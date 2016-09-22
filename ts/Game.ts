@@ -19,11 +19,11 @@ class Game {
     }
 
     private _run() {
-        
+
         this._initScene();
 
         this.scene.executeWhenReady(() => {
-            
+
             // Remove loader
             var loader = <HTMLElement> document.querySelector("#loader");
             loader.style.display = "none";
@@ -44,13 +44,15 @@ class Game {
         camera.attachControl(this.engine.getRenderingCanvas());
         let light = new BABYLON.HemisphericLight('', new BABYLON.Vector3(0, 1, 0), this.scene);
         light.intensity = 0.7;
-        
+
     }
 
 
     private _initGame () {
         this.scene.debugLayer.show();
-        
+
         BABYLON.MeshBuilder.CreateBox('myfirstbox', {size:10}, this.scene);
+
+        var test = new Test();
     }
 }

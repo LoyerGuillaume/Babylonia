@@ -1,7 +1,7 @@
 .idea
 node_modules
+dist/js
 .tmp
 *.map
 .tscache
 .history
-dist/js

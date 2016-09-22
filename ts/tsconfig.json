@@ -8,5 +8,6 @@
         "Game.ts",
         "Test.ts",
         "Preloader.ts"
-    ]
+    ],
+    "compileOnSave": false
 }

@@ -15,7 +15,6 @@ class Game {
         });
 
         this._run();
-
     }
 
     private _run() {

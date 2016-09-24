@@ -1,0 +1,6 @@
+class EnemyOne {
+
+    constructor() {
+    }
+
+}

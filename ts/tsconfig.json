@@ -6,7 +6,6 @@
         "typings/babylon.d.ts",
         "Timer.ts",
         "Game.ts",
-        "Test.ts",
         "Preloader.ts"
     ],
     "compileOnSave": false

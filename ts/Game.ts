@@ -49,9 +49,8 @@ class Game {
 
     private _initGame () {
         this.scene.debugLayer.show();
-
-        BABYLON.MeshBuilder.CreateBox('myfirstbox', {size:10}, this.scene);
-
-        var test = new Test();
+        
+        var gameManager = new GameManager();
+        gameManager.start();
     }
 }

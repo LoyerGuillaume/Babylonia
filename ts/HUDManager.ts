@@ -1,0 +1,6 @@
+class HUDManager {
+
+    constructor() {
+    }
+
+}

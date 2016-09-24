@@ -1,6 +1,7 @@
 class Enemy {
 
     constructor() {
+
     }
 
 }

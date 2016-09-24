@@ -1,6 +1,7 @@
-class EnemyOne {
+class EnemyOne extends Enemy {
 
     constructor() {
+        super();
     }
 
 }

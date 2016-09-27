@@ -1,0 +1,5 @@
+
+    enum ControllerType {
+        KEYBOARD,
+        TOUCH,
+    }

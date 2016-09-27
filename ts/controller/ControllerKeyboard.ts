@@ -1,0 +1,63 @@
+/**
+ * Controleur clavier
+ */
+class ControllerKeyboard extends Controller {
+
+	    /**
+	     * tableau stockant l'etat appuyé ou non des touches
+	     */
+        keys: Object;
+
+        constructor() {
+            console.log("ck");
+            super();
+
+            this.keys = {};
+            window.addEventListener(Keyboard.KEY_DOWN, this.onKeyDown.bind(this));
+            window.addEventListener(Keyboard.KEY_UP, this.onKeyUp.bind(this));
+        }
+
+        get attack(): boolean {
+            return this.keys[Keyboard.SPACE];
+        }
+
+        get pause(): boolean {
+            return this.keys[Keyboard.P];
+        }
+
+        get god(): boolean {
+            return this.keys[Keyboard.G];
+        }
+
+        get horizontal (): number {
+            if (this.keys[Keyboard.LEFT]) return -1;
+            if (this.keys[Keyboard.RIGHT]) return 1;
+            return 0;
+        }
+
+        get vertical (): number {
+            return this.keys[Keyboard.RIGHT];
+        }
+	
+	    /**
+	     * détruit l'instance unique et met sa référence interne à null
+	     */
+        public destroy(): void {
+            window.removeEventListener(Keyboard.KEY_DOWN, this.onKeyDown);
+            window.removeEventListener(Keyboard.KEY_UP, this.onKeyUp);
+            super.destroy();
+        }
+
+        private onKeyDown(pEvent: KeyboardEvent): void {
+            this.keys[pEvent.keyCode] = true;
+
+            // traitement des touches antagonistes en favorisant la dernière touche appuyée
+            if (pEvent.keyCode == Keyboard.LEFT) this.keys[Keyboard.RIGHT] = false;
+            else if (pEvent.keyCode == Keyboard.RIGHT) this.keys[Keyboard.LEFT] = false;
+        }
+
+        private onKeyUp(pEvent: KeyboardEvent): void {
+            this.keys[pEvent.keyCode] = false;
+        }
+
+    }

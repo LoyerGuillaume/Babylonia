@@ -23,6 +23,22 @@ class AssetGraphic extends GameObject {
         AssetGraphic.particlesSystemsList[id] = pParticleSystems;
     }
 
+    public static invisibleAllMesh(pMeshes:BABYLON.Mesh[]): BABYLON.Mesh[] {
+        return AssetGraphic.toggleVisible(pMeshes, false);
+    }
+
+    public static visibleAllMesh(pMeshes:BABYLON.Mesh[]): BABYLON.Mesh[] {
+        return AssetGraphic.toggleVisible(pMeshes, true);
+    }
+
+    private static toggleVisible(pMeshes:BABYLON.Mesh[], isVisible:boolean):BABYLON.Mesh[] {
+        for (var i = 0; i < pMeshes.length; i++) {
+            pMeshes[i].isVisible = isVisible;
+        }
+
+        return pMeshes;
+    }
+
     private setAsset(pAssetName: string, pScene: BABYLON.Scene): void {
         this.assetName = pAssetName;
 

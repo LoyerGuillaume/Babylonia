@@ -41,7 +41,7 @@ class GameManager {
 
 
     private initCamera() {
-        new CameraManager();
+        new CameraManager(this.mainScene, this.engine);
     }
 
 
@@ -59,7 +59,6 @@ class GameManager {
         }
 
         function onSuccess(pAssetName, pTask): void {
-
             AssetGraphic.addObject(pAssetName, pTask.loadedMeshes, pTask.loadedSkeletons, pTask.loadedParticleSystems);
 
             // var skeletons = task.loadedSkeletons;

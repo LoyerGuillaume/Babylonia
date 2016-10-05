@@ -5,3 +5,7 @@ dist/js
 *.map
 .tscache
 .history
+packages/
+packages.config
+web.config
+.vs/

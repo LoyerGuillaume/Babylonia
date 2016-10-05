@@ -2,59 +2,72 @@ class GameManager {
 
     private mainScene:BABYLON.Scene;
     private engine:BABYLON.Engine;
+    private levelManager: LevelManager;
 
     private playerOne:Player;
 
     private static get ASSETS_NAME() { return ['elf'];};
 
 
-
     constructor(pScene, pEngine) {
         this.mainScene = pScene;
         this.engine = pEngine;
+        this.levelManager = new LevelManager(pScene);
     }
 
 
-    public start () {
-        console.log('Start Game');
-        this.loadAssets();
+    public start() {
+        this.loadAssets(this.startGame.bind(this));
+    }
+    
+    public startGame () {
+
+        this.initLevel();
         this.initPlayer();
+
+        this.gameLoop();
     }
 
 
-    private initPlayer () {
+    private initPlayer() {
         this.playerOne = new Player();
     }
 
 
-    private loadAssets () {
+    public initLevel() {
+        this.levelManager.build();
+    }
+
+
+    private loadAssets(pCallback) {
+
         var loader = new BABYLON.AssetsManager(this.mainScene);
 
         var assetIndex;
-        console.log(GameManager.ASSETS_NAME);
+
         for (assetIndex in GameManager.ASSETS_NAME) {
-            var assetName:string = GameManager.ASSETS_NAME[assetIndex];
-            var meshTask = loader.addMeshTask(assetName, '', Config.ASSET_PATH, assetName + '.babylon');
+            var assetName: string = GameManager.ASSETS_NAME[assetIndex];
+
+            var meshTask = loader.addMeshTask(assetName, assetName, Config.ASSET_PATH, assetName + '.babylon');
+            meshTask.onSuccess = onSuccess.bind(this, assetName);
         }
 
+        function onSuccess(pAssetName, pTask): void {
 
-        // Fonction appelée quand le chargement de l’objet est terminé
+            AssetGraphic.addObject(pAssetName, pTask.loadedMeshes, pTask.loadedSkeletons, pTask.loadedParticleSystems);
 
-        // var that = this;
-        meshTask.onSuccess = (task) => {
             // var skeletons = task.loadedSkeletons;
-
-
+            
             // skeletons.forEach(function(s) {
             //     pScene.beginAnimation(s, 0, 100, true);
             // });
-        };
+        }
+        
 
-        loader.onFinish = (tasks) => {
-            this.gameLoop();
-        };
+        loader.onFinish = pCallback;
 
-        loader.load(); // Démarre le chargement
+        loader.useDefaultLoadingScreen = false; // FIXME : Path loading screen
+        loader.load();
     }
 
 

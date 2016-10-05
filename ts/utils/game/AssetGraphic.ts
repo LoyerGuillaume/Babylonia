@@ -18,18 +18,9 @@ class AssetGraphic extends GameObject {
     }
 
     public static addObject(id: string, pMeshes: BABYLON.Mesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {
-        pMeshes = AssetGraphic.invisibleAllMesh(pMeshes);
         AssetGraphic.meshesList[id] = pMeshes;
         AssetGraphic.skeletonsList[id] = pSkeletons;
         AssetGraphic.particlesSystemsList[id] = pParticleSystems;
-    }
-
-    private static invisibleAllMesh(pMeshes:BABYLON.Mesh[]): BABYLON.Mesh[] {
-        for (var i = 0; i < pMeshes.length; i++) {
-            pMeshes[i].isVisible = false;
-        }
-
-        return pMeshes;
     }
 
     private setAsset(pAssetName: string, pScene: BABYLON.Scene): void {

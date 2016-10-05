@@ -6,7 +6,8 @@
         "typings/babylon.ts",
         "Timer.ts",
         "Game.ts",
-        "Preloader.ts"
+        "Preloader.ts",
+        "CameraManager.ts"
     ],
     "compileOnSave": false
 }

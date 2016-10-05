@@ -19,11 +19,12 @@ class GameManager {
     public start() {
         this.loadAssets(this.startGame.bind(this));
     }
-    
+
     public startGame () {
 
         this.initLevel();
         this.initPlayer();
+        this.initCamera();
 
         this.gameLoop();
     }
@@ -34,8 +35,13 @@ class GameManager {
     }
 
 
-    public initLevel() {
+    private initLevel() {
         this.levelManager.build();
+    }
+
+
+    private initCamera() {
+        new CameraManager();
     }
 
 
@@ -57,12 +63,12 @@ class GameManager {
             AssetGraphic.addObject(pAssetName, pTask.loadedMeshes, pTask.loadedSkeletons, pTask.loadedParticleSystems);
 
             // var skeletons = task.loadedSkeletons;
-            
+
             // skeletons.forEach(function(s) {
             //     pScene.beginAnimation(s, 0, 100, true);
             // });
         }
-        
+
 
         loader.onFinish = pCallback;
 

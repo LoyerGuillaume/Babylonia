@@ -6,7 +6,21 @@
         "typings/babylon.ts",
         "Timer.ts",
         "Game.ts",
-        "Preloader.ts"
+        "GameManager.ts",
+        "LevelManager.ts",
+        "Player.ts",
+        "Config.ts",
+        "typings/babylon.d.ts",
+        "utils/game/AssetGraphic.ts",
+        "utils/game/GameObject.ts",
+        "utils/ui/Keyboards.ts",
+        "controller/Controller.ts",
+        "controller/ControllerKeyboard.ts",
+        "controller/ControllerType.ts",
+        "Enemy.ts",
+        "EnemyOne.ts",
+        "Preloader.ts",
+        "CameraManager.ts"
     ],
     "compileOnSave": false
 }

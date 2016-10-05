@@ -1,7 +1,12 @@
-class Player {
+class Player extends AssetGraphic {
 
-    constructor() {
-        console.log('New Player');
+    constructor(pAssetName:string, pScene:BABYLON.Scene) {
+        super(pAssetName, pScene);
+
+    }
+
+    public start() {
+
     }
 
 }

@@ -17,18 +17,15 @@ class AssetGraphic extends GameObject {
         this.setAsset(pAssetName, pScene);
     }
 
+    public setVisible(pState: boolean) {
+        AssetGraphic.toggleVisible(this.meshes, pState);
+    }
+
     public static addObject(id: string, pMeshes: BABYLON.Mesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {
-        AssetGraphic.meshesList[id] = pMeshes;
-        AssetGraphic.skeletonsList[id] = pSkeletons;
+        AssetGraphic.toggleVisible(pMeshes, false);
+        AssetGraphic.meshesList[id]           = pMeshes;
+        AssetGraphic.skeletonsList[id]        = pSkeletons;
         AssetGraphic.particlesSystemsList[id] = pParticleSystems;
-    }
-
-    public static invisibleAllMesh(pMeshes:BABYLON.Mesh[]): BABYLON.Mesh[] {
-        return AssetGraphic.toggleVisible(pMeshes, false);
-    }
-
-    public static visibleAllMesh(pMeshes:BABYLON.Mesh[]): BABYLON.Mesh[] {
-        return AssetGraphic.toggleVisible(pMeshes, true);
     }
 
     private static toggleVisible(pMeshes:BABYLON.Mesh[], isVisible:boolean):BABYLON.Mesh[] {
@@ -42,8 +39,8 @@ class AssetGraphic extends GameObject {
     private setAsset(pAssetName: string, pScene: BABYLON.Scene): void {
         this.assetName = pAssetName;
 
-        this.meshes = AssetGraphic.meshesList[pAssetName] || [BABYLON.Mesh.CreateBox(pAssetName, 1, pScene)];
-        this.skeletons = AssetGraphic.skeletonsList[pAssetName] || [];
-        this.particleSystems = AssetGraphic.particlesSystemsList[pAssetName] || [];
+        this.meshes          = AssetGraphic.meshesList[pAssetName].clone("meshes_" + pAssetName)                    || [BABYLON.Mesh.CreateBox(pAssetName, 1, pScene)];
+        this.skeletons       = AssetGraphic.skeletonsList[pAssetName].clone("skeletons_" + pAssetName)              || [];
+        this.particleSystems = AssetGraphic.particlesSystemsList[pAssetName].clone("particleSystems_" + pAssetName) || [];
     }
 }

@@ -9,6 +9,7 @@
         "GameManager.ts",
         "LevelManager.ts",
         "Player.ts",
+        "assets/Tree.ts",
         "Config.ts",
         "typings/babylon.d.ts",
         "utils/game/AssetGraphic.ts",

@@ -21,8 +21,7 @@ class GameManager {
     }
 
     public startGame () {
-
-        this.initLevel();
+        // this.initLevel();
         this.initPlayer();
         this.initCamera();
 
@@ -31,7 +30,8 @@ class GameManager {
 
 
     private initPlayer() {
-        // this.playerOne = new Player();
+        this.playerOne = new Player(this.mainScene);
+        this.playerOne.setVisible(true);
     }
 
 

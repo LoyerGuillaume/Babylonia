@@ -1,7 +1,10 @@
 class Player extends AssetGraphic {
 
-    constructor(pAssetName:string, pScene:BABYLON.Scene) {
-        super(pAssetName, pScene);
+
+    private static get ASSET_NAME():string { return 'elf';};
+
+    constructor(pScene:BABYLON.Scene) {
+        super(Player.ASSET_NAME, pScene);
 
     }
 

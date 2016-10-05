@@ -10,6 +10,7 @@ class LevelManager {
     public build(): void {
         var lTree: Tree = new Tree('elf', this.scene);
         lTree.start();
+        lTree.setVisible(true);
     }
 
 }

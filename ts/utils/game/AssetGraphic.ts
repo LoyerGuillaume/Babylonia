@@ -17,6 +17,10 @@ class AssetGraphic extends GameObject {
         this.setAsset(pAssetName, pScene);
     }
 
+    public setVisible(pState: boolean) {
+        AssetGraphic.toggleVisible(this.meshes, pState);
+    }
+
     public static addObject(id: string, pMeshes: BABYLON.Mesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {
         AssetGraphic.meshesList[id] = pMeshes;
         AssetGraphic.skeletonsList[id] = pSkeletons;

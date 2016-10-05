@@ -34,10 +34,6 @@ class GameManager {
         this.playerOne.setVisible(true);
         this.playerOne.setModeNormal();
         CameraManager.setTarget(this.playerOne.getMesh());
-        var that = this;
-        setInterval(function () {
-            that.playerOne.getMesh().position.x += 1;
-        }, 16);
     }
 
 

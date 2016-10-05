@@ -12,4 +12,8 @@ class Player extends AssetGraphic {
 
     }
 
+    public getMesh():BABYLON.Mesh {
+        return this.meshes[0];
+    }
+
 }

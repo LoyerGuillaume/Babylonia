@@ -22,18 +22,16 @@ class AssetGraphic extends GameObject {
     }
 
     public static addObject(id: string, pMeshes: BABYLON.Mesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {
-        // AssetGraphic.toggleVisible(pMeshes, false);
+        AssetGraphic.toggleVisible(pMeshes, false);
         AssetGraphic.meshesList[id]           = pMeshes;
         AssetGraphic.skeletonsList[id]        = pSkeletons;
         AssetGraphic.particlesSystemsList[id] = pParticleSystems;
     }
 
-    private static toggleVisible(pMeshes:BABYLON.Mesh[], isVisible:boolean):BABYLON.Mesh[] {
+    private static toggleVisible(pMeshes:BABYLON.Mesh[], isVisible:boolean) {
         for (var i = 0; i < pMeshes.length; i++) {
             pMeshes[i].isVisible = isVisible;
         }
-
-        return pMeshes;
     }
 
     private setAsset(pAssetName: string, pScene: BABYLON.Scene): void {

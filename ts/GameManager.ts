@@ -22,7 +22,7 @@ class GameManager {
     }
 
     public startGame () {
-        // this.initLevel();
+        this.initLevel();
         this.initPlayer();
 
         this.gameLoop();
@@ -32,6 +32,11 @@ class GameManager {
     private initPlayer() {
         this.playerOne = new Player(this.mainScene);
         this.playerOne.setVisible(true);
+        CameraManager.setTarget(this.playerOne.getMesh());
+        var that = this;
+        setInterval(function () {
+            that.playerOne.getMesh().position.x += 1;
+        }, 16);
     }
 
 

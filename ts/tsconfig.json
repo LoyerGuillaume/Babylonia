@@ -14,7 +14,7 @@
         "typings/babylon.d.ts",
         "utils/game/AssetGraphic.ts",
         "utils/game/GameObject.ts",
-        "utils/ui/Keyboards.ts",
+        "utils/ui/Keyboard.ts",
         "controller/Controller.ts",
         "controller/ControllerKeyboard.ts",
         "controller/ControllerType.ts",

@@ -74,6 +74,12 @@ class GameManager {
     private gameLoop () {
         this.engine.runRenderLoop(() => {
             this.mainScene.render();
+
+            var lLen = Tree.list.length;
+            for (var i = 0; i < lLen; i++) {
+                Tree.list[i].doAction();
+            }
+
         });
     }
 

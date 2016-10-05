@@ -43,8 +43,8 @@ class AssetGraphic extends GameObject {
     private setAsset(pAssetName: string, pScene: BABYLON.Scene): void {
         this.assetName = pAssetName;
 
-        this.meshes = AssetGraphic.meshesList[pAssetName] || [BABYLON.Mesh.CreateBox(pAssetName, 1, pScene)];
-        this.skeletons = AssetGraphic.skeletonsList[pAssetName] || [];
-        this.particleSystems = AssetGraphic.particlesSystemsList[pAssetName] || [];
+        this.meshes          = AssetGraphic.meshesList[pAssetName].clone("meshes_" + pAssetName)                    || [BABYLON.Mesh.CreateBox(pAssetName, 1, pScene)];
+        this.skeletons       = AssetGraphic.skeletonsList[pAssetName].clone("skeletons_" + pAssetName)              || [];
+        this.particleSystems = AssetGraphic.particlesSystemsList[pAssetName].clone("particleSystems_" + pAssetName) || [];
     }
 }

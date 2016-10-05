@@ -4,7 +4,7 @@
 class ControllerKeyboard extends Controller {
 
 	    /**
-	     * tableau stockant l'etat appuyé ou non des touches
+	     * tableau stockant l'etat appuyï¿½ ou non des touches
 	     */
         keys: Object;
 
@@ -38,9 +38,9 @@ class ControllerKeyboard extends Controller {
         get vertical (): number {
             return this.keys[Keyboard.RIGHT];
         }
-	
+
 	    /**
-	     * détruit l'instance unique et met sa référence interne à null
+	     * dï¿½truit l'instance unique et met sa rï¿½fï¿½rence interne ï¿½ null
 	     */
         public destroy(): void {
             window.removeEventListener(Keyboard.KEY_DOWN, this.onKeyDown);
@@ -51,7 +51,7 @@ class ControllerKeyboard extends Controller {
         private onKeyDown(pEvent: KeyboardEvent): void {
             this.keys[pEvent.keyCode] = true;
 
-            // traitement des touches antagonistes en favorisant la dernière touche appuyée
+            // traitement des touches antagonistes en favorisant la derniï¿½re touche appuyï¿½e
             if (pEvent.keyCode == Keyboard.LEFT) this.keys[Keyboard.RIGHT] = false;
             else if (pEvent.keyCode == Keyboard.RIGHT) this.keys[Keyboard.LEFT] = false;
         }

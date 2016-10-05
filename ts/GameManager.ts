@@ -32,6 +32,7 @@ class GameManager {
     private initPlayer() {
         this.playerOne = new Player(this.mainScene);
         this.playerOne.setVisible(true);
+        this.playerOne.setModeNormal();
     }
 
 
@@ -83,6 +84,8 @@ class GameManager {
             for (var i = 0; i < lLen; i++) {
                 Tree.list[i].doAction();
             }
+
+            this.playerOne.doAction();
 
         });
     }

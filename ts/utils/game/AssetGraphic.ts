@@ -1,5 +1,5 @@
 ﻿
-class AssetGraphic {
+class AssetGraphic extends GameObject {
 
     private static objects: {} = {};
     private static meshesList: {} = {};
@@ -13,6 +13,7 @@ class AssetGraphic {
     protected assetName: string;
 
     constructor(pAssetName: string, pScene: BABYLON.Scene) {
+        super();
         this.setAsset(pAssetName, pScene);
     }
 

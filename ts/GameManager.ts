@@ -31,7 +31,7 @@ class GameManager {
 
 
     private initPlayer() {
-        this.playerOne = new Player();
+        // this.playerOne = new Player();
     }
 
 
@@ -79,6 +79,12 @@ class GameManager {
     private gameLoop () {
         this.engine.runRenderLoop(() => {
             this.mainScene.render();
+
+            var lLen = Tree.list.length;
+            for (var i = 0; i < lLen; i++) {
+                Tree.list[i].doAction();
+            }
+
         });
     }
 

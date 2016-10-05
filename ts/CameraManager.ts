@@ -1,14 +1,19 @@
 class CameraManager {
 
-    constructor(pScene: BABYLON.Scene, pEngine: BABYLON.Engine) {
-        // console.log('New Camera');
-        this.init(pScene, pEngine);
+    private static camera:BABYLON.FollowCamera;
+
+
+    public static init(pScene: BABYLON.Scene, pEngine: BABYLON.Engine) {
+        CameraManager.camera = new BABYLON.FollowCamera('FollowCamera', new BABYLON.Vector3(0, 0, 0), pScene);
+
+        // pScene.activeCamera = camera;
     }
 
-    private init(pScene: BABYLON.Scene, pEngine: BABYLON.Engine) {
-        // console.log(pEngine);
-        let camera = new BABYLON.ArcRotateCamera('', -1.5, 1, 100, new BABYLON.Vector3(0, 0, 0), pScene);
-        camera.attachControl(pEngine.getRenderingCanvas());
+
+    public static setTarget(pMesh: BABYLON.AbstractMesh) {
+        CameraManager.camera.target = pMesh;
     }
+
+
 
 }

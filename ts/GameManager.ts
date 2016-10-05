@@ -17,6 +17,7 @@ class GameManager {
 
 
     public start() {
+        this.initCamera();
         this.loadAssets(this.startGame.bind(this));
     }
 
@@ -24,7 +25,6 @@ class GameManager {
 
         this.initLevel();
         this.initPlayer();
-        this.initCamera();
 
         this.gameLoop();
     }
@@ -41,7 +41,7 @@ class GameManager {
 
 
     private initCamera() {
-        new CameraManager(this.mainScene, this.engine);
+        CameraManager.init(this.mainScene, this.engine);
     }
 
 
@@ -50,7 +50,6 @@ class GameManager {
         var loader = new BABYLON.AssetsManager(this.mainScene);
 
         var assetIndex;
-
         for (assetIndex in GameManager.ASSETS_NAME) {
             var assetName: string = GameManager.ASSETS_NAME[assetIndex];
 

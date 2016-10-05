@@ -13,11 +13,14 @@ class Player extends AssetGraphic {
     }
 
     private move() {
-        
+
     }
 
     protected doActionNormal() {
+    }
 
+    public getMesh():BABYLON.Mesh {
+        return this.meshes[0];
     }
 
 }

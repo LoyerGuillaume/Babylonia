@@ -32,15 +32,12 @@ class GameManager {
     private initPlayer() {
         this.playerOne = new Player(this.mainScene);
         this.playerOne.setVisible(true);
-<<<<<<< HEAD
         this.playerOne.setModeNormal();
-=======
         CameraManager.setTarget(this.playerOne.getMesh());
         var that = this;
         setInterval(function () {
             that.playerOne.getMesh().position.x += 1;
         }, 16);
->>>>>>> 51d08e735e6c083691bd46a18633183b9bd82bed
     }
 
 

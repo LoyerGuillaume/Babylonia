@@ -19,7 +19,8 @@
         "controller/ControllerType.ts",
         "Enemy.ts",
         "EnemyOne.ts",
-        "Preloader.ts"
+        "Preloader.ts",
+        "CameraManager.ts"
     ],
     "compileOnSave": false
 }

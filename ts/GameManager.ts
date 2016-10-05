@@ -24,6 +24,7 @@ class GameManager {
 
         this.initLevel();
         this.initPlayer();
+        this.initCamera();
 
         this.gameLoop();
     }
@@ -34,8 +35,13 @@ class GameManager {
     }
 
 
-    public initLevel() {
+    private initLevel() {
         this.levelManager.build();
+    }
+
+
+    private initCamera() {
+        new CameraManager(this.mainScene, this.engine);
     }
 
 

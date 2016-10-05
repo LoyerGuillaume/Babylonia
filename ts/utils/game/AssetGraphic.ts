@@ -18,7 +18,6 @@ class AssetGraphic extends GameObject {
     }
 
     public static addObject(id: string, pMeshes: BABYLON.Mesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {
-        pMeshes = AssetGraphic.invisibleAllMesh(pMeshes);
         AssetGraphic.meshesList[id] = pMeshes;
         AssetGraphic.skeletonsList[id] = pSkeletons;
         AssetGraphic.particlesSystemsList[id] = pParticleSystems;

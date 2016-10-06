@@ -21,14 +21,14 @@ class AssetGraphic extends GameObject {
         AssetGraphic.toggleVisible(this.meshes, pState);
     }
 
-    public static addObject(id: string, pMeshes: BABYLON.Mesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {
+    public static addObject(id: string, pMeshes: BABYLON.AbstractMesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {
         AssetGraphic.toggleVisible(pMeshes, false);
         AssetGraphic.meshesList[id]           = pMeshes;
         AssetGraphic.skeletonsList[id]        = pSkeletons;
         AssetGraphic.particlesSystemsList[id] = pParticleSystems;
     }
 
-    private static toggleVisible(pMeshes:BABYLON.Mesh[], isVisible:boolean) {
+    private static toggleVisible(pMeshes:BABYLON.AbstractMesh[], isVisible:boolean) {
         for (var i = 0; i < pMeshes.length; i++) {
             pMeshes[i].isVisible = isVisible;
         }

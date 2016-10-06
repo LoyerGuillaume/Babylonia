@@ -58,20 +58,6 @@ class AssetGraphic extends GameObject {
         pMesh.setEnabled(true);
         pMesh.parent = pParent;
     }
-/*
-    private static cloneMeshes(pArray:any[], pName:string):any[] {
-        var newMeshes = [];
-        for (var i = 0; i < pArray.length; i++) {
-            var clone = pArray[i].clone(pName);
-            if (pArray[i].skeleton) {
-                clone.skeleton = pArray[i].skeleton.clone();
-            }
-            newMeshes.push(clone);
-        }
-
-        return newMeshes;
-    }
-*/
 
     protected addAnimation(animationName:string, startFrame:number, endFrame:number) {
         this.animationList[animationName] = {
@@ -92,19 +78,11 @@ class AssetGraphic extends GameObject {
     }
 
     private runAnimation(startFrame:number, endFrame:number, loop:boolean = true) {
-        //var that = this;
         this.getScene().beginAnimation(this.meshes, startFrame, endFrame, loop);
-        //this.meshes.forEach(function(meshe) {
-        //    that.getScene().beginAnimation(meshe, startFrame, endFrame, loop);
-        //});
     }
 
     protected stopAnimation() {
         this.currentAnimationName = '';
-        //var that = this;
         this.meshes.getScene().stopAnimation(this.meshes);
-        //this.meshes.forEach(function(meshe) {
-        //    that.getScene().stopAnimation(meshe);
-        //});
     }
 }

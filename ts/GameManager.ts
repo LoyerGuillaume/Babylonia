@@ -53,24 +53,22 @@ class GameManager {
     private loadAssets(pCallback) {
 
         var loader = new BABYLON.AssetsManager(this.mainScene);
-
+        
         var assetIndex;
         for (assetIndex in GameManager.ASSETS_NAME) {
-            var assetName: string = GameManager.ASSETS_NAME[assetIndex];
 
+            var assetName: string = GameManager.ASSETS_NAME[assetIndex];
             var meshTask = loader.addMeshTask(assetName, '', Config.ASSET_PATH, assetName + '.babylon');
             meshTask.onSuccess = onSuccess;
         }
 
         function onSuccess(pTask:BABYLON.MeshAssetTask): void {
-            //AssetGraphic.addObject(pTask.name, pTask.loadedMeshes, pTask.loadedSkeletons, pTask.loadedParticleSystems);
 
             var lLen = pTask.loadedMeshes.length;
             for (var i = 0; i < lLen; i++) {
                 AssetGraphic.addObject(pTask.loadedMeshes[i].name, pTask.loadedMeshes[i], pTask.loadedSkeletons[i], pTask.loadedParticleSystems[i]);
             }
         }
-
 
         loader.onFinish = pCallback;
 

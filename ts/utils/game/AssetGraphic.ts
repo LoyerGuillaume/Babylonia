@@ -21,13 +21,12 @@ class AssetGraphic extends GameObject {
     }
 
     public start () {
-        this.enable(true);
         super.start();
+        this.enable(true);
     }
 
     public enable(pState: boolean) {
         this.setEnabled(pState);
-        AssetGraphic.toggleEnable(this.meshes, pState);
     }
 
     public static addObject(id: string, pMeshes: BABYLON.AbstractMesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {

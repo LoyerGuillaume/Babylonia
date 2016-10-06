@@ -25,9 +25,8 @@ class GameManager {
         this.initLevel();
         this.initPlayer();
 
-        // var enemi = new EnemyOne(this.mainScene);
-        // enemi.start();
-        // enemi.setEnable(true);
+        var enemy = new EnemyOne(new BABYLON.Vector3(500, 0, 500), this.mainScene);
+        enemy.start();
 
         this.gameLoop();
     }
@@ -87,9 +86,9 @@ class GameManager {
                 Tree.list[i].doAction();
             }
 
-            // for (var j = 0; j < Enemy.list.length; j++) {
-            //     Enemy.list[i].doAction();
-            // }
+            for (var j = 0; j < Enemy.list.length; j++) {
+                Enemy.list[j].doAction();
+            }
 
             this.playerOne.doAction();
             CameraManager.updatePosition();

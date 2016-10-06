@@ -6,9 +6,9 @@ class AssetGraphic extends GameObject {
     private static skeletonsList: {} = {};
     private static particlesSystemsList: {} = {};
 
-    protected meshes: BABYLON.Mesh[];
-    protected skeletons: any[];
-    protected particleSystems: any[];
+    protected meshes: BABYLON.Mesh;
+    protected skeletons: any;
+    protected particleSystems: any;
 
     protected assetName: string;
 
@@ -21,11 +21,11 @@ class AssetGraphic extends GameObject {
     }
 
     public setEnable(pState: boolean) {
-        AssetGraphic.toggleEnable(this.meshes, pState);
+        this.meshes.setEnabled(pState);
     }
 
-    public static addObject(id: string, pMeshes: BABYLON.AbstractMesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {
-        AssetGraphic.toggleEnable(pMeshes, false);
+    public static addObject(id: string, pMeshes: BABYLON.AbstractMesh = undefined, pSkeletons : any = undefined, pParticleSystems: any = undefined) {
+        pMeshes.setEnabled(false);
 
         AssetGraphic.meshesList[id]           = pMeshes;
         AssetGraphic.skeletonsList[id]        = pSkeletons;
@@ -41,19 +41,24 @@ class AssetGraphic extends GameObject {
     private setAsset(pAssetName: string, pScene: BABYLON.Scene): void {
         this.assetName = pAssetName;
 
-        this.meshes          = AssetGraphic.cloneMeshes(AssetGraphic.meshesList[pAssetName], "meshes_" + pAssetName)                     || [BABYLON.Mesh.CreateBox(pAssetName, 1, pScene)];
-        // this.skeletons       = AssetGraphic.cloneMeshes(AssetGraphic.skeletonsList[pAssetName], "skeletons_" + pAssetName)               || [];
-        // this.particleSystems = AssetGraphic.cloneMeshes(AssetGraphic.particlesSystemsList[pAssetName], "particleSystems_" + pAssetName)  || [];
+        if (AssetGraphic.meshesList[pAssetName]) {
+            this.meshes = AssetGraphic.meshesList[pAssetName].clone("meshes_" + pAssetName);
+            if (AssetGraphic.meshesList[pAssetName].skeleton) {
+                this.meshes.skeleton = AssetGraphic.meshesList[pAssetName].skeleton.clone();
+            }
+        } else {
+            console.warn('The AssetGraphic with the name "'+pAssetName+'" don\'t have any loaded mesh with the same name. Is that ok ?');
+            this.meshes = BABYLON.Mesh.CreateBox(pAssetName, 10, pScene);
+        }
 
-        // this.meshes.forEach( function (meshe))
-        Tools.forEach(this.meshes, this.addMesh.bind(this));
+        AssetGraphic.addMesh(this.meshes, this);
     }
 
-    private addMesh(pMesh: BABYLON.AbstractMesh) {
+    private static addMesh(pMesh: BABYLON.AbstractMesh, pParent:AssetGraphic) {
         pMesh.setEnabled(true);
-        pMesh.parent = this;
+        pMesh.parent = pParent;
     }
-
+/*
     private static cloneMeshes(pArray:any[], pName:string):any[] {
         var newMeshes = [];
         for (var i = 0; i < pArray.length; i++) {
@@ -66,7 +71,7 @@ class AssetGraphic extends GameObject {
 
         return newMeshes;
     }
-
+*/
 
     protected addAnimation(animationName:string, startFrame:number, endFrame:number) {
         this.animationList[animationName] = {
@@ -87,17 +92,19 @@ class AssetGraphic extends GameObject {
     }
 
     private runAnimation(startFrame:number, endFrame:number, loop:boolean = true) {
-        var that = this;
-        this.meshes.forEach(function(meshe) {
-            that.getScene().beginAnimation(meshe, startFrame, endFrame, loop);
-        });
+        //var that = this;
+        this.getScene().beginAnimation(this.meshes, startFrame, endFrame, loop);
+        //this.meshes.forEach(function(meshe) {
+        //    that.getScene().beginAnimation(meshe, startFrame, endFrame, loop);
+        //});
     }
 
     protected stopAnimation() {
         this.currentAnimationName = '';
-        var that = this;
-        this.meshes.forEach(function(meshe) {
-            that.getScene().stopAnimation(meshe);
-        });
+        //var that = this;
+        this.meshes.getScene().stopAnimation(this.meshes);
+        //this.meshes.forEach(function(meshe) {
+        //    that.getScene().stopAnimation(meshe);
+        //});
     }
 }

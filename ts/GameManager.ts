@@ -55,7 +55,7 @@ class GameManager {
         for (assetIndex in GameManager.ASSETS_NAME) {
             var assetName: string = GameManager.ASSETS_NAME[assetIndex];
 
-            var meshTask = loader.addMeshTask(assetName, assetName, Config.ASSET_PATH, assetName + '.babylon');
+            var meshTask = loader.addMeshTask(assetName, '', Config.ASSET_PATH, assetName + '.babylon');
             meshTask.onSuccess = onSuccess;
         }
 

@@ -10,6 +10,26 @@ class Player extends AssetGraphic {
         super(Player.ASSET_NAME, pScene);
         this.controller = new ControllerKeyboard();
         this.currentRotation = 0;
+        this.initAnimation();
+    }
+
+    private initAnimation() {
+
+        //Saut 22-48
+        //run 0-21
+        //double saut 49-73
+        //Mort 74-138
+        //
+        this.addAnimation('Run', 0, 21);
+        this.addAnimation('Jump', 22, 48);
+        this.addAnimation('Double Jump', 49, 73);
+        this.addAnimation('Death', 74, 138);
+
+        this.runAnimationName('Run');
+
+
+        //IDLE 0-39
+        //Run 45-85
     }
 
     public start() {
@@ -29,6 +49,11 @@ class Player extends AssetGraphic {
 //Elipsoid
 //InterceptMesh
 //
+//
+//Saut 22-48
+//run 0-21
+//double saut 49-73
+//Mort 74-138
     private _rotate() {
         if (this.controller.vertical != 0 || this.controller.horizontal != 0) {
             var rotation = BABYLON.Tools.ToDegrees(Math.atan2(this.controller.vertical, this.controller.horizontal));

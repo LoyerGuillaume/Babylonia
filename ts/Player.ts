@@ -4,6 +4,9 @@ class Player extends AssetGraphic {
     private static get ASSET_NAME():string { return 'elf';};
     private static get MOVE_SPEED():number { return 10;};
     private static get ROTATION_SPEED():number { return 0.3;};
+    private static get COUNTDOWN_ATTACK():number { return 30;};
+
+    private countFrameAttack:number = 0;
 
     constructor(pScene:BABYLON.Scene) {
         super(Player.ASSET_NAME, pScene);
@@ -57,6 +60,8 @@ class Player extends AssetGraphic {
     }
 
     protected doActionNormal() {
+        this.countFrameAttack++;
+
         this.move();
         this._rotate();
         this.attack();
@@ -64,13 +69,15 @@ class Player extends AssetGraphic {
 
     private attack() {
         if (this.controller.attack) {
-            this.createFireBall();
+            if (this.countFrameAttack >= Player.COUNTDOWN_ATTACK) {
+                this.countFrameAttack = 0;
+                this.createFireBall();
+            }
         }
     }
 
     private createFireBall() {
-        console.log('FIREBALL');
-        var fireBall = new FireBall(this.getScene(), this.position, new BABYLON.Vector3(1,0,0));
+        var fireBall = new FireBall(this.getScene(), this.position, this.rotationQuaternion);
         fireBall.start();
     }
 

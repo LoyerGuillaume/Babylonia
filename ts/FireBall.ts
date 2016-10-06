@@ -7,11 +7,11 @@ class FireBall extends AssetGraphic {
 
     private direction:BABYLON.Vector3;
 
-    constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pDirection:BABYLON.Vector3) {
+    constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion) {
         super(FireBall.ASSET_NAME, pScene);
         FireBall.list.push(this);
         this.position = pPosition;
-        this.direction = pDirection;
+        this.rotationQuaternion = pRotation;
     }
 
     protected doActionNormal () {
@@ -19,9 +19,11 @@ class FireBall extends AssetGraphic {
     }
 
     private move() {
-        var v = this.direction;
-        var m = this.getWorldMatrix();
-        var movement = BABYLON.Vector3.TransformCoordinates(v, m);
+        var v         = new BABYLON.Vector3(0, 0, -1);
+        this.computeWorldMatrix(true);
+        var m         = this.getWorldMatrix();
+        var movement  = BABYLON.Vector3.TransformCoordinates(v, m);
+        movement.subtractInPlace(this.position).normalize().scaleInPlace(10);
         this.position = new BABYLON.Vector3(this.position.x + movement.x, this.position.y + movement.y, this.position.z + movement.z);
     }
 }

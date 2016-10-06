@@ -6,7 +6,7 @@ class AssetGraphic extends GameObject {
     private static skeletonsList: {} = {};
     private static particlesSystemsList: {} = {};
 
-    protected meshes: BABYLON.Mesh;
+    protected meshe: BABYLON.Mesh;
     protected skeletons: any;
     protected particleSystems: any;
 
@@ -20,8 +20,13 @@ class AssetGraphic extends GameObject {
         this.setAsset(pAssetName, pScene);
     }
 
-    public setEnable(pState: boolean) {
-        this.meshes.setEnabled(pState);
+    public start () {
+        super.start();
+        this.enable(true);
+    }
+
+    public enable(pState: boolean) {
+        this.setEnabled(pState);
     }
 
     public static addObject(id: string, pMeshes: BABYLON.AbstractMesh = undefined, pSkeletons : any = undefined, pParticleSystems: any = undefined) {
@@ -42,16 +47,16 @@ class AssetGraphic extends GameObject {
         this.assetName = pAssetName;
 
         if (AssetGraphic.meshesList[pAssetName]) {
-            this.meshes = AssetGraphic.meshesList[pAssetName].clone("meshes_" + pAssetName);
+            this.meshe = AssetGraphic.meshesList[pAssetName].clone("meshes_" + pAssetName);
             if (AssetGraphic.meshesList[pAssetName].skeleton) {
-                this.meshes.skeleton = AssetGraphic.meshesList[pAssetName].skeleton.clone();
+                this.meshe.skeleton = AssetGraphic.meshesList[pAssetName].skeleton.clone();
             }
         } else {
             console.warn('The AssetGraphic with the name "'+pAssetName+'" don\'t have any loaded mesh with the same name. Is that ok ?');
-            this.meshes = BABYLON.Mesh.CreateBox(pAssetName, 10, pScene);
+            this.meshe = BABYLON.Mesh.CreateBox(pAssetName, 10, pScene);
         }
 
-        AssetGraphic.addMesh(this.meshes, this);
+        AssetGraphic.addMesh(this.meshe, this);
     }
 
     private static addMesh(pMesh: BABYLON.AbstractMesh, pParent:AssetGraphic) {
@@ -78,11 +83,11 @@ class AssetGraphic extends GameObject {
     }
 
     private runAnimation(startFrame:number, endFrame:number, loop:boolean = true) {
-        this.getScene().beginAnimation(this.meshes, startFrame, endFrame, loop);
+        this.getScene().beginAnimation(this.meshe, startFrame, endFrame, loop);
     }
 
     protected stopAnimation() {
         this.currentAnimationName = '';
-        this.meshes.getScene().stopAnimation(this.meshes);
+        this.meshe.getScene().stopAnimation(this.meshe);
     }
 }

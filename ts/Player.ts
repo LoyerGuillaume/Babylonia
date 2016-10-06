@@ -2,7 +2,7 @@ class Player extends AssetGraphic {
 
     private controller:Controller;
     private static get ASSET_NAME():string { return 'elf';};
-    private static get MOVE_SPEED():number { return 2;};
+    private static get MOVE_SPEED():number { return 10;};
 
     constructor(pScene:BABYLON.Scene) {
         super(Player.ASSET_NAME, pScene);
@@ -14,8 +14,15 @@ class Player extends AssetGraphic {
     }
 
     private move() {
-        this.getMesh().position.x -= this.controller.horizontal * Player.MOVE_SPEED;
-        this.getMesh().position.z += this.controller.vertical * Player.MOVE_SPEED;
+        var vectorMovement:BABYLON.Vector3 = new BABYLON.Vector3(this.controller.horizontal, 0, this.controller.vertical);
+        vectorMovement.normalize();
+
+        this.getMesh().position.x -= vectorMovement.x * Player.MOVE_SPEED;
+        this.getMesh().position.z += vectorMovement.z * Player.MOVE_SPEED;
+    }
+
+    private rotate() {
+        
     }
 
     protected doActionNormal() {

@@ -7,9 +7,6 @@ class Player extends AssetGraphic {
     constructor(pScene:BABYLON.Scene) {
         super(Player.ASSET_NAME, pScene);
         this.controller = new ControllerKeyboard();
-
-
-        this.getMesh().position.x += 10;
     }
 
     public start() {
@@ -30,17 +27,15 @@ class Player extends AssetGraphic {
 //InterceptMesh
 //
     private _rotate() {
-        var rotate = Math.atan2(this.controller.vertical, this.controller.horizontal) * MathTools.RAD2DEG;
+        var rotation = BABYLON.Tools.ToDegrees(Math.atan2(this.controller.vertical, this.controller.horizontal));
         if (this.controller.vertical != 0 || this.controller.horizontal != 0) {
-            rotate -= 90;
+            rotation -= 90;
         }
-        console.log(rotate);
-        this.rotation = new BABYLON.Vector3(0, rotate, 0);
-
+        this.rotation.y = BABYLON.Tools.ToRadians(-rotation);
     }
 
     protected doActionNormal() {
-        // this.move();
+        this.move();
         this._rotate();
     }
 

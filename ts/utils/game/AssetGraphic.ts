@@ -13,15 +13,18 @@ class AssetGraphic extends GameObject {
     protected assetName: string;
 
     constructor(pAssetName: string, pScene: BABYLON.Scene) {
-
+        
         super(pAssetName, pScene);
         this.setAsset(pAssetName, pScene);
     }
 
-    public static addObject(id: string, pMeshes: BABYLON.AbstractMesh[] = [], pSkeletons: any[] = [], pParticleSystems: any[] = []) {
-        
+    public setEnable(pState: boolean) {
+        AssetGraphic.toggleEnable(this.meshes, pState);
+    }
+
+    public static addObject(id: string, pMeshes: BABYLON.AbstractMesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {
         AssetGraphic.toggleEnable(pMeshes, false);
-        
+
         AssetGraphic.meshesList[id]           = pMeshes;
         AssetGraphic.skeletonsList[id]        = pSkeletons;
         AssetGraphic.particlesSystemsList[id] = pParticleSystems;

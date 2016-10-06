@@ -4,9 +4,12 @@ class Player extends AssetGraphic {
     private static get ASSET_NAME():string { return 'elf';};
     private static get MOVE_SPEED():number { return 10;};
 
+    private currentRotation:number;
+
     constructor(pScene:BABYLON.Scene) {
         super(Player.ASSET_NAME, pScene);
         this.controller = new ControllerKeyboard();
+        this.currentRotation = 0;
     }
 
     public start() {
@@ -27,11 +30,13 @@ class Player extends AssetGraphic {
 //InterceptMesh
 //
     private rotate() {
-        var rotation = BABYLON.Tools.ToDegrees(Math.atan2(this.controller.vertical, this.controller.horizontal));
         if (this.controller.vertical != 0 || this.controller.horizontal != 0) {
+            var rotation = BABYLON.Tools.ToDegrees(Math.atan2(this.controller.vertical, this.controller.horizontal));
             rotation -= 90;
+            this.currentRotation = rotation;
         }
-        this.getMesh().rotation.y = BABYLON.Tools.ToRadians(-rotation);
+
+        this.getMesh().rotation.y = BABYLON.Tools.ToRadians(-this.currentRotation);
     }
 
     protected doActionNormal() {

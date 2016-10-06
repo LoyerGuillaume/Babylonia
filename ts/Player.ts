@@ -63,6 +63,19 @@ class Player extends AssetGraphic {
     protected doActionNormal() {
         this.move();
         this._rotate();
+        this.attack();
+    }
+
+    private attack() {
+        if (this.controller.attack) {
+            this.createFireBall();
+        }
+    }
+
+    private createFireBall() {
+        console.log('FIREBALL');
+        var fireBall = new FireBall(this.getScene(), this.position, new BABYLON.Vector3(1,0,0));
+        fireBall.setEnable(true);
     }
 
 }

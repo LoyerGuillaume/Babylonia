@@ -86,6 +86,12 @@ class GameManager {
                 Tree.list[i].doAction();
             }
 
+
+            var fireBallLength = FireBall.list.length;
+            for (var i = 0; i < fireBallLength; i++) {
+                FireBall.list[i].doAction();
+            }
+
             this.playerOne.doAction();
             CameraManager.updatePosition();
 

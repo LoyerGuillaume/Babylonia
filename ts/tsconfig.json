@@ -9,6 +9,7 @@
         "Game.ts",
         "GameManager.ts",
         "LevelManager.ts",
+        "FireBall.ts",
         "Player.ts",
         "assets/Tree.ts",
         "Config.ts",

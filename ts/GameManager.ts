@@ -87,6 +87,7 @@ class GameManager {
             }
 
             this.playerOne.doAction();
+            CameraManager.updatePosition();
 
         });
     }

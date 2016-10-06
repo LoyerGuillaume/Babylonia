@@ -61,7 +61,6 @@ class GameManager {
 
         function onSuccess(pTask:BABYLON.MeshAssetTask): void {
             AssetGraphic.addObject(pTask.name, pTask.loadedMeshes, pTask.loadedSkeletons, pTask.loadedParticleSystems);
-
             // var skeletons = task.loadedSkeletons;
 
             // skeletons.forEach(function(s) {

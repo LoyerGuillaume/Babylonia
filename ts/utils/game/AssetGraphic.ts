@@ -20,8 +20,13 @@ class AssetGraphic extends GameObject {
         this.setAsset(pAssetName, pScene);
     }
 
-    public setEnable(pState: boolean) {
-        AssetGraphic.toggleEnable(this.meshes, pState);
+    public start () {
+        super.start();
+        this.enable(true);
+    }
+
+    public enable(pState: boolean) {
+        this.setEnabled(pState);
     }
 
     public static addObject(id: string, pMeshes: BABYLON.AbstractMesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {

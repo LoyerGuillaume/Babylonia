@@ -31,10 +31,6 @@ class Player extends AssetGraphic {
         //Run 45-85
     }
 
-    public start() {
-
-    }
-
     private move() {
         var vectorMovement:BABYLON.Vector3 = new BABYLON.Vector3(this.controller.horizontal, 0, this.controller.vertical);
         vectorMovement.normalize();
@@ -75,7 +71,7 @@ class Player extends AssetGraphic {
     private createFireBall() {
         console.log('FIREBALL');
         var fireBall = new FireBall(this.getScene(), this.position, new BABYLON.Vector3(1,0,0));
-        fireBall.setEnable(true);
+        fireBall.start();
     }
 
 }

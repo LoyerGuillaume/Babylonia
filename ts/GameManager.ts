@@ -25,14 +25,16 @@ class GameManager {
         this.initLevel();
         this.initPlayer();
 
+        var enemy = new EnemyOne(new BABYLON.Vector3(500, 0, 500), this.mainScene);
+        enemy.start();
+
         this.gameLoop();
     }
 
 
     private initPlayer() {
         this.playerOne = new Player(this.mainScene);
-        this.playerOne.setEnabled(true);
-        this.playerOne.setModeNormal();
+        this.playerOne.start();
         CameraManager.setTarget(this.playerOne);
     }
 
@@ -80,16 +82,17 @@ class GameManager {
         this.engine.runRenderLoop(() => {
             this.mainScene.render();
 
-
-            var lLen = Tree.list.length;
-            for (var i = 0; i < lLen; i++) {
+            for (var i = 0; i < Tree.list.length; i++) {
                 Tree.list[i].doAction();
             }
 
-
             var fireBallLength = FireBall.list.length;
-            for (var i = 0; i < fireBallLength; i++) {
-                FireBall.list[i].doAction();
+            for (var k = 0; k < fireBallLength; k++) {
+                FireBall.list[k].doAction();
+            }
+
+            for (var j = 0; j < Enemy.list.length; j++) {
+                Enemy.list[j].doAction();
             }
 
             this.playerOne.doAction();

@@ -13,12 +13,10 @@ class AssetGraphic extends GameObject {
     protected assetName: string;
 
     private animationList = {};
-
-    private myScene;
+    private currentAnimationName:string;
 
     constructor(pAssetName: string, pScene: BABYLON.Scene) {
         super(pAssetName, pScene);
-        this.myScene = pScene;
         this.setAsset(pAssetName, pScene);
     }
 
@@ -61,7 +59,7 @@ class AssetGraphic extends GameObject {
         for (var i = 0; i < pArray.length; i++) {
             var clone = pArray[i].clone(pName);
             if (pArray[i].skeleton) {
-                clone.skeleton = pArray[i].skeleton;
+                clone.skeleton = pArray[i].skeleton.clone();
             }
             newMeshes.push(clone);
         }
@@ -78,17 +76,28 @@ class AssetGraphic extends GameObject {
     }
 
     protected runAnimationName(animationName:string, loop:boolean = true) {
-        var animation = this.animationList[animationName];
-        if (animation == null) {
-            console.error(animationName + ' doesn\'t exist in animationist, please add animation with addAnimation function');
+        if (this.currentAnimationName != animationName) {
+            this.currentAnimationName = animationName;
+            var animation = this.animationList[animationName];
+            if (animation == null) {
+                console.error(animationName + ' doesn\'t exist in animationist, please add animation with addAnimation function');
+            }
+            this.runAnimation(animation.start, animation.end, loop);
         }
-        this.runAnimation(animation.start, animation.end, loop);
     }
 
     private runAnimation(startFrame:number, endFrame:number, loop:boolean = true) {
         var that = this;
         this.meshes.forEach(function(meshe) {
-            that.myScene.beginAnimation(meshe, startFrame, endFrame, loop);
+            that.getScene().beginAnimation(meshe, startFrame, endFrame, loop);
+        });
+    }
+
+    protected stopAnimation() {
+        this.currentAnimationName = '';
+        var that = this;
+        this.meshes.forEach(function(meshe) {
+            that.getScene().stopAnimation(meshe);
         });
     }
 }

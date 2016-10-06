@@ -25,14 +25,17 @@ class GameManager {
         this.initLevel();
         this.initPlayer();
 
+        // var enemi = new EnemyOne(this.mainScene);
+        // enemi.start();
+        // enemi.setEnable(true);
+
         this.gameLoop();
     }
 
 
     private initPlayer() {
         this.playerOne = new Player(this.mainScene);
-        this.playerOne.setEnabled(true);
-        this.playerOne.setModeNormal();
+        this.playerOne.start();
         CameraManager.setTarget(this.playerOne);
     }
 
@@ -80,11 +83,13 @@ class GameManager {
         this.engine.runRenderLoop(() => {
             this.mainScene.render();
 
-
-            var lLen = Tree.list.length;
-            for (var i = 0; i < lLen; i++) {
+            for (var i = 0; i < Tree.list.length; i++) {
                 Tree.list[i].doAction();
             }
+
+            // for (var j = 0; j < Enemy.list.length; j++) {
+            //     Enemy.list[i].doAction();
+            // }
 
             this.playerOne.doAction();
             CameraManager.updatePosition();

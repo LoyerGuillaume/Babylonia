@@ -1,7 +1,11 @@
-class Enemy {
+class Enemy extends AssetGraphic {
 
-    constructor() {
+    public static list:Enemy[] = [];
 
+    protected constructor(pAssetName:string, pScene:BABYLON.Scene) {
+        super(pAssetName, pScene);
+
+        Enemy.list.push(this);
     }
 
 }

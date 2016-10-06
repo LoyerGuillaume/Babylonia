@@ -22,7 +22,13 @@ class AssetGraphic extends GameObject {
         this.setAsset(pAssetName, pScene);
     }
 
-    public setEnable(pState: boolean) {
+    public start () {
+        this.enable(true);
+        super.start();
+    }
+
+    public enable(pState: boolean) {
+        this.setEnabled(pState);
         AssetGraphic.toggleEnable(this.meshes, pState);
     }
 

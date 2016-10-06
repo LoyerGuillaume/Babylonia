@@ -31,10 +31,6 @@ class Player extends AssetGraphic {
         //Run 45-85
     }
 
-    public start() {
-
-    }
-
     private move() {
         var vectorMovement:BABYLON.Vector3 = new BABYLON.Vector3(this.controller.horizontal, 0, this.controller.vertical);
         vectorMovement.normalize();

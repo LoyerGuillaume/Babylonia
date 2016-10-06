@@ -39,8 +39,4 @@ class Player extends AssetGraphic {
         this._rotate();
     }
 
-    public getMesh():BABYLON.Mesh {
-        return this.meshes[0];
-    }
-
 }

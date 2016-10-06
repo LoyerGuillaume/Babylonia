@@ -3,13 +3,12 @@ class Player extends AssetGraphic {
     private controller:Controller;
     private static get ASSET_NAME():string { return 'elf';};
     private static get MOVE_SPEED():number { return 10;};
-
-    private currentRotation:number;
+    private static get ROTATION_SPEED():number { return 0.3;};
 
     constructor(pScene:BABYLON.Scene) {
         super(Player.ASSET_NAME, pScene);
         this.controller = new ControllerKeyboard();
-        this.currentRotation = 0;
+        this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
         this.initAnimation();
     }
 
@@ -49,18 +48,13 @@ class Player extends AssetGraphic {
 //Elipsoid
 //InterceptMesh
 //
-//
-//Saut 22-48
-//run 0-21
-//double saut 49-73
-//Mort 74-138
     private _rotate() {
         if (this.controller.vertical != 0 || this.controller.horizontal != 0) {
             var rotation = BABYLON.Tools.ToDegrees(Math.atan2(this.controller.vertical, this.controller.horizontal));
             rotation -= 90;
-            this.currentRotation = rotation;
+            var q = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(-rotation));
+            this.rotationQuaternion = BABYLON.Quaternion.Slerp(this.rotationQuaternion.clone(), q, Player.ROTATION_SPEED);
         }
-        this.rotation.y = BABYLON.Tools.ToRadians(-this.currentRotation);
     }
 
     protected doActionNormal() {

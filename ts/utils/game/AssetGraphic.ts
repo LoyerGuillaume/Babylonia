@@ -17,20 +17,20 @@ class AssetGraphic extends GameObject {
         this.setAsset(pAssetName, pScene);
     }
 
-    public setVisible(pState: boolean) {
-        AssetGraphic.toggleVisible(this.meshes, pState);
+    public setEnable(pState: boolean) {
+        AssetGraphic.toggleEnable(this.meshes, pState);
     }
 
     public static addObject(id: string, pMeshes: BABYLON.AbstractMesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {
-        AssetGraphic.toggleVisible(pMeshes, false);
+        AssetGraphic.toggleEnable(pMeshes, false);
         AssetGraphic.meshesList[id]           = pMeshes;
         AssetGraphic.skeletonsList[id]        = pSkeletons;
         AssetGraphic.particlesSystemsList[id] = pParticleSystems;
     }
 
-    private static toggleVisible(pMeshes:BABYLON.AbstractMesh[], isVisible:boolean) {
+    private static toggleEnable(pMeshes:BABYLON.AbstractMesh[], pEnable:boolean) {
         for (var i = 0; i < pMeshes.length; i++) {
-            pMeshes[i].isVisible = isVisible;
+            pMeshes[i].setEnabled(pEnable);
         }
     }
 

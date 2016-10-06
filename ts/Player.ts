@@ -20,8 +20,8 @@ class Player extends AssetGraphic {
         var vectorMovement:BABYLON.Vector3 = new BABYLON.Vector3(this.controller.horizontal, 0, this.controller.vertical);
         vectorMovement.normalize();
 
-        this.getMesh().position.x -= vectorMovement.x * Player.MOVE_SPEED;
-        this.getMesh().position.z -= vectorMovement.z * Player.MOVE_SPEED;
+        this.position.x -= vectorMovement.x * Player.MOVE_SPEED;
+        this.position.z -= vectorMovement.z * Player.MOVE_SPEED;
     }
 
 
@@ -29,19 +29,18 @@ class Player extends AssetGraphic {
 //Elipsoid
 //InterceptMesh
 //
-    private rotate() {
+    private _rotate() {
         if (this.controller.vertical != 0 || this.controller.horizontal != 0) {
             var rotation = BABYLON.Tools.ToDegrees(Math.atan2(this.controller.vertical, this.controller.horizontal));
             rotation -= 90;
             this.currentRotation = rotation;
         }
-
-        this.getMesh().rotation.y = BABYLON.Tools.ToRadians(-this.currentRotation);
+        this.rotation.y = BABYLON.Tools.ToRadians(-this.currentRotation);
     }
 
     protected doActionNormal() {
         this.move();
-        this.rotate();
+        this._rotate();
     }
 
     public getMesh():BABYLON.Mesh {

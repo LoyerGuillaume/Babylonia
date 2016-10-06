@@ -1,31 +1,34 @@
 class CameraManager {
 
-    private static camera:BABYLON.FollowCamera;
+    private static camera:BABYLON.FreeCamera;
 
-    private static get RADIUS()       { return 800;};
-    private static get HEIGHT()       { return 500;};
-    private static get ACCELERATION() { return 0.02;};
-    private static get MAX_SPEED()    { return 10;};
+    private static get HEIGHT():number   { return 1000;};
+    private static get X_OFFSET():number { return 0;};
+    private static get RADIUS():number   { return 1200;};
+
+    private static get LERP_AMOUNT():number { return 0.05;};
+
+    private static target:GameObject;
 
 
     public static init(pScene: BABYLON.Scene, pEngine: BABYLON.Engine):void {
-        CameraManager.camera = new BABYLON.FollowCamera('FollowCamera', new BABYLON.Vector3(0, 5, -20), pScene);
-
-        CameraManager.camera.radius = CameraManager.RADIUS;
-        CameraManager.camera.heightOffset = CameraManager.HEIGHT;
-        CameraManager.camera.cameraAcceleration = CameraManager.ACCELERATION;
-        CameraManager.camera.maxCameraSpeed = CameraManager.MAX_SPEED;
-        CameraManager.camera.rotationOffset = 0;
+        CameraManager.camera = new BABYLON.FreeCamera('FreeCamera', new BABYLON.Vector3( CameraManager.X_OFFSET, CameraManager.HEIGHT, CameraManager.RADIUS), pScene);
 
         pScene.activeCamera = CameraManager.camera;
-        CameraManager.camera.attachControl(pEngine.getRenderingCanvas());
     }
 
 
-    public static setTarget(pMesh: BABYLON.AbstractMesh):void {
-        CameraManager.camera.target = pMesh;
+    public static setTarget(pTarget: GameObject):void {
+        CameraManager.target = pTarget;
+        CameraManager.camera.setTarget(pTarget.position.clone());
     }
 
+    public static updatePosition () {
+        var targetPosition:BABYLON.Vector3 = CameraManager.target.position.clone();
+        targetPosition.z += CameraManager.RADIUS;
+        targetPosition.y = CameraManager.camera.position.y;
+        CameraManager.camera.position = BABYLON.Vector3.Lerp(CameraManager.camera.position, targetPosition, CameraManager.LERP_AMOUNT);
+    }
 
 
 }

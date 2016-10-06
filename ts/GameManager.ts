@@ -33,7 +33,7 @@ class GameManager {
         this.playerOne = new Player(this.mainScene);
         this.playerOne.setEnabled(true);
         this.playerOne.setModeNormal();
-        CameraManager.setTarget(this.playerOne.getMesh());
+        CameraManager.setTarget(this.playerOne);
     }
 
 
@@ -55,7 +55,7 @@ class GameManager {
         for (assetIndex in GameManager.ASSETS_NAME) {
             var assetName: string = GameManager.ASSETS_NAME[assetIndex];
 
-            var meshTask = loader.addMeshTask(assetName, assetName, Config.ASSET_PATH, assetName + '.babylon');
+            var meshTask = loader.addMeshTask(assetName, '', Config.ASSET_PATH, assetName + '.babylon');
             meshTask.onSuccess = onSuccess;
         }
 
@@ -87,6 +87,7 @@ class GameManager {
             }
 
             this.playerOne.doAction();
+            CameraManager.updatePosition();
 
         });
     }

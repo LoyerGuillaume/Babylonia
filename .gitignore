@@ -9,4 +9,4 @@ packages/
 packages.config
 web.config
 .vs/
-.tmp.txt
+*.tmp.txt

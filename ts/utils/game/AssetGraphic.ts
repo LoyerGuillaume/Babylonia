@@ -18,15 +18,16 @@ class AssetGraphic extends GameObject {
         this.setAsset(pAssetName, pScene);
     }
 
-    public static addObject(id: string, pMeshes: BABYLON.Mesh[] = [], pSkeletons: any[] = [], pParticleSystems: any[] = []) {
-
+    public static addObject(id: string, pMeshes: BABYLON.AbstractMesh[] = [], pSkeletons: any[] = [], pParticleSystems: any[] = []) {
+        
         AssetGraphic.toggleEnable(pMeshes, false);
+        
         AssetGraphic.meshesList[id]           = pMeshes;
         AssetGraphic.skeletonsList[id]        = pSkeletons;
         AssetGraphic.particlesSystemsList[id] = pParticleSystems;
     }
-
-    private static toggleEnable(pMeshes:BABYLON.Mesh[], pValue:boolean) {
+    
+    private static toggleEnable(pMeshes: BABYLON.AbstractMesh[], pValue:boolean) {
         for (var i = 0; i < pMeshes.length; i++) {
             pMeshes[i].setEnabled(pValue);
         }
@@ -42,7 +43,7 @@ class AssetGraphic extends GameObject {
         Tools.forEach(this.meshes, this.addMesh.bind(this));
     }
 
-    private addMesh(pMesh: BABYLON.Mesh) {
+    private addMesh(pMesh: BABYLON.AbstractMesh) {
         pMesh.setEnabled(true);
         pMesh.parent = this;
     }

@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
-        "target": "es5"
+        "target": "es5",
+        "outDir": "../dist/js"
     },
     "files": [
         "typings/babylon.ts",
@@ -16,6 +17,8 @@
         "utils/game/AssetGraphic.ts",
         "utils/game/GameObject.ts",
         "utils/ui/Keyboard.ts",
+        "utils/MathTools.ts",
+        "utils/Debug.ts",
         "controller/Controller.ts",
         "controller/ControllerKeyboard.ts",
         "controller/ControllerType.ts",
@@ -24,5 +27,5 @@
         "Preloader.ts",
         "CameraManager.ts"
     ],
-    "compileOnSave": false
+    "compileOnSave": true
 }

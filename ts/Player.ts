@@ -24,7 +24,7 @@ class Player extends AssetGraphic {
         this.addAnimation('Double Jump', 49, 73);
         this.addAnimation('Death', 74, 138);
 
-        this.runAnimationName('Run');
+        // this.runAnimationName('IDLE');
 
 
         //IDLE 0-39
@@ -46,10 +46,13 @@ class Player extends AssetGraphic {
 //
     private _rotate() {
         if (this.controller.vertical != 0 || this.controller.horizontal != 0) {
+            this.runAnimationName('Run');
             var rotation = BABYLON.Tools.ToDegrees(Math.atan2(this.controller.vertical, this.controller.horizontal));
             rotation -= 90;
             var q = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(-rotation));
             this.rotationQuaternion = BABYLON.Quaternion.Slerp(this.rotationQuaternion.clone(), q, Player.ROTATION_SPEED);
+        } else {
+            this.stopAnimation();
         }
     }
 

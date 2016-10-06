@@ -27,5 +27,5 @@ class GameObject extends BABYLON.Mesh {
     }
 
     private doActionVoid() { }
-    
+
 }

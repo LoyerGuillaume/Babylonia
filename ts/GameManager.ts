@@ -79,7 +79,7 @@ class GameManager {
 
 
     private gameLoop () {
-        this.engine.runRenderLoop(() => {
+        this.engine.runRenderLoop(() => {            
             this.mainScene.render();
 
             for (var i = 0; i < Tree.list.length; i++) {

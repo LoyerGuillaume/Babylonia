@@ -36,8 +36,8 @@ class ControllerKeyboard extends Controller {
         }
 
         get vertical (): number {
-            if (this.keys[Keyboard.UP]) return -1;
-            if (this.keys[Keyboard.DOWN]) return 1;
+            if (this.keys[Keyboard.UP]) return 1;
+            if (this.keys[Keyboard.DOWN]) return -1;
             return 0;
         }
 

@@ -15,6 +15,8 @@
         "utils/game/AssetGraphic.ts",
         "utils/game/GameObject.ts",
         "utils/ui/Keyboard.ts",
+        "utils/MathTools.ts",
+        "utils/Debug.ts",
         "controller/Controller.ts",
         "controller/ControllerKeyboard.ts",
         "controller/ControllerType.ts",

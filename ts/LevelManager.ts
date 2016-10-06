@@ -10,7 +10,7 @@ class LevelManager {
     public build(): void {
         var lTree: Tree = new Tree('elf', this.scene);
         lTree.start();
-        lTree.setEnable(true);
+        lTree.setEnabled(true);
     }
 
 }

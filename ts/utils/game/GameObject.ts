@@ -1,9 +1,12 @@
 ﻿
-class GameObject {
+class GameObject extends BABYLON.Mesh {
 
     public doAction: () => void;
 
-    constructor() {
+    constructor(pName: string, pScene: BABYLON.Scene) {
+        super(pName, pScene);
+
+        this.setEnabled(false);
         this.setModeVoid();
     }
 

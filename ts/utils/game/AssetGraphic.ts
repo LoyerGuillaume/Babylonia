@@ -13,24 +13,22 @@ class AssetGraphic extends GameObject {
     protected assetName: string;
 
     constructor(pAssetName: string, pScene: BABYLON.Scene) {
-        super();
+
+        super(pAssetName, pScene);
         this.setAsset(pAssetName, pScene);
     }
 
-    public setVisible(pState: boolean) {
-        AssetGraphic.toggleVisible(this.meshes, pState);
-    }
+    public static addObject(id: string, pMeshes: BABYLON.Mesh[] = [], pSkeletons: any[] = [], pParticleSystems: any[] = []) {
 
-    public static addObject(id: string, pMeshes: BABYLON.Mesh[] = [], pSkeletons : any[] = [], pParticleSystems: any[] = []) {
-        AssetGraphic.toggleVisible(pMeshes, false);
+        AssetGraphic.toggleEnable(pMeshes, false);
         AssetGraphic.meshesList[id]           = pMeshes;
         AssetGraphic.skeletonsList[id]        = pSkeletons;
         AssetGraphic.particlesSystemsList[id] = pParticleSystems;
     }
 
-    private static toggleVisible(pMeshes:BABYLON.Mesh[], isVisible:boolean) {
+    private static toggleEnable(pMeshes:BABYLON.Mesh[], pValue:boolean) {
         for (var i = 0; i < pMeshes.length; i++) {
-            pMeshes[i].isVisible = isVisible;
+            pMeshes[i].setEnabled(pValue);
         }
     }
 
@@ -40,6 +38,13 @@ class AssetGraphic extends GameObject {
         this.meshes          = AssetGraphic.cloneGraphicsElements(AssetGraphic.meshesList[pAssetName], "meshes_" + pAssetName)                     || [BABYLON.Mesh.CreateBox(pAssetName, 1, pScene)];
         this.skeletons       = AssetGraphic.cloneGraphicsElements(AssetGraphic.skeletonsList[pAssetName], "skeletons_" + pAssetName)               || [];
         this.particleSystems = AssetGraphic.cloneGraphicsElements(AssetGraphic.particlesSystemsList[pAssetName], "particleSystems_" + pAssetName)  || [];
+        
+        Tools.forEach(this.meshes, this.addMesh.bind(this));
+    }
+
+    private addMesh(pMesh: BABYLON.Mesh) {
+        pMesh.setEnabled(true);
+        pMesh.parent = this;
     }
 
     private static cloneGraphicsElements(pArray:any[], pName:string):any[] {

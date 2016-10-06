@@ -31,7 +31,7 @@ class GameManager {
 
     private initPlayer() {
         this.playerOne = new Player(this.mainScene);
-        this.playerOne.setVisible(true);
+        this.playerOne.setEnabled(true);
         this.playerOne.setModeNormal();
         CameraManager.setTarget(this.playerOne.getMesh());
     }

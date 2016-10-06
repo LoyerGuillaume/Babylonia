@@ -12,6 +12,7 @@
         "assets/Tree.ts",
         "Config.ts",
         "typings/babylon.d.ts",
+        "utils/tools/Tools.ts",
         "utils/game/AssetGraphic.ts",
         "utils/game/GameObject.ts",
         "utils/ui/Keyboard.ts",

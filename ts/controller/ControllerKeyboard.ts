@@ -9,7 +9,7 @@ class ControllerKeyboard extends Controller {
         keys: Object;
 
         constructor() {
-            console.log("ck");
+
             super();
 
             this.keys = {};

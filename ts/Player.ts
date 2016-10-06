@@ -17,11 +17,11 @@ class Player extends AssetGraphic {
         var vectorMovement:BABYLON.Vector3 = new BABYLON.Vector3(this.controller.horizontal, 0, this.controller.vertical);
         vectorMovement.normalize();
 
-        this.getMesh().position.x -= vectorMovement.x * Player.MOVE_SPEED;
-        this.getMesh().position.z += vectorMovement.z * Player.MOVE_SPEED;
+        this.position.x -= vectorMovement.x * Player.MOVE_SPEED;
+        this.position.z += vectorMovement.z * Player.MOVE_SPEED;
     }
 
-    private rotate() {
+    public rotate() { // FIXME override
         
     }
 

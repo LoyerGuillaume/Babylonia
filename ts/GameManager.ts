@@ -56,12 +56,11 @@ class GameManager {
             var assetName: string = GameManager.ASSETS_NAME[assetIndex];
 
             var meshTask = loader.addMeshTask(assetName, assetName, Config.ASSET_PATH, assetName + '.babylon');
-            meshTask.onSuccess = onSuccess.bind(this, assetName);
+            meshTask.onSuccess = onSuccess;
         }
 
-        function onSuccess(pAssetName, pTask): void {
-            AssetGraphic.addObject(pAssetName, pTask.loadedMeshes, pTask.loadedSkeletons, pTask.loadedParticleSystems);
-
+        function onSuccess(pTask:BABYLON.MeshAssetTask): void {
+            AssetGraphic.addObject(pTask.name, pTask.loadedMeshes, pTask.loadedSkeletons, pTask.loadedParticleSystems);
             // var skeletons = task.loadedSkeletons;
 
             // skeletons.forEach(function(s) {

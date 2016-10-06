@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
-        "target": "es5"
+        "target": "es5",
+        "outDir": "../dist/js"
     },
     "files": [
         "typings/babylon.ts",
@@ -25,5 +26,5 @@
         "Preloader.ts",
         "CameraManager.ts"
     ],
-    "compileOnSave": false
+    "compileOnSave": true
 }

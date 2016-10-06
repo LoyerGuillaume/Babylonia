@@ -10,3 +10,4 @@ packages.config
 web.config
 .vs/
 *.tmp.txt
+*.log

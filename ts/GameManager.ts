@@ -87,6 +87,11 @@ class GameManager {
                 Tree.list[i].doAction();
             }
 
+            var fireBallLength = FireBall.list.length;
+            for (var k = 0; k < fireBallLength; k++) {
+                FireBall.list[k].doAction();
+            }
+
             for (var j = 0; j < Enemy.list.length; j++) {
                 Enemy.list[j].doAction();
             }

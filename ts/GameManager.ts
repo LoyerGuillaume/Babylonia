@@ -63,6 +63,7 @@ class GameManager {
 
     private initPlayer() {
         this.playerOne = new Player(this.mainScene);
+        this.playerOne.position.y = 120;
         this.playerOne.start();
         CameraManager.setTarget(this.playerOne);
     }

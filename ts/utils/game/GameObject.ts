@@ -11,6 +11,7 @@ class GameObject extends BABYLON.Mesh {
 
         this.setEnabled(false);
         this.setModeVoid();
+        this.checkCollisions = false;
     }
 
     public start() {
@@ -33,8 +34,6 @@ class GameObject extends BABYLON.Mesh {
 
 
     protected createCollisionBox(scale:BABYLON.Vector3 = new BABYLON.Vector3(1, 1, 1)) {
-        this.checkCollisions = false;
-
         this.collisionBox                 = BABYLON.Mesh.CreateBox("collision", 2, this.getScene());
         this.collisionBox.parent          = this;
         this.collisionBox.checkCollisions = true;

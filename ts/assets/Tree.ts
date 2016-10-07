@@ -9,7 +9,7 @@
 
         this.scaling = new BABYLON.Vector3(100, 100, 100);
 
-        this.createCollisionBox();
+        this.createCollisionBox(new BABYLON.Vector3(0.5, 1.5, 0.5));
     }
 
     public destroy () {

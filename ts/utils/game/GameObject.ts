@@ -2,6 +2,7 @@
 class GameObject extends BABYLON.Mesh {
 
     public doAction: () => void;
+    private static get DEBUG_COLLISION_BOX():boolean { return false;};
 
     private collisionBox;
 
@@ -38,7 +39,7 @@ class GameObject extends BABYLON.Mesh {
         this.collisionBox.parent          = this;
         this.collisionBox.checkCollisions = true;
         this.collisionBox.scaling         = scale;
-        this.collisionBox.isVisible       = false;
+        this.collisionBox.isVisible       = GameObject.DEBUG_COLLISION_BOX;
     }
 
     public destroy () {

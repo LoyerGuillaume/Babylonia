@@ -15,11 +15,15 @@ class FireBall extends AssetGraphic {
         this.position = pPosition;
         this.rotationQuaternion = pRotation;
         this.lifeTime = 0;
+
+        this.scaling = new BABYLON.Vector3(1, 0.5, 1);
     }
 
     protected doActionNormal () {
         this.move();
         this.checkLifeTime();
+
+        this.meshe.rotation = this.meshe.rotation.add(BABYLON.Vector3.Up());
     }
 
     private move() {

@@ -16,7 +16,7 @@ class Player extends AssetGraphic {
         this.initCollision();
     }
 
-    private initCollision() {
+    protected initCollision() {
         this.checkCollisions = true;
         this.ellipsoid = new BABYLON.Vector3(100, 100, 100);
         // Tools.displayEllipsoid(this.getScene(), this);

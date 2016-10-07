@@ -7,7 +7,10 @@ class GameManager {
     private playerOne:Player;
 
     private static get ASSETS_NAME() { return [
-        'elf',
+        'elf'
+    ];};
+
+    private static get LEVELS_NAME() { return [
         'Base'
     ];};
 
@@ -23,7 +26,17 @@ class GameManager {
 
     public start() {
         this.initCamera();
-        this.loadAssets(this.startGame.bind(this));
+
+        var loadedCount = 2;
+        var loadedCounter = 0;
+
+        var self:GameManager = this;
+        function onAssetLoaded () {
+            if (++loadedCounter >= loadedCount) self.startGame();
+        }
+
+        this.loadAssets(GameManager.ASSETS_NAME, true, onAssetLoaded);
+        this.loadAssets(GameManager.LEVELS_NAME, false, onAssetLoaded);
     }
 
     public startGame () {
@@ -65,16 +78,17 @@ class GameManager {
     }
 
 
-    private loadAssets(pCallback) {
+    private loadAssets(pSources:string[], pInstantiable:boolean, pCallback) {
 
         var loader = new BABYLON.AssetsManager(this.mainScene);
 
         var assetIndex;
-        for (assetIndex in GameManager.ASSETS_NAME) {
+        for (assetIndex in pSources) {
 
-            var assetName: string = GameManager.ASSETS_NAME[assetIndex];
+            var assetName: string = pSources[assetIndex];
             var meshTask = loader.addMeshTask(assetName, '', Config.ASSET_PATH, assetName + '.babylon');
-            meshTask.onSuccess = onSuccess;
+
+            meshTask.onSuccess = (pInstantiable) ? onSuccess : onLevelMeshSuccess;
         }
 
         function onSuccess(pTask:BABYLON.MeshAssetTask): void {
@@ -82,6 +96,14 @@ class GameManager {
             var lLen = pTask.loadedMeshes.length;
             for (var i = 0; i < lLen; i++) {
                 AssetGraphic.addObject(pTask.loadedMeshes[i].name, pTask.loadedMeshes[i], pTask.loadedSkeletons[i], pTask.loadedParticleSystems[i]);
+            }
+        }
+
+        function onLevelMeshSuccess(pTask:BABYLON.MeshAssetTask): void {
+
+            var lLen = pTask.loadedMeshes.length;
+            for (var i = 0; i < lLen; i++) {
+                //console.log(pTask.loadedMeshes[i].name, pTask.loadedMeshes[i]);
             }
         }
 

@@ -2,6 +2,7 @@
 class GameObject extends BABYLON.Mesh {
 
     public doAction: () => void;
+    private static get DEBUG_COLLISION_BOX():boolean { return false;};
 
     private collisionBox;
 
@@ -10,6 +11,7 @@ class GameObject extends BABYLON.Mesh {
 
         this.setEnabled(false);
         this.setModeVoid();
+        this.checkCollisions = false;
     }
 
     public start() {
@@ -31,14 +33,12 @@ class GameObject extends BABYLON.Mesh {
     private doActionVoid() { }
 
 
-    protected initCollision() {
-        this.checkCollisions = false;
-
+    protected createCollisionBox(scale:BABYLON.Vector3 = new BABYLON.Vector3(1, 1, 1)) {
         this.collisionBox                 = BABYLON.Mesh.CreateBox("collision", 2, this.getScene());
         this.collisionBox.parent          = this;
         this.collisionBox.checkCollisions = true;
-        this.collisionBox.scaling         = new BABYLON.Vector3(1, 1, 1);
-        this.collisionBox.isVisible       = false;
+        this.collisionBox.scaling         = scale;
+        this.collisionBox.isVisible       = GameObject.DEBUG_COLLISION_BOX;
     }
 
     public destroy () {

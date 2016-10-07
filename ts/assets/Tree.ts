@@ -2,12 +2,13 @@
 
     public static list: Tree[] = [];
 
+
     constructor(pAssetName:string, pScene:BABYLON.Scene) {
         super(pAssetName, pScene);
         Tree.list.push(this);
 
-        this.scaling.x = 100;
-        this.scaling.y = 100;
-        this.scaling.z = 100;
+        this.scaling = new BABYLON.Vector3(100, 100, 100);
+
+        this.initCollision();
     }
 }

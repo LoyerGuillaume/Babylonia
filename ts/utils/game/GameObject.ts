@@ -3,6 +3,8 @@ class GameObject extends BABYLON.Mesh {
 
     public doAction: () => void;
 
+    private collisionBox;
+
     constructor(pName: string, pScene: BABYLON.Scene) {
         super(pName, pScene);
 
@@ -27,5 +29,16 @@ class GameObject extends BABYLON.Mesh {
     }
 
     private doActionVoid() { }
+
+
+    protected initCollision() {
+        this.checkCollisions = false;
+
+        this.collisionBox                 = BABYLON.Mesh.CreateBox("collision", 2, this.getScene());
+        this.collisionBox.parent          = this;
+        this.collisionBox.checkCollisions = true;
+        this.collisionBox.scaling         = new BABYLON.Vector3(1, 1, 1);
+        this.collisionBox.isVisible       = false;
+    }
 
 }

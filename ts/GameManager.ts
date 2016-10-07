@@ -16,6 +16,8 @@ class GameManager {
         this.mainScene = pScene;
         this.engine = pEngine;
         this.levelManager = new LevelManager(pScene);
+
+        this.mainScene.collisionsEnabled = true;
     }
 
 
@@ -30,6 +32,17 @@ class GameManager {
 
         var enemy = new EnemyOne(new BABYLON.Vector3(500, 0, 500), this.mainScene);
         enemy.start();
+
+        //
+        // var box = BABYLON.Mesh.CreateBox("crate", 2, this.mainScene);
+        // box.position = new BABYLON.Vector3(-50, 0, 0);
+        // box.checkCollisions = true;
+        //
+        // box.scaling.x = 100;
+        // box.scaling.y = 100;
+        // box.scaling.z = 100;
+
+        // Tools.displayEllipsoid(this.mainScene, box);
 
         this.gameLoop();
     }
@@ -80,7 +93,7 @@ class GameManager {
 
 
     private gameLoop () {
-        this.engine.runRenderLoop(() => {            
+        this.engine.runRenderLoop(() => {
             this.mainScene.render();
 
             for (var i = 0; i < Tree.list.length; i++) {

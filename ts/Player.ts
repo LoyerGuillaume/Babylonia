@@ -13,7 +13,15 @@ class Player extends AssetGraphic {
         this.controller = new ControllerKeyboard();
         this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
         this.initAnimation();
+        this.initCollision();
     }
+
+    private initCollision() {
+        this.checkCollisions = true;
+        this.ellipsoid = new BABYLON.Vector3(100, 100, 100);
+        // Tools.displayEllipsoid(this.getScene(), this);
+    }
+
 
     private initAnimation() {
 
@@ -37,9 +45,11 @@ class Player extends AssetGraphic {
     private move() {
         var vectorMovement:BABYLON.Vector3 = new BABYLON.Vector3(this.controller.horizontal, 0, this.controller.vertical);
         vectorMovement.normalize();
+        //
+        // this.position.x -= vectorMovement.x * Player.MOVE_SPEED;
+        // this.position.z -= vectorMovement.z * Player.MOVE_SPEED;
 
-        this.position.x -= vectorMovement.x * Player.MOVE_SPEED;
-        this.position.z -= vectorMovement.z * Player.MOVE_SPEED;
+        this.moveWithCollisions(vectorMovement.scaleInPlace(-Player.MOVE_SPEED));
     }
 
 

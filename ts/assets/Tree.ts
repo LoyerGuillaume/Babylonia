@@ -10,4 +10,9 @@
         this.scaling.y = 100;
         this.scaling.z = 100;
     }
+
+    public destroy () {
+        super.destroy();
+        Tree.list.splice(Tree.list.indexOf(this), 1);
+    }
 }

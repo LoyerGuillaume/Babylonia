@@ -26,4 +26,9 @@ class FireBall extends AssetGraphic {
         movement.subtractInPlace(this.position).normalize().scaleInPlace(10);
         this.position = new BABYLON.Vector3(this.position.x + movement.x, this.position.y + movement.y, this.position.z + movement.z);
     }
+
+    public destroy () {
+        super.destroy();
+        FireBall.list.splice(FireBall.list.indexOf(this), 1);
+    }
 }

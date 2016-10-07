@@ -3,7 +3,7 @@ class FireBall extends AssetGraphic {
     public static list: FireBall[] = [];
 
     private static get ASSET_NAME():string { return 'elf';};
-    private static get SPEED():number { return 2;};
+    private static get SPEED():number { return 25;};
     private static get MAX_LIFE_TIME():number { return 60;};
 
     private lifeTime:number;
@@ -31,7 +31,7 @@ class FireBall extends AssetGraphic {
         this.computeWorldMatrix(true);
         var m         = this.getWorldMatrix();
         var movement  = BABYLON.Vector3.TransformCoordinates(v, m);
-        movement.subtractInPlace(this.position).normalize().scaleInPlace(10);
+        movement.subtractInPlace(this.position).normalize().scaleInPlace(FireBall.SPEED);
         this.position = new BABYLON.Vector3(this.position.x + movement.x, this.position.y + movement.y, this.position.z + movement.z);
     }
 

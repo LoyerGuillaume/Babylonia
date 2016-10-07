@@ -6,7 +6,4 @@ class EnemyOne extends Enemy {
         super(EnemyOne.ASSET_NAME, pPosition, pScene);
     }
 
-    protected doActionNormal () {
-    }
-
 }

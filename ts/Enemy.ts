@@ -19,9 +19,6 @@ class Enemy extends AssetGraphic {
         this.runAnimationName('Run');
     }
 
-    protected doActionNormal() {
-        this.move();
-    }
 
     private move() {
         var target = Player.list[0];
@@ -42,7 +39,20 @@ class Enemy extends AssetGraphic {
     }
 
 
-    public destroy () {
+    protected checkProjectilesCollision ():void {
+        for (var i in FireBall.list) {
+            if (this.meshe.intersectsMesh(FireBall.list[i], false)) {
+                this.destroy();
+            }
+        }
+    }
+
+    protected doActionNormal ():void {
+        this.checkProjectilesCollision();
+        this.move();
+    }
+
+    public destroy ():void {
         super.destroy();
         Enemy.list.splice(Enemy.list.indexOf(this), 1);
     }

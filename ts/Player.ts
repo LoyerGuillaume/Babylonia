@@ -7,8 +7,13 @@ class Player extends AssetGraphic {
     private static get MOVE_SPEED():number { return 10;};
     private static get ROTATION_SPEED():number { return 0.3;};
     private static get COUNTDOWN_ATTACK():number { return 30;};
+    private static get INVICIBILITY_TIME():number { return 120;};
 
     private countFrameAttack:number = 0;
+
+    private lifePoint:number = 3;
+    private invicibleTime:number = 0;
+    private isInvicible:boolean = false;
 
     constructor(pScene:BABYLON.Scene) {
         super(Player.ASSET_NAME, pScene);
@@ -75,6 +80,12 @@ class Player extends AssetGraphic {
         this.move();
         this._rotate();
         this.attack();
+
+        if (this.isInvicible) {
+            this.invicibilityCooldown();
+        } else {
+            this.checkEnemyCollision();
+        }
     }
 
     private attack() {
@@ -89,6 +100,37 @@ class Player extends AssetGraphic {
     private createFireBall() {
         var fireBall = new FireBall(this.getScene(), this.position, this.rotationQuaternion);
         fireBall.start();
+    }
+
+    private checkEnemyCollision () {
+        for (var i in Enemy.list) {
+            if (this.meshe.intersectsMesh(Enemy.list[i], false)) {
+                this.onHit();
+            }
+        }
+    }
+
+    private invicibilityCooldown () {
+        this.invicibiliyFeedback();
+        if (++this.invicibleTime >= Player.INVICIBILITY_TIME) {
+            this.isInvicible = false;
+            this.meshe.isVisible = true;
+            this.invicibleTime = 0;
+        }
+    }
+
+    private invicibiliyFeedback () {
+        if (this.invicibleTime % 5 === 0) {
+            this.meshe.isVisible = !this.meshe.isVisible;
+        }
+    }
+
+    private onHit () {
+        if (--this.lifePoint >= 0) {
+            this.isInvicible = true;
+        } else {
+            this.destroy();
+        }
     }
 
 }

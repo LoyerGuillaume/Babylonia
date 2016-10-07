@@ -96,17 +96,16 @@ class GameManager {
         this.engine.runRenderLoop(() => {
             this.mainScene.render();
 
-            for (var i = 0; i < Tree.list.length; i++) {
+            for (var i in Tree.list) {
                 Tree.list[i].doAction();
             }
 
-            var fireBallLength = FireBall.list.length;
-            for (var k = 0; k < fireBallLength; k++) {
-                FireBall.list[k].doAction();
+            for (var j in FireBall.list) {
+                FireBall.list[j].doAction();
             }
 
-            for (var j = 0; j < Enemy.list.length; j++) {
-                Enemy.list[j].doAction();
+            for (var k in Enemy.list) {
+                Enemy.list[k].doAction();
             }
 
             this.playerOne.doAction();

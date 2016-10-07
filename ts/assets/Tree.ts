@@ -11,4 +11,9 @@
 
         this.initCollision();
     }
+
+    public destroy () {
+        super.destroy();
+        Tree.list.splice(Tree.list.indexOf(this), 1);
+    }
 }

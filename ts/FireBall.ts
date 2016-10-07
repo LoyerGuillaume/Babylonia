@@ -4,7 +4,9 @@ class FireBall extends AssetGraphic {
 
     private static get ASSET_NAME():string { return 'elf';};
     private static get SPEED():number { return 2;};
+    private static get MAX_LIFE_TIME():number { return 60;};
 
+    private lifeTime:number;
     private direction:BABYLON.Vector3;
 
     constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion) {
@@ -12,10 +14,12 @@ class FireBall extends AssetGraphic {
         FireBall.list.push(this);
         this.position = pPosition;
         this.rotationQuaternion = pRotation;
+        this.lifeTime = 0;
     }
 
     protected doActionNormal () {
         this.move();
+        this.checkLifeTime();
     }
 
     private move() {
@@ -25,5 +29,16 @@ class FireBall extends AssetGraphic {
         var movement  = BABYLON.Vector3.TransformCoordinates(v, m);
         movement.subtractInPlace(this.position).normalize().scaleInPlace(10);
         this.position = new BABYLON.Vector3(this.position.x + movement.x, this.position.y + movement.y, this.position.z + movement.z);
+    }
+
+    private checkLifeTime () {
+        if (++this.lifeTime >= FireBall.MAX_LIFE_TIME) {
+            this.destroy();
+        }
+    }
+
+    public destroy () {
+        super.destroy();
+        FireBall.list.splice(FireBall.list.indexOf(this), 1);
     }
 }

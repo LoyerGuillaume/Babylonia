@@ -41,4 +41,7 @@ class GameObject extends BABYLON.Mesh {
         this.collisionBox.isVisible       = false;
     }
 
+    public destroy () {
+        this.dispose();
+    }
 }

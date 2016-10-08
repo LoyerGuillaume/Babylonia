@@ -1,5 +1,7 @@
 class Player extends AssetGraphic {
 
+    public static list:Player[] = [];
+
     private controller:Controller;
     private static get ASSET_NAME():string { return 'elf';};
     private static get MOVE_SPEED():number { return 10;};
@@ -15,6 +17,7 @@ class Player extends AssetGraphic {
 
     constructor(pScene:BABYLON.Scene) {
         super(Player.ASSET_NAME, pScene);
+        Player.list.push(this);
         this.controller = new ControllerKeyboard();
         this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
         this.initAnimation();
@@ -50,9 +53,6 @@ class Player extends AssetGraphic {
     private move() {
         var vectorMovement:BABYLON.Vector3 = new BABYLON.Vector3(this.controller.horizontal, 0, this.controller.vertical);
         vectorMovement.normalize();
-        //
-        // this.position.x -= vectorMovement.x * Player.MOVE_SPEED;
-        // this.position.z -= vectorMovement.z * Player.MOVE_SPEED;
 
         this.moveWithCollisions(vectorMovement.scaleInPlace(-Player.MOVE_SPEED));
     }

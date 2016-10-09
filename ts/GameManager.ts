@@ -42,7 +42,6 @@ class GameManager {
     public startGame () {
         this.initLevel();
         this.initPlayer();
-
         var enemy = new EnemyOne(new BABYLON.Vector3(500, 0, 500), this.mainScene);
         enemy.start();
 
@@ -119,19 +118,20 @@ class GameManager {
         this.engine.runRenderLoop(() => {
             this.mainScene.render();
 
+            var deltaTime:number = this.engine.getDeltaTime();
+
             for (var i in Tree.list) {
-                Tree.list[i].doAction();
+                Tree.list[i].doAction(deltaTime);
             }
 
             for (var j in FireBall.list) {
-                FireBall.list[j].doAction();
+                FireBall.list[j].doAction(deltaTime);
             }
 
             for (var k in Enemy.list) {
-                Enemy.list[k].doAction();
+                Enemy.list[k].doAction(deltaTime);
             }
-
-            this.playerOne.doAction();
+            this.playerOne.doAction(deltaTime);
             CameraManager.updatePosition();
 
         });

@@ -2,7 +2,7 @@ class Enemy extends AssetGraphic {
 
     public static list:Enemy[] = [];
 
-    private static get MOVE_SPEED():number { return 6;};
+    private static get MOVE_SPEED():number { return 0.25;};
     private static get ROTATION_SPEED():number { return 0.3;};
 
     protected constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene) {
@@ -20,7 +20,7 @@ class Enemy extends AssetGraphic {
     }
 
 
-    private move() {
+    private move(deltaTime:number) {
         var target = Player.list[0];
         var vectorMovement:BABYLON.Vector3 = target.position.subtract(this.position);
 
@@ -28,7 +28,7 @@ class Enemy extends AssetGraphic {
         var vectorMovementNormalized:BABYLON.Vector3 = vectorMovement.normalize();
         // console.log(vectorMovementNormalized);
 
-        this.moveWithCollisions(vectorMovement.scaleInPlace(Enemy.MOVE_SPEED));
+        this.moveWithCollisions(vectorMovement.scaleInPlace(Enemy.MOVE_SPEED * deltaTime));
 
         var rotation = BABYLON.Tools.ToDegrees(Math.atan2(vectorMovementNormalized.y, vectorMovementNormalized.x));
         // console.log(rotation);
@@ -47,9 +47,9 @@ class Enemy extends AssetGraphic {
         }
     }
 
-    protected doActionNormal ():void {
+    protected doActionNormal (deltaTime:number):void {
         this.checkProjectilesCollision();
-        this.move();
+        this.move(deltaTime);
     }
 
     public destroy ():void {

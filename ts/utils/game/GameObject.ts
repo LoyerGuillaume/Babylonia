@@ -1,7 +1,7 @@
 ﻿
 class GameObject extends BABYLON.Mesh {
 
-    public doAction: () => void;
+    public doAction: (deltaTime:number) => void;
     private static get DEBUG_COLLISION_BOX():boolean { return false;};
 
     private collisionBox;
@@ -26,11 +26,11 @@ class GameObject extends BABYLON.Mesh {
         this.doAction = this.doActionVoid;
     }
 
-    protected doActionNormal() {
+    protected doActionNormal(deltaTime:number) {
 
     }
 
-    private doActionVoid() { }
+    private doActionVoid(deltaTime:number) { }
 
 
     protected createCollisionBox(scale:BABYLON.Vector3 = new BABYLON.Vector3(1, 1, 1)) {

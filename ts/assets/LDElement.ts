@@ -1,7 +1,7 @@
 class LDElement implements ICollisionable {
 
     public collisionBox:BABYLON.Mesh;
-    public mesh:BABYLON.Mesh;
+    private mesh:BABYLON.Mesh;
 
     constructor(pMesh:BABYLON.Mesh) {
         this.mesh = pMesh;

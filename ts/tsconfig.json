@@ -20,6 +20,7 @@
         "utils/ui/Keyboard.ts",
         "utils/MathTools.ts",
         "utils/Debug.ts",
+        "utils/Type.ts",
         "controller/Controller.ts",
         "controller/ControllerKeyboard.ts",
         "controller/ControllerType.ts",
@@ -29,7 +30,8 @@
         "CameraManager.ts",
         "ICollisionable.ts",
         "CollisionBoxCreator.ts",
-        "assets/LDElement.ts"
+        "assets/LDElement.ts",
+        "EnemySpawner.ts"
     ],
     "compileOnSave": true
 }

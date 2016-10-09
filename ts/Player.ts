@@ -4,7 +4,7 @@ class Player extends AssetGraphic {
 
     private controller:Controller;
     private static get ASSET_NAME():string { return 'elf';};
-    private static get MOVE_SPEED():number { return 10;};
+    private static get MOVE_SPEED():number { return 0.5;};
     private static get ROTATION_SPEED():number { return 0.3;};
     private static get COUNTDOWN_ATTACK():number { return 30;};
     private static get INVICIBILITY_TIME():number { return 120;};
@@ -50,11 +50,11 @@ class Player extends AssetGraphic {
         //Run 45-85
     }
 
-    private move() {
+    private move(deltaTime:number) {
         var vectorMovement:BABYLON.Vector3 = new BABYLON.Vector3(this.controller.horizontal, 0, this.controller.vertical);
         vectorMovement.normalize();
 
-        this.moveWithCollisions(vectorMovement.scaleInPlace(-Player.MOVE_SPEED));
+        this.moveWithCollisions(vectorMovement.scaleInPlace(-Player.MOVE_SPEED * deltaTime));
     }
 
 
@@ -74,10 +74,10 @@ class Player extends AssetGraphic {
         }
     }
 
-    protected doActionNormal() {
+    protected doActionNormal(deltaTime:number) {
         this.countFrameAttack++;
 
-        this.move();
+        this.move(deltaTime);
         this._rotate();
         this.attack();
 

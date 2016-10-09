@@ -7,10 +7,6 @@ class EnemyOne extends Enemy {
         this.initAnimation();
     }
 
-    protected doActionNormal () {
-        super.doActionNormal();
-    }
-
 
     private initAnimation() {
 

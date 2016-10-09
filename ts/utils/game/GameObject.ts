@@ -1,7 +1,8 @@
 ﻿
 class GameObject extends BABYLON.Mesh {
 
-    public doAction: () => void;
+    public doAction: (deltaTime:number) => void;
+    private static get DEBUG_COLLISION_BOX():boolean { return false;};
 
     constructor(pName: string, pScene: BABYLON.Scene) {
         super(pName, pScene);
@@ -22,11 +23,11 @@ class GameObject extends BABYLON.Mesh {
         this.doAction = this.doActionVoid;
     }
 
-    protected doActionNormal() {
+    protected doActionNormal(deltaTime:number) {
 
     }
 
-    private doActionVoid() { }
+    private doActionVoid(deltaTime:number) { }
 
     public destroy () {
         this.dispose();

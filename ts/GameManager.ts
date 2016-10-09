@@ -103,7 +103,7 @@ class GameManager {
 
             var lLen = pTask.loadedMeshes.length;
             for (var i = 0; i < lLen; i++) {
-                //console.log(pTask.loadedMeshes[i].name, pTask.loadedMeshes[i]);
+                new LDElement(pTask.loadedMeshes[i] as BABYLON.Mesh);
             }
         }
 

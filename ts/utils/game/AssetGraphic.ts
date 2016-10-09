@@ -1,5 +1,5 @@
-﻿
 class AssetGraphic extends GameObject {
+﻿
 
     private static objects: {} = {};
     private static meshesList: {} = {};

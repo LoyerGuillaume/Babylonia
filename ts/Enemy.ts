@@ -2,11 +2,14 @@ class Enemy extends Character {
 
     public static list:Enemy[] = [];
 
+    private invincibilityTime:number;
+
     private static get MOVE_SPEED():number { return 0.25;};
     private static get ROTATION_SPEED():number { return 0.3;};
 
-    constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene) {
-        super(pScene, pAssetName, pPosition);
+    constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene, pLifePoint:number, pInvincibilityTime:number) {
+        super(pScene, pAssetName, pPosition, pLifePoint);
+        this.invincibilityTime = pInvincibilityTime;
         Enemy.list.push(this);
     }
 
@@ -33,13 +36,18 @@ class Enemy extends Character {
         for (var i in FireBall.list) {
             if (this.meshe.intersectsMesh(FireBall.list[i], false)) {
                 FireBall.list[i].destroy();
-                this.destroy();
+                super.onHit();
             }
         }
     }
 
+
     protected doActionNormal (deltaTime:number):void {
-        this.checkProjectilesCollision();
+        if (this.isInvicible) {
+            super.invicibilityCooldown(this.invincibilityTime);
+        } else {
+            this.checkProjectilesCollision();
+        }
         this.move(deltaTime);
     }
 

@@ -1,13 +1,13 @@
 class Character extends AssetGraphic {
 
-    // protected invicibilityTime:number;
-    protected lifePoint:number = 3;
+    protected lifePoint:number;
     protected invicibleTime:number = 0;
     protected isInvicible:boolean = false;
 
-    constructor(pScene:BABYLON.Scene, pAssetName:string, pPosition:BABYLON.Vector3) {
+    constructor(pScene:BABYLON.Scene, pAssetName:string, pPosition:BABYLON.Vector3, pLifePoint:number) {
         super(pAssetName, pScene);
 
+        this.lifePoint = pLifePoint;
         this.position = pPosition.clone();
         this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
     }
@@ -40,7 +40,7 @@ class Character extends AssetGraphic {
 
 
     protected onHit () {
-        if (--this.lifePoint >= 0) {
+        if (--this.lifePoint > 0) {
             this.isInvicible = true;
         } else {
             this.destroy();

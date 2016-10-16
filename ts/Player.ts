@@ -8,15 +8,12 @@ class Player extends Character {
     private static get ROTATION_SPEED():number { return 0.3;};
     private static get COUNTDOWN_ATTACK():number { return 30;};
     private static get INVICIBILITY_TIME():number { return 120;};
+    private static get LIFE_POINT():number { return 3;};
 
     private countFrameAttack:number = 0;
 
-    // // private lifePoint:number = 3;
-    // private invicibleTime:number = 0;
-    // private isInvicible:boolean = false;
-
     constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3) {
-        super(pScene, Player.ASSET_NAME, pPosition);
+        super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
         this.controller = new ControllerKeyboard();
         this.initAnimation();
@@ -98,28 +95,4 @@ class Player extends Character {
             }
         }
     }
-    //
-    // private invicibilityCooldown () {
-    //     this.invicibiliyFeedback();
-    //     if (++this.invicibleTime >= Player.INVICIBILITY_TIME) {
-    //         this.isInvicible = false;
-    //         this.meshe.isVisible = true;
-    //         this.invicibleTime = 0;
-    //     }
-    // }
-    //
-    // private invicibiliyFeedback () {
-    //     if (this.invicibleTime % 5 === 0) {
-    //         this.meshe.isVisible = !this.meshe.isVisible;
-    //     }
-    // }
-
-    // private onHit () {
-    //     if (--this.lifePoint >= 0) {
-    //         this.isInvicible = true;
-    //     } else {
-    //         this.destroy();
-    //     }
-    // }
-
 }

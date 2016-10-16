@@ -101,10 +101,24 @@ class GameManager {
 
         function onLevelMeshSuccess(pTask:BABYLON.MeshAssetTask): void {
 
+            console.log(pTask);
+
+            var lElems:BABYLON.AbstractMesh[] = [];
+
             var lLen = pTask.loadedMeshes.length;
+            for (var i = 0; i < lLen; i++) {
+                if (pTask.loadedMeshes[i].name == 'BOX') {
+                    CollisionBoxCreator.addBox(pTask.loadedMeshes[i] as BABYLON.Mesh);
+                } else {
+                    lElems.push(pTask.loadedMeshes[i]);
+                }
+            }
+
+            lLen = lElems.length;
             for (var i = 0; i < lLen; i++) {
                 new LDElement(pTask.loadedMeshes[i] as BABYLON.Mesh);
             }
+
         }
 
         loader.onFinish = pCallback;

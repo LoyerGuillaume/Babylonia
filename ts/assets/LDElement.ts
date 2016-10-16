@@ -4,7 +4,9 @@ class LDElement implements ICollisionable {
     private mesh:BABYLON.Mesh;
 
     constructor(pMesh:BABYLON.Mesh) {
+
         this.mesh = pMesh;
-        CollisionBoxCreator.createAuto(this, this.mesh);
+
+        CollisionBoxCreator.getBox(this.mesh.uniqueId);
     }
 }

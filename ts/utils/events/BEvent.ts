@@ -17,6 +17,16 @@ class BEvent {
         BEvent.callbacks[pId].push(pFunc.bind(pThis));
     }
 
+    public static off (pId:string, pFunc:any, pThis:any = undefined) {
+
+        if (BEvent.callbacks[pId]) {
+            var lI = BEvent.callbacks[pId].indexOf(pFunc.bind(pThis));
+            if (lI >= 0) {
+                BEvent.callbacks[pId].splice(lI, 1);
+            }
+        }
+    }
+
     public static emit (pEvent:BEvent) {
 
         if (BEvent.callbacks[pEvent.id]) {

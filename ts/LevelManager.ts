@@ -14,7 +14,7 @@ class LevelManager {
     }
 
     public getSpwanerPosition (): BABYLON.Vector3 {
-        return this.spawner.mesh.position;
+        return this.spawner.mesh.position.clone();
     }
 
     public build(pMeshes:BABYLON.Mesh[]): void {

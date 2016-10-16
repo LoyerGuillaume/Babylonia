@@ -44,6 +44,7 @@ class Enemy extends AssetGraphic {
     protected checkProjectilesCollision ():void {
         for (var i in FireBall.list) {
             if (this.meshe.intersectsMesh(FireBall.list[i], false)) {
+                FireBall.list[i].destroy();
                 this.destroy();
             }
         }

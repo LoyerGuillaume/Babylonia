@@ -26,7 +26,11 @@ class EnemySpawner {
         if (++this.enemySpawned >= EnemySpawner.SPAWN_NUMBER) {
             this.destroy();
         }
-        var enemy = new this.enemyConstructor(this.position.clone(), this.scene);
+
+        //FIX : position
+        var enemyPosition = this.position.clone();
+        enemyPosition = enemyPosition.add(new BABYLON.Vector3(0, 100, 0));
+        var enemy = new this.enemyConstructor(enemyPosition, this.scene);
         enemy.start();
     }
 

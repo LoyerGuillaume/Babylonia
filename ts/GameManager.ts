@@ -63,8 +63,7 @@ class GameManager {
 
 
     private initPlayer() {
-        this.playerOne = new Player(this.mainScene);
-        this.playerOne.position.y = 120;
+        this.playerOne = new Player(this.mainScene, new BABYLON.Vector3(0, 120, 0));
         this.playerOne.start();
         CameraManager.setTarget(this.playerOne);
     }

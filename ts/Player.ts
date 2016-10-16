@@ -1,4 +1,4 @@
-class Player extends AssetGraphic {
+class Player extends Character {
 
     public static list:Player[] = [];
 
@@ -11,15 +11,14 @@ class Player extends AssetGraphic {
 
     private countFrameAttack:number = 0;
 
-    private lifePoint:number = 3;
-    private invicibleTime:number = 0;
-    private isInvicible:boolean = false;
+    // // private lifePoint:number = 3;
+    // private invicibleTime:number = 0;
+    // private isInvicible:boolean = false;
 
-    constructor(pScene:BABYLON.Scene) {
-        super(Player.ASSET_NAME, pScene);
+    constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3) {
+        super(pScene, Player.ASSET_NAME, pPosition);
         Player.list.push(this);
         this.controller = new ControllerKeyboard();
-        this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
         this.initAnimation();
         this.initCollision();
     }
@@ -55,34 +54,24 @@ class Player extends AssetGraphic {
         vectorMovement.normalize();
 
         this.moveWithCollisions(vectorMovement.scaleInPlace(-Player.MOVE_SPEED * deltaTime));
-    }
 
-
-//checkCollision = true
-//Elipsoid
-//InterceptMesh
-//
-    private _rotate() {
         if (this.controller.vertical != 0 || this.controller.horizontal != 0) {
             this.runAnimationName('Run');
-            var rotation = BABYLON.Tools.ToDegrees(Math.atan2(this.controller.vertical, this.controller.horizontal));
-            rotation -= 90;
-            var q = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(-rotation));
-            this.rotationQuaternion = BABYLON.Quaternion.Slerp(this.rotationQuaternion.clone(), q, Player.ROTATION_SPEED);
+            super._rotate(vectorMovement.clone(), Player.ROTATION_SPEED);
         } else {
             this.stopAnimation();
         }
     }
 
+
     protected doActionNormal(deltaTime:number) {
         this.countFrameAttack++;
 
         this.move(deltaTime);
-        this._rotate();
         this.attack();
 
         if (this.isInvicible) {
-            this.invicibilityCooldown();
+            super.invicibilityCooldown(Player.INVICIBILITY_TIME);
         } else {
             this.checkEnemyCollision();
         }
@@ -105,32 +94,32 @@ class Player extends AssetGraphic {
     private checkEnemyCollision () {
         for (var i in Enemy.list) {
             if (this.meshe.intersectsMesh(Enemy.list[i], false)) {
-                this.onHit();
+                super.onHit();
             }
         }
     }
+    //
+    // private invicibilityCooldown () {
+    //     this.invicibiliyFeedback();
+    //     if (++this.invicibleTime >= Player.INVICIBILITY_TIME) {
+    //         this.isInvicible = false;
+    //         this.meshe.isVisible = true;
+    //         this.invicibleTime = 0;
+    //     }
+    // }
+    //
+    // private invicibiliyFeedback () {
+    //     if (this.invicibleTime % 5 === 0) {
+    //         this.meshe.isVisible = !this.meshe.isVisible;
+    //     }
+    // }
 
-    private invicibilityCooldown () {
-        this.invicibiliyFeedback();
-        if (++this.invicibleTime >= Player.INVICIBILITY_TIME) {
-            this.isInvicible = false;
-            this.meshe.isVisible = true;
-            this.invicibleTime = 0;
-        }
-    }
-
-    private invicibiliyFeedback () {
-        if (this.invicibleTime % 5 === 0) {
-            this.meshe.isVisible = !this.meshe.isVisible;
-        }
-    }
-
-    private onHit () {
-        if (--this.lifePoint >= 0) {
-            this.isInvicible = true;
-        } else {
-            this.destroy();
-        }
-    }
+    // private onHit () {
+    //     if (--this.lifePoint >= 0) {
+    //         this.isInvicible = true;
+    //     } else {
+    //         this.destroy();
+    //     }
+    // }
 
 }

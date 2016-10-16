@@ -1,4 +1,4 @@
-class Enemy extends AssetGraphic {
+class Enemy extends Character {
 
     public static list:Enemy[] = [];
 
@@ -6,11 +6,8 @@ class Enemy extends AssetGraphic {
     private static get ROTATION_SPEED():number { return 0.3;};
 
     constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene) {
-        super(pAssetName, pScene);
+        super(pScene, pAssetName, pPosition);
         Enemy.list.push(this);
-
-        this.position = pPosition.clone();
-        this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
     }
 
 
@@ -28,16 +25,7 @@ class Enemy extends AssetGraphic {
 
         this.moveWithCollisions(vectorMovement.scaleInPlace(Enemy.MOVE_SPEED * deltaTime));
 
-        this._rotate(vectorMovement);
-    }
-
-
-    private _rotate (vectorMovement:BABYLON.Vector3) {
-        vectorMovement = vectorMovement.multiplyByFloats(-1, -1, -1);
-        var rotation = BABYLON.Tools.ToDegrees(Math.atan2(vectorMovement.z, vectorMovement.x));
-        rotation -= 90;
-        var q = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(-rotation));
-        this.rotationQuaternion = BABYLON.Quaternion.Slerp(this.rotationQuaternion.clone(), q, Enemy.ROTATION_SPEED);
+        super._rotate(vectorMovement, Enemy.ROTATION_SPEED);
     }
 
 

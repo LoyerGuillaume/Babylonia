@@ -11,6 +11,7 @@
         "LevelManager.ts",
         "FireBall.ts",
         "Player.ts",
+        "Character.ts",
         "assets/Tree.ts",
         "Config.ts",
         "typings/babylon.d.ts",

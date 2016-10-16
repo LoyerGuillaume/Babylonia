@@ -42,8 +42,10 @@ class GameManager {
     public startGame () {
         this.initLevel();
         this.initPlayer();
-        var enemy = new EnemyOne(new BABYLON.Vector3(500, 0, 500), this.mainScene);
-        enemy.start();
+
+        new EnemySpawner('EnemyOne', this.mainScene);
+        // var enemy = new EnemyOne(new BABYLON.Vector3(500, 0, 500), this.mainScene);
+        // enemy.start();
 
         //
         // var box = BABYLON.Mesh.CreateBox("crate", 2, this.mainScene);

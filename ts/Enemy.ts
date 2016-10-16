@@ -5,7 +5,7 @@ class Enemy extends AssetGraphic {
     private static get MOVE_SPEED():number { return 0.25;};
     private static get ROTATION_SPEED():number { return 0.3;};
 
-    protected constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene) {
+    constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene) {
         super(pAssetName, pScene);
         Enemy.list.push(this);
 

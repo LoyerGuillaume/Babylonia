@@ -31,7 +31,9 @@
         "ICollisionable.ts",
         "CollisionBoxCreator.ts",
         "assets/LDElement.ts",
-        "EnemySpawner.ts"
+        "EnemySpawner.ts",
+        "utils/events/BEvent.ts",
+        "events/PlayerEvent.ts"
     ],
     "compileOnSave": true
 }

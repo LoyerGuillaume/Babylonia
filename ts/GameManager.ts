@@ -40,7 +40,6 @@ class GameManager {
     }
 
     public startGame () {
-        this.initLevel();
         this.initPlayer();
 
         new EnemySpawner('EnemyOne', this.mainScene);
@@ -58,7 +57,16 @@ class GameManager {
 
         // Tools.displayEllipsoid(this.mainScene, box);
 
+        BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
+
         this.gameLoop();
+    }
+
+
+    private onPlayerDeath (pEvent:PlayerEvent) {
+        pEvent.player.destroy();
+        //pPlayer.destroy();
+        this.initPlayer();
     }
 
 
@@ -70,10 +78,9 @@ class GameManager {
     }
 
 
-    private initLevel() {
-        this.levelManager.build();
+    private initLevel(pMeshes:BABYLON.Mesh[]) {
+        this.levelManager.build(pMeshes);
     }
-
 
     private initCamera() {
         CameraManager.init(this.mainScene, this.engine);
@@ -90,7 +97,7 @@ class GameManager {
             var assetName: string = pSources[assetIndex];
             var meshTask = loader.addMeshTask(assetName, '', Config.ASSET_PATH, assetName + '.babylon');
 
-            meshTask.onSuccess = (pInstantiable) ? onSuccess : onLevelMeshSuccess;
+            meshTask.onSuccess = (pInstantiable) ? onSuccess.bind(this) : onLevelMeshSuccess.bind(this);
         }
 
         function onSuccess(pTask:BABYLON.MeshAssetTask): void {
@@ -102,25 +109,7 @@ class GameManager {
         }
 
         function onLevelMeshSuccess(pTask:BABYLON.MeshAssetTask): void {
-
-            console.log(pTask);
-
-            var lElems:BABYLON.AbstractMesh[] = [];
-
-            var lLen = pTask.loadedMeshes.length;
-            for (var i = 0; i < lLen; i++) {
-                if (pTask.loadedMeshes[i].name == 'BOX') {
-                    CollisionBoxCreator.addBox(pTask.loadedMeshes[i] as BABYLON.Mesh);
-                } else {
-                    lElems.push(pTask.loadedMeshes[i]);
-                }
-            }
-
-            lLen = lElems.length;
-            for (var i = 0; i < lLen; i++) {
-                new LDElement(pTask.loadedMeshes[i] as BABYLON.Mesh);
-            }
-
+            this.initLevel(pTask.loadedMeshes as BABYLON.Mesh[]);
         }
 
         loader.onFinish = pCallback;

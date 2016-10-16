@@ -2,6 +2,8 @@ class Player extends AssetGraphic {
 
     public static list:Player[] = [];
 
+    public static ON_PLAYER_DEATH:string = 'player_death';
+
     private controller:Controller;
     private static get ASSET_NAME():string { return 'elf';};
     private static get MOVE_SPEED():number { return 0.5;};
@@ -129,8 +131,17 @@ class Player extends AssetGraphic {
         if (--this.lifePoint >= 0) {
             this.isInvicible = true;
         } else {
-            this.destroy();
+            this.die();
         }
+    }
+
+    private die () {
+        BEvent.emit(new PlayerEvent(this));
+    }
+
+    public destroy () {
+        this.controller.destroy();
+        Player.list.splice(Player.list.indexOf(this), 1);
     }
 
 }

@@ -71,7 +71,7 @@ class GameManager {
         Player.list[indexPlayer] = new Player(this.mainScene, lPos);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
-        HUDManager.gainLife(Player.LIFE_POINT);
+        UIManager.gainLife(Player.LIFE_POINT);
     }
 
     private checkController() {

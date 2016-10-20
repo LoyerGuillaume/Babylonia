@@ -36,7 +36,7 @@
         "EnemySpawner.ts",
         "utils/events/BEvent.ts",
         "events/PlayerEvent.ts",
-        "HUDManager.ts"
+        "UIManager.ts"
     ],
     "compileOnSave": true
 }

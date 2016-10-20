@@ -69,7 +69,7 @@ class Player extends Character {
 
     private hasHit (pPlayerEvent:PlayerEvent) {
         if (this === pPlayerEvent.player) {
-            
+
         }
     }
 
@@ -122,6 +122,7 @@ class Player extends Character {
     private checkEnemyCollision () {
         for (var i in Enemy.list) {
             if (this.meshe.intersectsMesh(Enemy.list[i], false)) {
+                BEvent.emit(new PlayerEvent(this, PlayerEvent.HIT));
                 super.onHit();
                 return;
             }

@@ -23,13 +23,15 @@ class HUDManager {
     public static initHud(scene:BABYLON.Scene) {
         HUDManager.hudContainer = new BABYLON.ScreenSpaceCanvas2D(scene, {
             id: 'hudContainer',
-            size: new BABYLON.Size(window.innerWidth, window.innerHeight)
+            size: new BABYLON.Size(window.innerWidth, window.innerHeight),
+            origin: new BABYLON.Vector2(0, 1)
         });
 
         HUDManager.scoreText = new BABYLON.Text2D('Score : 0', {
             id: 'score',
             parent:HUDManager.hudContainer,
-            fontName: HUDManager.SCORE_SIZE + "pt Arial"
+            fontName: HUDManager.SCORE_SIZE + "pt Arial",
+            origin: new BABYLON.Vector2(0, 0)
         })
 
         BEvent.on(PlayerEvent.HIT, HUDManager.looseLife);
@@ -40,9 +42,9 @@ class HUDManager {
         var sprite = new BABYLON.Sprite2D(HUDManager.heartTexture, {
             id: 'heart' + HUDManager.heartsSprites.length,
             parent: HUDManager.hudContainer,
-            x: -window.innerWidth / 2 + HUDManager.HEART_SIZE * HUDManager.heartsSprites.length,
-            y: -HUDManager.HEART_SIZE * 2,
-            scale: HUDManager.heartScale
+            x: HUDManager.HEART_SIZE * HUDManager.heartsSprites.length,
+            scale: HUDManager.heartScale,
+            origin: new BABYLON.Vector2(0 * HUDManager.heartScale, 1 * HUDManager.heartScale)
         });
         HUDManager.heartsSprites.push(sprite);
     }

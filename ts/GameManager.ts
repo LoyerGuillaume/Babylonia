@@ -22,6 +22,7 @@ class GameManager {
     }
 
     public start () {
+        var that = this;
 
         this.initPlayer(0);
 
@@ -100,8 +101,6 @@ class GameManager {
     private gameLoop () {
         this.engine.runRenderLoop(() => {
             this.checkController();
-
-            this.mainScene.render();
 
             var deltaTime:number = this.engine.getDeltaTime();
 

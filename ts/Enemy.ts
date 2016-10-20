@@ -35,6 +35,7 @@ class Enemy extends Character {
     protected checkProjectilesCollision ():void {
         for (var i in FireBall.list) {
             if (this.meshe.intersectsMesh(FireBall.list[i], false)) {
+                BEvent.emit(new PlayerEvent(FireBall.list[i].getLauncher, PlayerEvent.HAS_HIT));
                 FireBall.list[i].destroy();
                 super.onHit();
             }

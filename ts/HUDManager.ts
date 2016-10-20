@@ -18,23 +18,28 @@ class HUDManager {
             pCallback();
         });
     }
- 
+
 
     public static initHud(scene:BABYLON.Scene) {
         HUDManager.hudContainer = new BABYLON.ScreenSpaceCanvas2D(scene, {
-            id: 'hudContainer',
-            size: new BABYLON.Size(window.innerWidth, window.innerHeight),
-            origin: new BABYLON.Vector2(0, 1)
+            id: 'hudContainer'
         });
 
         HUDManager.scoreText = new BABYLON.Text2D('Score : 0', {
             id: 'score',
             parent:HUDManager.hudContainer,
-            fontName: HUDManager.SCORE_SIZE + "pt Arial",
-            origin: new BABYLON.Vector2(0, 0)
+            fontName: HUDManager.SCORE_SIZE + "pt Arial"
         })
 
         BEvent.on(PlayerEvent.HIT, HUDManager.looseLife);
+        window.onresize = HUDManager.onResize;
+    }
+
+
+    private static onResize () {
+        for (var i in HUDManager.heartsSprites) {
+            HUDManager.heartsSprites[i].y = window.innerHeight - HUDManager.HEART_SIZE;
+        }
     }
 
 
@@ -42,9 +47,10 @@ class HUDManager {
         var sprite = new BABYLON.Sprite2D(HUDManager.heartTexture, {
             id: 'heart' + HUDManager.heartsSprites.length,
             parent: HUDManager.hudContainer,
+            y: window.innerHeight - HUDManager.HEART_SIZE,
             x: HUDManager.HEART_SIZE * HUDManager.heartsSprites.length,
             scale: HUDManager.heartScale,
-            origin: new BABYLON.Vector2(0 * HUDManager.heartScale, 1 * HUDManager.heartScale)
+            origin: new BABYLON.Vector2(0, 0)
         });
         HUDManager.heartsSprites.push(sprite);
     }

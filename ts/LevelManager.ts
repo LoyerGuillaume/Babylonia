@@ -3,7 +3,7 @@ class LevelManager {
     private assets: BABYLON.Mesh;
     private scene: BABYLON.Scene;
 
-    private static GP_OBJECTS_PREFFIX: string = 'LD_'; // FIXME should be 'OBJ_'
+    private static GP_OBJECTS_PREFFIX: string = 'OBJ_';
     private static GP_POSITION_PREFFIX: string = 'POS_';
 
     // list of ld elements by name

@@ -45,6 +45,7 @@ class GameManager {
     public startGame () {
         this.initPlayer(0);
 
+        HUDManager.initHud(this.mainScene);
         new EnemySpawner('EnemyOne', this.mainScene);
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);

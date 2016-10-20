@@ -83,6 +83,7 @@ class GameManager {
 
     private loadAssets(pSources:string[], pInstantiable:boolean, pCallback) {
 
+        var self:GameManager = this;
         var loader = new BABYLON.AssetsManager(this.mainScene);
 
         var assetIndex;
@@ -103,7 +104,7 @@ class GameManager {
         }
 
         function onLevelMeshSuccess(pTask:BABYLON.MeshAssetTask): void {
-            this.initLevel(pTask.loadedMeshes as BABYLON.Mesh[]);
+            self.initLevel(pTask.loadedMeshes as BABYLON.Mesh[]);
         }
 
         loader.onFinish = pCallback;

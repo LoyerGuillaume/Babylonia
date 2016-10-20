@@ -5,9 +5,11 @@ class PlayerEvent extends BEvent {
     public static HIT    :string = 'PLAYER_HIT';
 
     public player:Player;
+    public enemyScore:number;
 
-    constructor(pPlayer:Player, pEventName:string) {
+    constructor(pEventName:string, pPlayer:Player, pEnemyScore:number = 0) {
         super(pEventName);
-        this.player = pPlayer;
+        this.player     = pPlayer;
+        this.enemyScore = pEnemyScore;
     }
 }

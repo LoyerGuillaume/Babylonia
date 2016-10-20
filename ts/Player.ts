@@ -18,6 +18,7 @@ class Player extends Character {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
 
+        this.score      = 0;
         this.controller = new ControllerKeyboard();
         this.initEvents();
         this.initAnimation();
@@ -69,7 +70,8 @@ class Player extends Character {
 
     private hasHit (pPlayerEvent:PlayerEvent) {
         if (this === pPlayerEvent.player) {
-
+            this.score += pPlayerEvent.enemyScore;
+            console.log(this.score);
         }
     }
 
@@ -122,7 +124,7 @@ class Player extends Character {
     private checkEnemyCollision () {
         for (var i in Enemy.list) {
             if (this.meshe.intersectsMesh(Enemy.list[i], false)) {
-                BEvent.emit(new PlayerEvent(this, PlayerEvent.HIT));
+                BEvent.emit(new PlayerEvent(PlayerEvent.HIT, this));
                 super.onHit();
                 return;
             }
@@ -131,7 +133,7 @@ class Player extends Character {
 
 
     protected die () {
-        BEvent.emit(new PlayerEvent(this, PlayerEvent.DEATH));
+        BEvent.emit(new PlayerEvent(PlayerEvent.DEATH, this));
     }
 
 

@@ -59,6 +59,13 @@ class GameManager {
         var playerIndex = pEvent.player.getPlayerIndex();
         pEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
+
+        console.log(Player.list.length);
+        if (Player.list.length === 0) {
+            //GameOver
+            this.destroyAllEnemies();
+        }
+
         this.initPlayer(playerIndex);
     }
 
@@ -169,6 +176,14 @@ class GameManager {
             CameraManager.updatePosition();
 
         });
+    }
+
+
+    private destroyAllEnemies () {
+        var enemyLength = Enemy.list.length;
+        for (var i = enemyLength - 1; i >= 0; i--) {
+            Enemy.list[i].destroy();
+        }
     }
 
 }

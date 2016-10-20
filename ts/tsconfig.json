@@ -17,6 +17,7 @@
         "assets/characters/Character.ts",
         "assets/characters/Enemy.ts",
         "assets/characters/EnemyOne.ts",
+        "assets/items/Coin.ts",
         "assets/Tree.ts",
         "assets/LDElement.ts",
         "typings/babylon.d.ts",

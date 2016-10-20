@@ -6,6 +6,7 @@ class GameManager {
 
     private onPause:boolean = false;
     private oldPausePress:boolean = false;
+    private frameCount:number = 0;
 
     private playerOne:Player;
 
@@ -98,6 +99,7 @@ class GameManager {
 
     }
 
+
     private gameLoop () {
         this.engine.runRenderLoop(() => {
             this.checkController();
@@ -122,7 +124,11 @@ class GameManager {
 
             CameraManager.updatePosition();
 
-            this.mainScene.render();
+            if (this.frameCount % 2) {
+                this.mainScene.render();
+            }
+
+            this.frameCount++;
         });
     }
 

@@ -1,11 +1,15 @@
 class HUDManager {
 
+    private static get HEART_SIZE():number { return 64 };
+    private static get SCORE_SIZE():number { return 40 };
+
     private static heartTexture:BABYLON.Texture;
     private static heartScale:number;
-
-    private static heartContainer:BABYLON.ScreenSpaceCanvas2D;
     private static heartsSprites:BABYLON.Sprite2D[] = [];
-    private static get HEART_SIZE():number { return 64 };
+
+    private static scoreText:BABYLON.Text2D;
+
+    private static hudContainer:BABYLON.ScreenSpaceCanvas2D;
 
 
     public static loadTextures(scene:BABYLON.Scene, pCallback:any) {
@@ -17,10 +21,16 @@ class HUDManager {
 
 
     public static initHud(scene:BABYLON.Scene) {
-        HUDManager.heartContainer = new BABYLON.ScreenSpaceCanvas2D(scene, {
-            id: 'heartContainer',
+        HUDManager.hudContainer = new BABYLON.ScreenSpaceCanvas2D(scene, {
+            id: 'hudContainer',
             size: new BABYLON.Size(window.innerWidth, window.innerHeight)
         });
+
+        HUDManager.scoreText = new BABYLON.Text2D('Score : 0', {
+            id: 'score',
+            parent:HUDManager.hudContainer,
+            fontName: HUDManager.SCORE_SIZE + "pt Arial"
+        })
 
         BEvent.on(PlayerEvent.HIT, HUDManager.looseLife);
     }
@@ -29,9 +39,9 @@ class HUDManager {
     private static addHeart () {
         var sprite = new BABYLON.Sprite2D(HUDManager.heartTexture, {
             id: 'heart' + HUDManager.heartsSprites.length,
-            parent: HUDManager.heartContainer,
+            parent: HUDManager.hudContainer,
             x: -window.innerWidth / 2 + HUDManager.HEART_SIZE * HUDManager.heartsSprites.length,
-            y: -window.innerHeight / 2 - HUDManager.HEART_SIZE,
+            y: -HUDManager.HEART_SIZE * 2,
             scale: HUDManager.heartScale
         });
         HUDManager.heartsSprites.push(sprite);
@@ -56,6 +66,11 @@ class HUDManager {
         for (var i = 0; i < pAmount; i++) {
             HUDManager.addHeart();
         }
+    }
+
+    public static setScore (pScore:number) {
+        console.log(pScore);
+        HUDManager.scoreText.text = "Score : " + pScore;
     }
 
 }

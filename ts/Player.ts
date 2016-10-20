@@ -71,7 +71,7 @@ class Player extends Character {
     private hasHit (pPlayerEvent:PlayerEvent) {
         if (this === pPlayerEvent.player) {
             this.score += pPlayerEvent.enemyScore;
-            console.log(this.score);
+            HUDManager.setScore(this.score);
         }
     }
 

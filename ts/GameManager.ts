@@ -44,11 +44,12 @@ class GameManager {
 
         var that = this;
         var secondsRemaining = GameManager.RESPAWN_SECONDS;
-        console.log('Player ' + (playerIndex + 1) + ' : Vous êtes mort, respawn dans ' + secondsRemaining);
+        UIManager.displayMessage('Player ' + (playerIndex + 1) + ' : Vous êtes mort, respawn dans ' + secondsRemaining);
         var interval = setInterval(function () {
             secondsRemaining--;
-            console.log('Player ' + (playerIndex + 1) + ' : Vous êtes mort, respawn dans ' + secondsRemaining);
+            UIManager.displayMessage('Player ' + (playerIndex + 1) + ' : Vous êtes mort, respawn dans ' + secondsRemaining);
             if (secondsRemaining === 0) {
+                UIManager.removeMessage();
                 clearTimeout(interval);
                 that.initPlayer(playerIndex);
                 if (playerRemaining === 0) {

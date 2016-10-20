@@ -8,7 +8,7 @@ class Player extends Character {
     private static get ROTATION_SPEED()        :number { return 0.3;};
     private static get COUNTDOWN_ATTACK()      :number { return 30;};
     private static get INVICIBILITY_TIME()     :number { return 120;};
-    public static get LIFE_POINT()             :number { return 2;};
+    public static get LIFE_POINT()             :number { return 1;};
     public static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
 
     private countFrameAttack:number = 0;
@@ -157,7 +157,6 @@ class Player extends Character {
 
 
     public destroy () {
-        console.log('Destroy');
         this.controller.destroy();
         // Player.list.splice(Player.list.indexOf(this), 1);
         super.destroy();

@@ -2,12 +2,14 @@ class UIManager {
 
     private static get HEART_SIZE():number { return 64 };
     private static get SCORE_SIZE():number { return 40 };
+    private static get MESSAGE_SIZE():number { return 20 };
 
     private static heartTexture:BABYLON.Texture;
     private static heartScale:number;
     private static heartsSprites:BABYLON.Sprite2D[] = [];
 
     private static scoreText:BABYLON.Text2D;
+    private static displayText:BABYLON.Text2D;
 
     private static hudContainer:BABYLON.ScreenSpaceCanvas2D;
 
@@ -29,7 +31,7 @@ class UIManager {
             id: 'score',
             parent:UIManager.hudContainer,
             fontName: UIManager.SCORE_SIZE + "pt Arial"
-        })
+        });
 
         BEvent.on(PlayerEvent.HIT, UIManager.looseLife);
         window.onresize = UIManager.onResize;
@@ -76,9 +78,30 @@ class UIManager {
         }
     }
 
+
     public static setScore (pScore:number) {
-        console.log(pScore);
         UIManager.scoreText.text = "Score : " + pScore;
+    }
+
+
+    public static displayMessage (pMessage:string) {
+        if (typeof UIManager.displayText === 'undefined') {
+            UIManager.displayText = new BABYLON.Text2D(pMessage, {
+                id: 'displayedMessage',
+                parent:UIManager.hudContainer,
+                fontName: UIManager.MESSAGE_SIZE + "pt Arial",
+            });
+        } else {
+            UIManager.displayText.text = pMessage;
+        }
+
+        UIManager.displayText.position = new BABYLON.Vector2(window.innerWidth / 2 - UIManager.displayText.width / 2, window.innerHeight / 2);
+    }
+
+    public static removeMessage () {
+        if (typeof UIManager.displayText !== 'undefined') {
+            UIManager.displayText.text = '';
+        }
     }
 
 }

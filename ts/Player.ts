@@ -7,7 +7,7 @@ class Player extends Character {
     private static get MOVE_SPEED()            :number { return 0.5;};
     private static get ROTATION_SPEED()        :number { return 0.3;};
     private static get INVICIBILITY_TIME()     :number { return 120;};
-    public static get LIFE_POINT()             :number { return 1;};
+    public static get LIFE_POINT()             :number { return 2;};
     public static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
     private static get COUNTDOWNS_ATTACK()     :{}     { return {
         1: 30,

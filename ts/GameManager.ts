@@ -63,9 +63,9 @@ class GameManager {
 
 
     private initPlayer(indexPlayer) {
-        var lPos = this.levelManager.getSpwanerPosition();
+        var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();
+        console.warn('init player ', lPos);
         lPos.y += 150;
-        lPos.z += 500;
         Player.list[indexPlayer] = new Player(this.mainScene, lPos);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);

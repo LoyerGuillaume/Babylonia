@@ -9,7 +9,9 @@ class GameManager {
 
     private playerOne:Player;
 
-    constructor(pScene, pEngine, pLevelManager) {
+    private static get RESPAWN_SECONDS() { return 3;};
+
+	constructor(pScene, pEngine, pLevelManager) {
         this.mainScene = pScene;
         this.engine = pEngine;
         this.levelManager = pLevelManager;
@@ -32,17 +34,34 @@ class GameManager {
 
     private onPlayerDeath (pEvent:PlayerEvent) {
         var playerIndex = pEvent.player.getPlayerIndex();
+
         pEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
 
-        console.log(Player.list.length);
-        if (Player.list.length === 0) {
-            //GameOver
-            this.destroyAllEnemies();
-        }
+        var playerRemaining = Player.list.length;
 
-        this.initPlayer(playerIndex);
+        var that = this;
+        var secondsRemaining = GameManager.RESPAWN_SECONDS;
+        console.log('Player ' + (playerIndex + 1) + ' : Vous êtes mort, respawn dans ' + secondsRemaining);
+        var interval = setInterval(function () {
+            secondsRemaining--;
+            console.log('Player ' + (playerIndex + 1) + ' : Vous êtes mort, respawn dans ' + secondsRemaining);
+            if (secondsRemaining === 0) {
+                clearTimeout(interval);
+                that.initPlayer(playerIndex);
+                if (playerRemaining === 0) {
+                    that.onGameOver();
+                }
+            }
+        }, 1000);
+
+
     }
+
+    private onGameOver () {
+        this.destroyAllEnemies();
+    }
+
 
     private initPlayer(indexPlayer) {
         var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();

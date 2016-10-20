@@ -129,8 +129,6 @@ class Player extends Character {
                 var attack = this.attacks[attackName];
                 if (attack.countFrameAttack >= attack.cooldown) {
                     attack.countFrameAttack = 0;
-                    console.log('Check Attack');
-                    console.log(attack.attackFunction);
                     attack.attackFunction.apply(this);
                 }
             }
@@ -148,7 +146,6 @@ class Player extends Character {
 //==== ATTACKS ====
 
     private createFireBall (pRotationQuaternion:BABYLON.Quaternion) {
-        console.log('createFireBall');
         var fireBall = new FireBall(this.getScene(), this.position, pRotationQuaternion, this);
         fireBall.start();
     }
@@ -184,7 +181,6 @@ class Player extends Character {
 
 
     public destroy () {
-        console.log('Destroy');
         this.controller.destroy();
         super.destroy();
     }

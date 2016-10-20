@@ -58,7 +58,9 @@ class GameManager {
 
 
     private initPlayer() {
-        var lPos = this.levelManager.getSpwanerPosition();
+        //var lPos = this.levelManager.getSpwanerPosition();
+        var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();
+        console.warn(lPos);
         lPos.y += 120;
         this.playerOne = new Player(this.mainScene, lPos);
         this.playerOne.start();

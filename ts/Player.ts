@@ -101,8 +101,10 @@ class Player extends Character {
     }
 
     public destroy () {
+        console.log('Destroy');
         this.controller.destroy();
         Player.list.splice(Player.list.indexOf(this), 1);
+        super.destroy();
     }
 
 }

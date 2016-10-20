@@ -51,9 +51,13 @@ class Enemy extends Character {
         this.move(deltaTime);
     }
 
+    protected die ():void {
+        this.destroy();
+    }
+
     public destroy ():void {
-        super.destroy();
         Enemy.list.splice(Enemy.list.indexOf(this), 1);
+        super.destroy();
     }
 
 }

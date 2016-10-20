@@ -46,7 +46,7 @@ class Game {
 
 
     private _initGame () {
-        // this.scene.debugLayer.show();
+        this.scene.debugLayer.show();
 
         var app:Babylonia = new Babylonia(this.scene, this.engine);
     }

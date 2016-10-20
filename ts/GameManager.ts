@@ -32,6 +32,16 @@ class GameManager {
         this.gameLoop();
     }
 
+    /**
+     * @params pCount if null, the count is random
+     */
+    private spawnEnemy (pCount:number = null) {
+
+        var lPoppers = this.levelManager.getGameplayObjects('EnemyPopper');
+        var lPopperSupers = this.levelManager.getGameplayObjects('EnemyPopper_S');
+
+    }
+
     private onPlayerDeath (pEvent:PlayerEvent) {
         var playerIndex = pEvent.player.getPlayerIndex();
 

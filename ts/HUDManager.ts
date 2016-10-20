@@ -18,7 +18,7 @@ class HUDManager {
             pCallback();
         });
     }
-
+ 
 
     public static initHud(scene:BABYLON.Scene) {
         HUDManager.hudContainer = new BABYLON.ScreenSpaceCanvas2D(scene, {

@@ -3,17 +3,15 @@ class Player extends Character {
     public static list:Player[] = [];
 
     public controller:Controller;
-    private static get ASSET_NAME()            :string { return 'elf';};
-    private static get MOVE_SPEED()            :number { return 0.5;};
-    private static get ROTATION_SPEED()        :number { return 0.3;};
-    private static get INVICIBILITY_TIME()     :number { return 120;};
-    public static get LIFE_POINT()             :number { return 1;};
-    public static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
-    private static get COUNTDOWNS_ATTACK()     :{}     { return {
-        1: 30,
-        2: 120
-    };};
+    private static get ASSET_NAME()             :string { return 'elf';};
+    private static get MOVE_SPEED()             :number { return 0.5;};
+    private static get ROTATION_SPEED()         :number { return 0.3;};
+    private static get INVICIBILITY_TIME()      :number { return 120;};
+    private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
+    public static get LIFE_POINT()              :number { return 1;};
 
+    private score:number;
+    
     private attacks:{} = {
         'attack': {
             'cooldown': 30,
@@ -27,8 +25,6 @@ class Player extends Character {
         },
     };
 
-    private countFrameAttack:number = 0;
-    private score:number;
 
 
     constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3) {

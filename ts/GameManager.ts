@@ -122,6 +122,7 @@ class GameManager {
 
             CameraManager.updatePosition();
 
+            this.mainScene.render();
         });
     }
 

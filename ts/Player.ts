@@ -17,7 +17,7 @@ class Player extends Character {
     constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3) {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
-        
+
         this.score      = 0;
         this.controller = new ControllerKeyboard();
         this.initEvents();
@@ -124,6 +124,7 @@ class Player extends Character {
     private checkEnemyCollision () {
         for (var i in Enemy.list) {
             if (this.meshe.intersectsMesh(Enemy.list[i], false)) {
+                BEvent.emit(new PlayerEvent(PlayerEvent.HIT, this));
                 super.onHit();
                 return;
             }

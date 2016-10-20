@@ -31,7 +31,7 @@ class GameManager {
     public start() {
         this.initCamera();
 
-        var loadedCount = 2;
+        var loadedCount = 3;
         var loadedCounter = 0;
 
         var self:GameManager = this;
@@ -41,12 +41,13 @@ class GameManager {
 
         this.loadAssets(GameManager.ASSETS_NAME, true, onAssetLoaded);
         this.loadAssets(GameManager.LEVELS_NAME, false, onAssetLoaded);
+        HUDManager.loadTextures(this.mainScene, onAssetLoaded);
     }
 
     public startGame () {
+        HUDManager.initHud(this.mainScene);
         this.initPlayer(0);
 
-        HUDManager.initHud(this.mainScene);
         new EnemySpawner('EnemyOne', this.mainScene);
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
@@ -94,6 +95,7 @@ class GameManager {
         Player.list[indexPlayer] = new Player(this.mainScene, lPos);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
+        HUDManager.gainLife(Player.LIFE_POINT);
     }
 
 

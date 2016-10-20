@@ -40,7 +40,7 @@ class GameManager {
     }
 
     public startGame () {
-        this.initPlayer();
+        this.initPlayer(0);
 
         new EnemySpawner('EnemyOne', this.mainScene);
 
@@ -51,18 +51,24 @@ class GameManager {
 
 
     private onPlayerDeath (pEvent:PlayerEvent) {
+        var playerIndex = pEvent.player.getPlayerIndex();
+        console.log('playerIndex : ' + playerIndex);
         pEvent.player.destroy();
+        // Player.list[playerIndex] = null;
         //pPlayer.destroy();
-        this.initPlayer();
+        console.log('Before : ' + Player.list.length);
+        Player.list.splice(playerIndex, 1);
+        console.log('After : ' + Player.list.length);
+        this.initPlayer(playerIndex);
     }
 
 
-    private initPlayer() {
+    private initPlayer(indexPlayer) {
         var lPos = this.levelManager.getSpwanerPosition();
-        lPos.y += 120;
-        this.playerOne = new Player(this.mainScene, lPos);
-        this.playerOne.start();
-        CameraManager.setTarget(this.playerOne);
+        lPos.y += 250;
+        Player.list[indexPlayer] = new Player(this.mainScene, lPos);
+        Player.list[indexPlayer].start();
+        CameraManager.setTarget(Player.list[indexPlayer]);
     }
 
 
@@ -124,7 +130,11 @@ class GameManager {
             for (var k in Enemy.list) {
                 Enemy.list[k].doAction(deltaTime);
             }
-            this.playerOne.doAction(deltaTime);
+
+            for (var l in Player.list) {
+                Player.list[l].doAction(deltaTime);
+            }
+
             CameraManager.updatePosition();
 
         });

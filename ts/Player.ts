@@ -15,9 +15,14 @@ class Player extends Character {
     constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3) {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
+
         this.controller = new ControllerKeyboard();
         this.initAnimation();
         this.initCollision();
+    }
+
+    public getPlayerIndex():number {
+        return Player.list.indexOf(this);
     }
 
     protected initCollision() {
@@ -103,7 +108,7 @@ class Player extends Character {
     public destroy () {
         console.log('Destroy');
         this.controller.destroy();
-        Player.list.splice(Player.list.indexOf(this), 1);
+        // Player.list.splice(Player.list.indexOf(this), 1);
         super.destroy();
     }
 

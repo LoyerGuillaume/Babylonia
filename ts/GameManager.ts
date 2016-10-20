@@ -4,6 +4,8 @@ class GameManager {
     private engine:BABYLON.Engine;
     private levelManager: LevelManager;
 
+    private onPause:boolean = false;
+
     private playerOne:Player;
 
     private static get ASSETS_NAME() { return [
@@ -40,7 +42,7 @@ class GameManager {
     }
 
     public startGame () {
-        this.initPlayer();
+        this.initPlayer(0);
 
         HUDManager.initHud(this.mainScene);
         new EnemySpawner('EnemyOne', this.mainScene);
@@ -52,18 +54,24 @@ class GameManager {
 
 
     private onPlayerDeath (pEvent:PlayerEvent) {
+        var playerIndex = pEvent.player.getPlayerIndex();
+        console.log('playerIndex : ' + playerIndex);
         pEvent.player.destroy();
+        // Player.list[playerIndex] = null;
         //pPlayer.destroy();
-        this.initPlayer();
+        console.log('Before : ' + Player.list.length);
+        Player.list.splice(playerIndex, 1);
+        console.log('After : ' + Player.list.length);
+        this.initPlayer(playerIndex);
     }
 
 
-    private initPlayer() {
+    private initPlayer(indexPlayer) {
         var lPos = this.levelManager.getSpwanerPosition();
-        lPos.y += 120;
-        this.playerOne = new Player(this.mainScene, lPos);
-        this.playerOne.start();
-        CameraManager.setTarget(this.playerOne);
+        lPos.y += 250;
+        Player.list[indexPlayer] = new Player(this.mainScene, lPos);
+        Player.list[indexPlayer].start();
+        CameraManager.setTarget(Player.list[indexPlayer]);
     }
 
 
@@ -78,6 +86,7 @@ class GameManager {
 
     private loadAssets(pSources:string[], pInstantiable:boolean, pCallback) {
 
+        var self:GameManager = this;
         var loader = new BABYLON.AssetsManager(this.mainScene);
 
         var assetIndex;
@@ -98,7 +107,7 @@ class GameManager {
         }
 
         function onLevelMeshSuccess(pTask:BABYLON.MeshAssetTask): void {
-            this.initLevel(pTask.loadedMeshes as BABYLON.Mesh[]);
+            self.initLevel(pTask.loadedMeshes as BABYLON.Mesh[]);
         }
 
         loader.onFinish = pCallback;
@@ -108,8 +117,37 @@ class GameManager {
     }
 
 
+    private oldPausePress:boolean = false;
+    private checkController() {
+        for (var l in Player.list) {
+            if (Player.list[l].controller.pause != this.oldPausePress) {
+                this.oldPausePress = Player.list[l].controller.pause;
+                if (Player.list[l].controller.pause) {
+                    this.onPause       = !this.onPause;
+                    if (this.onPause) {
+                         this.engine.stopRenderLoop();
+                         this.pauseGameLoop();
+                    } else {
+                        this.engine.stopRenderLoop();
+                        this.gameLoop();
+                    }
+                }
+            }
+        }
+    }
+
+    private pauseGameLoop () {
+        this.engine.runRenderLoop(() => {
+            this.checkController();
+        });
+
+    }
+
+
     private gameLoop () {
         this.engine.runRenderLoop(() => {
+            this.checkController();
+
             this.mainScene.render();
 
             var deltaTime:number = this.engine.getDeltaTime();
@@ -125,7 +163,11 @@ class GameManager {
             for (var k in Enemy.list) {
                 Enemy.list[k].doAction(deltaTime);
             }
-            this.playerOne.doAction(deltaTime);
+
+            for (var l in Player.list) {
+                Player.list[l].doAction(deltaTime);
+            }
+
             CameraManager.updatePosition();
 
         });

@@ -3,7 +3,7 @@ class LevelManager {
     private assets: BABYLON.Mesh;
     private scene: BABYLON.Scene;
 
-    private static ELEMENTS_PREFFIX: string = 'LD_';
+    private static GP_ELEMENTS_PREFFIX: string = 'LD_';
 
     private static PLAYER_SPWANER: string = 'LD_Spawner';
 
@@ -22,7 +22,6 @@ class LevelManager {
         //lTree.position = new BABYLON.Vector3(500, 0, 10);
         //lTree.start();
 
-
         var lElems:BABYLON.AbstractMesh[] = [];
 
         var lLen = pMeshes.length;
@@ -38,14 +37,14 @@ class LevelManager {
         for (var i = 0; i < lLen; i++) {
             var lElem:LDElement = new LDElement(pMeshes[i]);
 
-            if (pMeshes[i].name.substr(0, LevelManager.ELEMENTS_PREFFIX.length) == LevelManager.ELEMENTS_PREFFIX) {
-                this.addElement(lElem);
+            if (pMeshes[i].name.substr(0, LevelManager.GP_ELEMENTS_PREFFIX.length) == LevelManager.GP_ELEMENTS_PREFFIX) {
+                this.addGameplayElement(lElem);
             }
         }
 
     }
 
-    private addElement (pMesh:LDElement) {
+    private addGameplayElement (pMesh:LDElement) {
 
         switch (pMesh.name) {
             case LevelManager.PLAYER_SPWANER :

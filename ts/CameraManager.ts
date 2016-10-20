@@ -25,9 +25,9 @@ class CameraManager {
 
     public static updatePosition () {
         var targetPosition:BABYLON.Vector3 = CameraManager.target.position.clone();
-        targetPosition.z += CameraManager.RADIUS;
-        targetPosition.y = CameraManager.camera.position.y;
-        CameraManager.camera.position = BABYLON.Vector3.Lerp(CameraManager.camera.position, targetPosition, CameraManager.LERP_AMOUNT);
+        targetPosition.z                  += CameraManager.RADIUS;
+        targetPosition.y                   = CameraManager.camera.position.y;
+        CameraManager.camera.position      = BABYLON.Vector3.Lerp(CameraManager.camera.position, targetPosition, CameraManager.LERP_AMOUNT);
     }
 
 

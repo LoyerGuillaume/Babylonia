@@ -48,7 +48,6 @@ class Game {
     private _initGame () {
         // this.scene.debugLayer.show();
 
-        var gameManager:GameManager = new GameManager(this.scene, this.engine);
-        gameManager.start();
+        var app:Babylonia = new Babylonia(this.scene, this.engine);
     }
 }

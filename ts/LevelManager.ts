@@ -24,6 +24,10 @@ class LevelManager {
         this.gameplayPositions = {};
     }
 
+    public destroy () {
+        // TODO
+    }
+
     /**
      * initialise level boxes and data
      */
@@ -106,7 +110,7 @@ class LevelManager {
         this.gameplayPositions[pName] = this.gameplayPositions[pName] || [];
         this.gameplayPositions[pName].push(pPos);
 
-    } 
+    }
 
     private addGameplayObject (pMesh:LDElement) {
 

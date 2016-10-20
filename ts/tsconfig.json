@@ -8,6 +8,7 @@
         "Timer.ts",
         "Game.ts",
         "GameManager.ts",
+        "Babylonia.ts",
         "LevelManager.ts",
         "FireBall.ts",
         "Player.ts",

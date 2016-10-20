@@ -1,5 +1,4 @@
 class AssetGraphic extends GameObject {
-﻿
 
     private static objects: {} = {};
     private static meshesList: {} = {};
@@ -35,6 +34,12 @@ class AssetGraphic extends GameObject {
         AssetGraphic.meshesList[id]           = pMeshes;
         AssetGraphic.skeletonsList[id]        = pSkeletons;
         AssetGraphic.particlesSystemsList[id] = pParticleSystems;
+    }
+
+    public static clear () {
+        AssetGraphic.meshesList           = [];
+        AssetGraphic.skeletonsList        = [];
+        AssetGraphic.particlesSystemsList = [];
     }
 
     private static toggleEnable(pMeshes: BABYLON.AbstractMesh[], pValue:boolean) {

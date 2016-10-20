@@ -1,9 +1,10 @@
 class EnemyOne extends Enemy {
 
-    private static get ASSET_NAME()       :string { return 'elf';};
-    private static get LIFE_POINT()       :number { return 2;};
-    private static get INVICIBILITY_TIME():number { return 30;};
-    private static get SCORE_GET()        :number { return 100;};
+    private static get ASSET_NAME()          :string { return 'elf';};
+    private static get LIFE_POINT()          :number { return 2;};
+    private static get INVICIBILITY_TIME()   :number { return 30;};
+    private static get SCORE_GET()           :number { return 100;};
+    private static get DROPED_COINS_NUMBER() :number { return 2;};
 
     constructor(pPosition:BABYLON.Vector3, pScene:BABYLON.Scene) {
         super(EnemyOne.ASSET_NAME, pPosition, pScene, EnemyOne.LIFE_POINT, EnemyOne.INVICIBILITY_TIME);
@@ -13,6 +14,11 @@ class EnemyOne extends Enemy {
 
     public get getScore () {
         return EnemyOne.SCORE_GET;
+    }
+
+
+    public get getDropedCoinsNumber () {
+        return EnemyOne.DROPED_COINS_NUMBER;
     }
 
 

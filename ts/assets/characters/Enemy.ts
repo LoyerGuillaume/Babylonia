@@ -23,6 +23,11 @@ class Enemy extends Character {
     }
 
 
+    public get getDropedCoinsNumber () {
+        return 0;
+    }
+
+
     public setModeNormal() {
         super.setModeNormal();
         this.runAnimationName('Run');
@@ -67,8 +72,16 @@ class Enemy extends Character {
     }
 
 
+    private dropCoins ():void {
+        for (var i = 0; i < this.getDropedCoinsNumber; i++) {
+            
+        }
+    }
+
+
     protected die ():void {
         BEvent.emit(new PlayerEvent(PlayerEvent.HAS_HIT, this.lastPlayerHitMe, this.getScore));
+        this.dropCoins();
         this.destroy();
     }
 

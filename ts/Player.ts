@@ -3,12 +3,12 @@ class Player extends Character {
     public static list:Player[] = [];
 
     public controller:Controller;
-    private static get ASSET_NAME():string { return 'elf';};
-    private static get MOVE_SPEED():number { return 0.5;};
-    private static get ROTATION_SPEED():number { return 0.3;};
-    private static get COUNTDOWN_ATTACK():number { return 30;};
+    private static get ASSET_NAME()       :string { return 'elf';};
+    private static get MOVE_SPEED()       :number { return 0.5;};
+    private static get ROTATION_SPEED()   :number { return 0.3;};
+    private static get COUNTDOWN_ATTACK() :number { return 30;};
     private static get INVICIBILITY_TIME():number { return 120;};
-    public static get LIFE_POINT():number { return 3;};
+    public static get LIFE_POINT()        :number { return 2;};
 
     private countFrameAttack:number = 0;
 

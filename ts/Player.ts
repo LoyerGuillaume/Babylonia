@@ -97,6 +97,7 @@ class Player extends Character {
         for (var i in Enemy.list) {
             if (this.meshe.intersectsMesh(Enemy.list[i], false)) {
                 super.onHit();
+                return;
             }
         }
     }

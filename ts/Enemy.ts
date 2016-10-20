@@ -7,10 +7,17 @@ class Enemy extends Character {
     private static get MOVE_SPEED():number { return 0.25;};
     private static get ROTATION_SPEED():number { return 0.3;};
 
+    private lastPlayerHitMe:Player;
+
     constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene, pLifePoint:number, pInvincibilityTime:number) {
         super(pScene, pAssetName, pPosition, pLifePoint);
         this.invincibilityTime = pInvincibilityTime;
         Enemy.list.push(this);
+    }
+
+
+    public get getScore () {
+        return 0;
     }
 
 
@@ -35,7 +42,7 @@ class Enemy extends Character {
     protected checkProjectilesCollision ():void {
         for (var i in FireBall.list) {
             if (this.meshe.intersectsMesh(FireBall.list[i], false)) {
-                BEvent.emit(new PlayerEvent(FireBall.list[i].getLauncher, PlayerEvent.HAS_HIT));
+                this.lastPlayerHitMe = FireBall.list[i].getLauncher;
                 FireBall.list[i].destroy();
                 super.onHit();
             }
@@ -54,6 +61,7 @@ class Enemy extends Character {
 
 
     protected die ():void {
+        BEvent.emit(new PlayerEvent(PlayerEvent.HAS_HIT, this.lastPlayerHitMe, this.getScore));
         this.destroy();
     }
 

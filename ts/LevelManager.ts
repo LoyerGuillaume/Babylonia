@@ -106,7 +106,7 @@ class LevelManager {
         this.gameplayPositions[pName] = this.gameplayPositions[pName] || [];
         this.gameplayPositions[pName].push(pPos);
 
-    }
+    } 
 
     private addGameplayObject (pMesh:LDElement) {
 

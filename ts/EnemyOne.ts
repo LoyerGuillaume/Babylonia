@@ -3,11 +3,16 @@ class EnemyOne extends Enemy {
     private static get ASSET_NAME()       :string { return 'elf';};
     private static get LIFE_POINT()       :number { return 2;};
     private static get INVICIBILITY_TIME():number { return 30;};
-    private static get SCORE_GET()        :number { return 10;};
+    private static get SCORE_GET()        :number { return 100;};
 
     constructor(pPosition:BABYLON.Vector3, pScene:BABYLON.Scene) {
         super(EnemyOne.ASSET_NAME, pPosition, pScene, EnemyOne.LIFE_POINT, EnemyOne.INVICIBILITY_TIME);
         this.initAnimation();
+    }
+
+
+    public get getScore () {
+        return EnemyOne.SCORE_GET;
     }
 
 

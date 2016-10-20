@@ -17,7 +17,8 @@ class Player extends Character {
     constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3) {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
-
+        
+        this.score      = 0;
         this.controller = new ControllerKeyboard();
         this.initEvents();
         this.initAnimation();
@@ -69,7 +70,8 @@ class Player extends Character {
 
     private hasHit (pPlayerEvent:PlayerEvent) {
         if (this === pPlayerEvent.player) {
-            
+            this.score += pPlayerEvent.enemyScore;
+            console.log(this.score);
         }
     }
 
@@ -130,7 +132,7 @@ class Player extends Character {
 
 
     protected die () {
-        BEvent.emit(new PlayerEvent(this, PlayerEvent.DEATH));
+        BEvent.emit(new PlayerEvent(PlayerEvent.DEATH, this));
     }
 
 

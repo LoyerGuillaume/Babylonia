@@ -28,6 +28,7 @@ class Enemy extends Character {
         this.runAnimationName('Run');
     }
 
+
     private move(deltaTime:number) {
         if (Player.list.length != 0) {
             this.lastPlayerPosition = Player.list[0].position;

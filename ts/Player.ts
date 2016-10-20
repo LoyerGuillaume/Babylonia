@@ -88,7 +88,7 @@ class Player extends Character {
     private hasHit (pPlayerEvent:PlayerEvent) {
         if (this === pPlayerEvent.player) {
             this.score += pPlayerEvent.enemyScore;
-            HUDManager.setScore(this.score);
+            UIManager.setScore(this.score);
         }
     }
 

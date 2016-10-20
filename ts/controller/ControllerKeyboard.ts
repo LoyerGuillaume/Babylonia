@@ -18,7 +18,11 @@ class ControllerKeyboard extends Controller {
         }
 
         get attack(): boolean {
-            return this.keys[Keyboard.SPACE];
+            return this.keys[Keyboard.A];
+        }
+
+        get special_1(): boolean {
+            return this.keys[Keyboard.Z];
         }
 
         get pause(): boolean {

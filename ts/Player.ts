@@ -11,28 +11,43 @@ class Player extends Character {
     public static get LIFE_POINT()        :number { return 2;};
 
     private countFrameAttack:number = 0;
+    private score:number;
 
-    constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3) {
+
+    constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3) {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
 
         this.controller = new ControllerKeyboard();
+        this.initEvents();
         this.initAnimation();
         this.initCollision();
     }
 
-    public getPlayerIndex():number {
+
+    public getPlayerIndex ():number {
         return Player.list.indexOf(this);
     }
 
-    protected initCollision() {
+
+    public get getScore ():number {
+        return this.score;
+    }
+
+
+    protected initEvents () {
+        BEvent.on(PlayerEvent.HAS_HIT, this.hasHit, this);
+    }
+
+
+    protected initCollision () {
         this.checkCollisions = true;
         this.ellipsoid = new BABYLON.Vector3(50, 50, 50);
         // Tools.displayEllipsoid(this.getScene(), this);
     }
 
 
-    private initAnimation() {
+    private initAnimation () {
 
         //Saut 22-48
         //run 0-21
@@ -51,7 +66,15 @@ class Player extends Character {
         //Run 45-85
     }
 
-    private move(deltaTime:number) {
+
+    private hasHit (pPlayerEvent:PlayerEvent) {
+        if (this === pPlayerEvent.player) {
+            
+        }
+    }
+
+
+    private move (deltaTime:number) {
         var vectorMovement:BABYLON.Vector3 = new BABYLON.Vector3(this.controller.horizontal, 0, this.controller.vertical);
         vectorMovement.normalize();
 
@@ -66,7 +89,7 @@ class Player extends Character {
     }
 
 
-    protected doActionNormal(deltaTime:number) {
+    protected doActionNormal (deltaTime:number) {
         this.countFrameAttack++;
 
         this.move(deltaTime);
@@ -79,7 +102,8 @@ class Player extends Character {
         }
     }
 
-    private attack() {
+
+    private attack () {
         if (this.controller.attack) {
             if (this.countFrameAttack >= Player.COUNTDOWN_ATTACK) {
                 this.countFrameAttack = 0;
@@ -88,10 +112,12 @@ class Player extends Character {
         }
     }
 
-    private createFireBall() {
-        var fireBall = new FireBall(this.getScene(), this.position, this.rotationQuaternion);
+
+    private createFireBall () {
+        var fireBall = new FireBall(this.getScene(), this.position, this.rotationQuaternion, this);
         fireBall.start();
     }
+
 
     private checkEnemyCollision () {
         for (var i in Enemy.list) {
@@ -102,9 +128,11 @@ class Player extends Character {
         }
     }
 
+
     protected die () {
-        BEvent.emit(new PlayerEvent(this));
+        BEvent.emit(new PlayerEvent(this, PlayerEvent.DEATH));
     }
+
 
     public destroy () {
         console.log('Destroy');

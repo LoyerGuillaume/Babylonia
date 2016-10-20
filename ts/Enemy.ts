@@ -8,10 +8,12 @@ class Enemy extends Character {
     private static get ROTATION_SPEED():number { return 0.3;};
 
     private lastPlayerHitMe:Player;
+    private lastPlayerPosition:BABYLON.Vector3;
 
     constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene, pLifePoint:number, pInvincibilityTime:number) {
         super(pScene, pAssetName, pPosition, pLifePoint);
         this.invincibilityTime = pInvincibilityTime;
+        this.lastPlayerPosition = new BABYLON.Vector3(0, 0, 0);
         Enemy.list.push(this);
     }
 
@@ -26,16 +28,19 @@ class Enemy extends Character {
         this.runAnimationName('Run');
     }
 
-
     private move(deltaTime:number) {
-        var target = Player.list[0];
-        var vectorMovement:BABYLON.Vector3 = target.position.subtract(this.position);
+        if (Player.list.length != 0) {
+            this.lastPlayerPosition = Player.list[0].position;
+        }
+
+        var vectorMovement:BABYLON.Vector3 = this.lastPlayerPosition.subtract(this.position);
 
         vectorMovement.normalize();
 
         this.moveWithCollisions(vectorMovement.scaleInPlace(Enemy.MOVE_SPEED * deltaTime));
 
         super._rotate(vectorMovement, Enemy.ROTATION_SPEED);
+
     }
 
 

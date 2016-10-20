@@ -5,6 +5,7 @@ class GameManager {
     private levelManager: LevelManager;
 
     private onPause:boolean = false;
+    private oldPausePress:boolean = false;
 
     private playerOne:Player;
 
@@ -54,13 +55,8 @@ class GameManager {
 
     private onPlayerDeath (pEvent:PlayerEvent) {
         var playerIndex = pEvent.player.getPlayerIndex();
-        console.log('playerIndex : ' + playerIndex);
         pEvent.player.destroy();
-        // Player.list[playerIndex] = null;
-        //pPlayer.destroy();
-        console.log('Before : ' + Player.list.length);
         Player.list.splice(playerIndex, 1);
-        console.log('After : ' + Player.list.length);
         this.initPlayer(playerIndex);
     }
 
@@ -117,7 +113,6 @@ class GameManager {
     }
 
 
-    private oldPausePress:boolean = false;
     private checkController() {
         for (var l in Player.list) {
             if (Player.list[l].controller.pause != this.oldPausePress) {

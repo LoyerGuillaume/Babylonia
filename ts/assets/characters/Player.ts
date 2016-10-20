@@ -13,15 +13,15 @@ class Player extends Character {
     private score:number;
 
     private attacks:{} = {
-        'attack': {
-            'cooldown': 30,
-            'attackFunction': this.shotOneFireBall,
-            'countFrameAttack': 0
+        attack: {
+            cooldown        : 30,
+            attackFunction  : this.shotOneFireBall,
+            countFrameAttack: 0
         },
-        'special_1': {
-            'cooldown': 120,
-            'attackFunction': this.shotThreeFireBalls,
-            'countFrameAttack': 0
+        special_1: {
+            cooldown        : 120,
+            attackFunction  : this.shotThreeFireBalls,
+            countFrameAttack: 0
         },
     };
 
@@ -36,6 +36,7 @@ class Player extends Character {
         this.initEvents();
         this.initAnimation();
         this.initCollision();
+        this.initCapacitiesUI();
     }
 
 
@@ -58,6 +59,12 @@ class Player extends Character {
         this.checkCollisions = true;
         this.ellipsoid = new BABYLON.Vector3(50, 50, 50);
         // Tools.displayEllipsoid(this.getScene(), this);
+    }
+
+    private initCapacitiesUI () {
+        for (var name in this.attacks) {
+            UIManager.addCapacity(this.attacks[name]);
+        }
     }
 
 

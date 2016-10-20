@@ -2,7 +2,7 @@ class Player extends Character {
 
     public static list:Player[] = [];
 
-    private controller:Controller;
+    public controller:Controller;
     private static get ASSET_NAME():string { return 'elf';};
     private static get MOVE_SPEED():number { return 0.5;};
     private static get ROTATION_SPEED():number { return 0.3;};

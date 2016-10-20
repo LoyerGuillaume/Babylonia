@@ -4,6 +4,8 @@ class GameManager {
     private engine:BABYLON.Engine;
     private levelManager: LevelManager;
 
+    private onPause:boolean = false;
+
     private playerOne:Player;
 
     private static get ASSETS_NAME() { return [
@@ -114,8 +116,37 @@ class GameManager {
     }
 
 
+    private oldPausePress:boolean = false;
+    private checkController() {
+        for (var l in Player.list) {
+            if (Player.list[l].controller.pause != this.oldPausePress) {
+                this.oldPausePress = Player.list[l].controller.pause;
+                if (Player.list[l].controller.pause) {
+                    this.onPause       = !this.onPause;
+                    if (this.onPause) {
+                         this.engine.stopRenderLoop();
+                         this.pauseGameLoop();
+                    } else {
+                        this.engine.stopRenderLoop();
+                        this.gameLoop();
+                    }
+                }
+            }
+        }
+    }
+
+    private pauseGameLoop () {
+        this.engine.runRenderLoop(() => {
+            this.checkController();
+        });
+
+    }
+
+
     private gameLoop () {
         this.engine.runRenderLoop(() => {
+            this.checkController();
+
             this.mainScene.render();
 
             var deltaTime:number = this.engine.getDeltaTime();

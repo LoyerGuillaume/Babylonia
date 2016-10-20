@@ -22,7 +22,7 @@ class ControllerKeyboard extends Controller {
         }
 
         get pause(): boolean {
-            return this.keys[Keyboard.P];
+            return this.keys[Keyboard.P] || false;
         }
 
         get god(): boolean {

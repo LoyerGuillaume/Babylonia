@@ -17,12 +17,12 @@ class Player extends Character {
     private attacks:{} = {
         'attack': {
             'cooldown': 30,
-            'function': this.createFireBall,
+            'attackFunction': this.shotOneFireBall,
             'countFrameAttack': 0
         },
         'special_1': {
             'cooldown': 120,
-            'function': this.createMultipleFireBall,
+            'attackFunction': this.shotThreeFireBalls,
             'countFrameAttack': 0
         },
     };
@@ -113,7 +113,6 @@ class Player extends Character {
 
         this.move(deltaTime);
         this.checkAttack();
-        // this.checkAttackSpecial_1();
 
         if (this.isInvicible) {
             super.invicibilityCooldown(Player.INVICIBILITY_TIME);
@@ -130,11 +129,14 @@ class Player extends Character {
                 var attack = this.attacks[attackName];
                 if (attack.countFrameAttack >= attack.cooldown) {
                     attack.countFrameAttack = 0;
-                    attack.function();
+                    console.log('Check Attack');
+                    console.log(attack.attackFunction);
+                    attack.attackFunction.apply(this);
                 }
             }
         }
     }
+
 
     private addFrameAttack () {
         var attackName:string;
@@ -142,32 +144,22 @@ class Player extends Character {
             this.attacks[attackName].countFrameAttack++;
         }
     }
-    // private checkAttack () {
-    //     if (this.controller.attack) {
-    //         if (this.countFrameAttack >= Player.COUNTDOWNS_ATTACK['1']) {
-    //             this.countFrameAttack = 0;
-    //             this.createFireBall(this.rotationQuaternion);
-    //         }
-    //     }
-    // }
 
-    private checkAttackSpecial_1 () {
-        if (this.controller.special_1) {
-            if (this.countFrameAttack >= Player.COUNTDOWNS_ATTACK['2']) {
-                this.countFrameAttack = 0;
-                this.createMultipleFireBall();
-            }
-        }
-    }
-
+//==== ATTACKS ====
 
     private createFireBall (pRotationQuaternion:BABYLON.Quaternion) {
+        console.log('createFireBall');
         var fireBall = new FireBall(this.getScene(), this.position, pRotationQuaternion, this);
         fireBall.start();
     }
 
 
-    private createMultipleFireBall () {
+    private shotOneFireBall () {
+        this.createFireBall(this.rotationQuaternion);
+    }
+
+
+    private shotThreeFireBalls () {
         var rotationQuaternion:BABYLON.Quaternion = this.rotationQuaternion;
         this.createFireBall(rotationQuaternion);
         this.createFireBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( Player.ANGLE_SPECIAL_ATTACK_1))));
@@ -194,7 +186,6 @@ class Player extends Character {
     public destroy () {
         console.log('Destroy');
         this.controller.destroy();
-        // Player.list.splice(Player.list.indexOf(this), 1);
         super.destroy();
     }
 

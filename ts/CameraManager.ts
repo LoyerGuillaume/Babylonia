@@ -20,6 +20,11 @@ class CameraManager {
 
     public static setTarget(pTarget: GameObject):void {
         CameraManager.target = pTarget;
+        var targetPosition:BABYLON.Vector3 = pTarget.position.clone();
+        targetPosition.z                  += CameraManager.RADIUS;
+        targetPosition.y                  += CameraManager.HEIGHT;
+        targetPosition.x                  += CameraManager.X_OFFSET;
+        CameraManager.camera.position = targetPosition;
         CameraManager.camera.setTarget(pTarget.position.clone());
     }
 

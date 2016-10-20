@@ -50,6 +50,7 @@ class Enemy extends Character {
                 this.lastPlayerHitMe = FireBall.list[i].getLauncher;
                 FireBall.list[i].destroy();
                 super.onHit();
+                return;
             }
         }
     }

@@ -3,12 +3,13 @@ class Player extends Character {
     public static list:Player[] = [];
 
     public controller:Controller;
-    private static get ASSET_NAME()       :string { return 'elf';};
-    private static get MOVE_SPEED()       :number { return 0.5;};
-    private static get ROTATION_SPEED()   :number { return 0.3;};
-    private static get COUNTDOWN_ATTACK() :number { return 30;};
-    private static get INVICIBILITY_TIME():number { return 120;};
-    public static get LIFE_POINT()        :number { return 2;};
+    private static get ASSET_NAME()            :string { return 'elf';};
+    private static get MOVE_SPEED()            :number { return 0.5;};
+    private static get ROTATION_SPEED()        :number { return 0.3;};
+    private static get COUNTDOWN_ATTACK()      :number { return 30;};
+    private static get INVICIBILITY_TIME()     :number { return 120;};
+    public static get LIFE_POINT()             :number { return 2;};
+    public static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
 
     private countFrameAttack:number = 0;
     private score:number;
@@ -95,7 +96,8 @@ class Player extends Character {
         this.countFrameAttack++;
 
         this.move(deltaTime);
-        this.attack();
+        this.checkAttack();
+        this.checkAttackSpecial_1();
 
         if (this.isInvicible) {
             super.invicibilityCooldown(Player.INVICIBILITY_TIME);
@@ -105,19 +107,36 @@ class Player extends Character {
     }
 
 
-    private attack () {
+    private checkAttack () {
         if (this.controller.attack) {
             if (this.countFrameAttack >= Player.COUNTDOWN_ATTACK) {
                 this.countFrameAttack = 0;
-                this.createFireBall();
+                this.createFireBall(this.rotationQuaternion);
+            }
+        }
+    }
+
+    private checkAttackSpecial_1 () {
+        if (this.controller.special_1) {
+            if (this.countFrameAttack >= Player.COUNTDOWN_ATTACK) {
+                this.countFrameAttack = 0;
+                this.createMultipleFireBall();
             }
         }
     }
 
 
-    private createFireBall () {
-        var fireBall = new FireBall(this.getScene(), this.position, this.rotationQuaternion, this);
+    private createFireBall (pRotationQuaternion:BABYLON.Quaternion) {
+        var fireBall = new FireBall(this.getScene(), this.position, pRotationQuaternion, this);
         fireBall.start();
+    }
+
+
+    private createMultipleFireBall () {
+        var rotationQuaternion:BABYLON.Quaternion = this.rotationQuaternion;
+        this.createFireBall(rotationQuaternion);
+        this.createFireBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( Player.ANGLE_SPECIAL_ATTACK_1))));
+        this.createFireBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(-Player.ANGLE_SPECIAL_ATTACK_1))));
     }
 
 

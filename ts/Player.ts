@@ -2,22 +2,27 @@ class Player extends Character {
 
     public static list:Player[] = [];
 
-    private controller:Controller;
-    private static get ASSET_NAME():string { return 'elf';};
-    private static get MOVE_SPEED():number { return 0.5;};
-    private static get ROTATION_SPEED():number { return 0.3;};
-    private static get COUNTDOWN_ATTACK():number { return 30;};
+    public controller:Controller;
+    private static get ASSET_NAME()       :string { return 'elf';};
+    private static get MOVE_SPEED()       :number { return 0.5;};
+    private static get ROTATION_SPEED()   :number { return 0.3;};
+    private static get COUNTDOWN_ATTACK() :number { return 30;};
     private static get INVICIBILITY_TIME():number { return 120;};
-    private static get LIFE_POINT():number { return 3;};
+    public static get LIFE_POINT()        :number { return 2;};
 
     private countFrameAttack:number = 0;
 
     constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3) {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
+
         this.controller = new ControllerKeyboard();
         this.initAnimation();
         this.initCollision();
+    }
+
+    public getPlayerIndex():number {
+        return Player.list.indexOf(this);
     }
 
     protected initCollision() {
@@ -92,6 +97,7 @@ class Player extends Character {
         for (var i in Enemy.list) {
             if (this.meshe.intersectsMesh(Enemy.list[i], false)) {
                 super.onHit();
+                return;
             }
         }
     }
@@ -103,7 +109,7 @@ class Player extends Character {
     public destroy () {
         console.log('Destroy');
         this.controller.destroy();
-        Player.list.splice(Player.list.indexOf(this), 1);
+        // Player.list.splice(Player.list.indexOf(this), 1);
         super.destroy();
     }
 

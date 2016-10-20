@@ -34,7 +34,8 @@
         "assets/LDElement.ts",
         "EnemySpawner.ts",
         "utils/events/BEvent.ts",
-        "events/PlayerEvent.ts"
+        "events/PlayerEvent.ts",
+        "HUDManager.ts"
     ],
     "compileOnSave": true
 }

@@ -46,7 +46,7 @@ class Game {
 
 
     private _initGame () {
-        this.scene.debugLayer.show();
+        // this.scene.debugLayer.show();
 
         var gameManager:GameManager = new GameManager(this.scene, this.engine);
         gameManager.start();

@@ -22,7 +22,6 @@ class LevelManager {
         //lTree.position = new BABYLON.Vector3(500, 0, 10);
         //lTree.start();
 
-
         var lElems:BABYLON.AbstractMesh[] = [];
 
         var lLen = pMeshes.length;

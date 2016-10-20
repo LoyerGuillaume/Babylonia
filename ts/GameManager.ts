@@ -23,7 +23,6 @@ class GameManager {
 
         this.initPlayer(0);
 
-        HUDManager.initHud(this.mainScene);
         new EnemySpawner('EnemyOne', this.mainScene);
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
@@ -35,6 +34,13 @@ class GameManager {
         var playerIndex = pEvent.player.getPlayerIndex();
         pEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
+
+        console.log(Player.list.length);
+        if (Player.list.length === 0) {
+            //GameOver
+            this.destroyAllEnemies();
+        }
+
         this.initPlayer(playerIndex);
     }
 
@@ -44,6 +50,7 @@ class GameManager {
         Player.list[indexPlayer] = new Player(this.mainScene, lPos);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
+        HUDManager.gainLife(Player.LIFE_POINT);
     }
 
     private checkController() {
@@ -98,6 +105,13 @@ class GameManager {
             CameraManager.updatePosition();
 
         });
+    }
+
+    private destroyAllEnemies () {
+        var enemyLength = Enemy.list.length;
+        for (var i = enemyLength - 1; i >= 0; i--) {
+            Enemy.list[i].destroy();
+        }
     }
 
 }

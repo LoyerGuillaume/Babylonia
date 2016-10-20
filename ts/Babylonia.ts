@@ -29,18 +29,20 @@ class Babylonia {
         this.gameManager = new GameManager(pScene, pEngine, this.levelManager);
 
         CameraManager.init(this.mainScene, this.engine);
+        HUDManager.initHud(this.mainScene);
 
         // loading
-        var loadedCount = 2;
+        var loadedCount = 3;
         var loadedCounter = 0;
+
+        this.loadAssets(Babylonia.ASSETS_NAME, true, onAssetLoaded);
+        this.loadAssets(Babylonia.LEVELS_NAME, false, onAssetLoaded);
+        HUDManager.loadTextures(this.mainScene, onAssetLoaded);
 
         var self:Babylonia = this;
         function onAssetLoaded () {
             if (++loadedCounter >= loadedCount) self.gameManager.start();
         }
-
-        this.loadAssets(Babylonia.ASSETS_NAME, true, onAssetLoaded);
-        this.loadAssets(Babylonia.LEVELS_NAME, false, onAssetLoaded);
     }
 
     public destroy () {

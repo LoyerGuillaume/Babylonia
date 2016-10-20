@@ -25,11 +25,15 @@ class GameManager {
     public start () {
         var that = this;
 
+
         this.initPlayer(0);
 
         new EnemySpawner('EnemyOne', this.mainScene);
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
+
+        var testCoin = new Coin(this.mainScene, new BABYLON.Vector3(0, 150, 500));
+        testCoin.start();
 
         this.gameLoop();
     }
@@ -121,6 +125,10 @@ class GameManager {
 
             for (var l in Player.list) {
                 Player.list[l].doAction(deltaTime);
+            }
+
+            for (var m in Coin.list) {
+                Coin.list[m].doAction(deltaTime);
             }
 
             CameraManager.updatePosition();

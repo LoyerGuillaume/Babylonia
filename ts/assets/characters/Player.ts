@@ -11,7 +11,8 @@ class Player extends Character {
     public static get LIFE_POINT()              :number { return 1;};
 
     private score:number;
-    
+    private coins:number;
+
     private attacks:{} = {
         'attack': {
             'cooldown': 30,
@@ -32,6 +33,7 @@ class Player extends Character {
         Player.list.push(this);
 
         this.score      = 0;
+        this.coins      = 0;
         this.controller = new ControllerKeyboard();
         this.initEvents();
         this.initAnimation();
@@ -51,6 +53,7 @@ class Player extends Character {
 
     protected initEvents () {
         BEvent.on(PlayerEvent.HAS_HIT, this.hasHit, this);
+        BEvent.on(PlayerEvent.GOT_COIN, this.onCoinCollision, this);
     }
 
 
@@ -115,6 +118,8 @@ class Player extends Character {
         } else {
             this.checkEnemyCollision();
         }
+
+        this.checkCoinCollision();
     }
 
 
@@ -168,6 +173,22 @@ class Player extends Character {
                 return;
             }
         }
+    }
+
+
+    private checkCoinCollision () {
+        for (var i in Coin.list) {
+            if (this.meshe.intersectsMesh(Coin.list[i], false)) {
+                Coin.list[i].destroy();
+                BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, this));
+            }
+        }
+    }
+
+
+    private onCoinCollision ():void {
+        this.coins++;
+        console.log('Coins : ' + this.coins);
     }
 
 

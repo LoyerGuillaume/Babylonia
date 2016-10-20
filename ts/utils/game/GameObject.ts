@@ -30,6 +30,6 @@ class GameObject extends BABYLON.Mesh {
     private doActionVoid(deltaTime:number) { }
 
     public destroy () {
-        this.dispose();
+        this.dispose(false);
     }
 }

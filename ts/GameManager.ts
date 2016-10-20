@@ -58,11 +58,18 @@ class GameManager {
         var playerIndex = pEvent.player.getPlayerIndex();
         pEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
+
+        console.log(Player.list.length);
+        if (Player.list.length === 0) {
+            //GameOver
+            this.destroyAllEnemies();
+        }
+
         this.initPlayer(playerIndex);
     }
 
 
-    private initPlayer(indexPlayer) { 
+    private initPlayer(indexPlayer) {
         var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();
         console.warn('init player ', lPos);
         lPos.y += 150;
@@ -167,6 +174,14 @@ class GameManager {
             CameraManager.updatePosition();
 
         });
+    }
+
+
+    private destroyAllEnemies () {
+        var enemyLength = Enemy.list.length;
+        for (var i = enemyLength - 1; i >= 0; i--) {
+            Enemy.list[i].destroy();
+        }
     }
 
 }

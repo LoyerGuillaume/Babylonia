@@ -140,7 +140,9 @@ class Player extends Character {
             if (this.controller[attackName]) {
                 var attack = this.attacks[attackName];
                 if (attack.countFrameAttack >= attack.cooldown) {
-                    // BEvent.emit(new PlayerEvent(PlayerEvent.ATTACK, ))
+                    BEvent.emit(new PlayerEvent(PlayerEvent.ATTACK, {
+                        name: attack.name
+                    }));
                     attack.countFrameAttack = 0;
                     attack.attackFunction.apply(this);
                 }

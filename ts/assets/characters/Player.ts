@@ -3,7 +3,7 @@ class Player extends Character {
     public static list:Player[] = [];
 
     public controller:Controller;
-    private static get ASSET_NAME()             :string { return 'elf';};
+    private static get ASSET_NAME()             :string { return 'ChaWitch';};
     private static get MOVE_SPEED()             :number { return 0.5;};
     private static get ROTATION_SPEED()         :number { return 0.3;};
     private static get INVICIBILITY_TIME()      :number { return 120;};
@@ -20,7 +20,7 @@ class Player extends Character {
             cooldown        : 30,
             attackFunction  : this.shotOneFireBall,
             countFrameAttack: 0
-        }, 
+        },
         special_1: {
             name            : 'BabySpread',
             key             : 'Z',
@@ -82,12 +82,16 @@ class Player extends Character {
         //double saut 49-73
         //Mort 74-138
         //
-        this.addAnimation('Run', 0, 21);
-        this.addAnimation('Jump', 22, 48);
-        this.addAnimation('Double Jump', 49, 73);
-        this.addAnimation('Death', 74, 138);
-
-        // this.runAnimationName('IDLE');
+        // this.addAnimation('Run', 0, 21);
+        // this.addAnimation('Jump', 22, 48);
+        // this.addAnimation('Double Jump', 49, 73);
+        // this.addAnimation('Death', 74, 138);
+        //
+        //
+        // this.skeleton.beginAnimation('Witch_Walk');
+        // this.addAnimation('Run', 0, 1);
+        //
+        // this.runAnimationName('Run');
 
 
         //IDLE 0-39
@@ -110,10 +114,10 @@ class Player extends Character {
         this.moveWithCollisions(vectorMovement.scaleInPlace(-Player.MOVE_SPEED * deltaTime));
 
         if (this.controller.vertical != 0 || this.controller.horizontal != 0) {
-            this.runAnimationName('Run');
+            // this.runAnimationName('Run');
             super._rotate(vectorMovement.clone(), Player.ROTATION_SPEED);
         } else {
-            this.stopAnimation();
+            // this.stopAnimation();
         }
     }
 

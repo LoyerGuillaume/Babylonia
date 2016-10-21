@@ -2,7 +2,7 @@ class Coin extends AssetGraphic {
 
     public static list:Coin[] = [];
 
-    private static get ASSET_NAME()           :string { return 'elf';};
+    private static get ASSET_NAME()           :string { return 'Stone_Frog_Blue';};
     private static get ROTATION_SPEED()       :number { return 0.1;};
     private static get MIN_MULTIPLY_MOVEMENT():number { return 500;};
     private static get MAX_MULTIPLY_MOVEMENT():number { return 2000;};

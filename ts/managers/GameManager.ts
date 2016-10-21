@@ -28,7 +28,7 @@ class GameManager {
 
         this.initPlayer(0);
 
-        new EnemySpawner('EnemyOne', this.mainScene);
+        // new EnemySpawner('EnemyOne', this.mainScene);
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
 
@@ -36,6 +36,16 @@ class GameManager {
         // testCoin.start();
 
         this.gameLoop();
+    }
+
+    /**
+     * @params pCount if null, the count is random
+     */
+    private spawnEnemy (pCount:number = null) {
+
+        var lPoppers = this.levelManager.getGameplayObjects('EnemyPopper');
+        var lPopperSupers = this.levelManager.getGameplayObjects('EnemyPopper_S');
+
     }
 
     private onPlayerDeath (pEvent:PlayerEvent) {

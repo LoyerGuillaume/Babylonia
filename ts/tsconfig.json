@@ -33,6 +33,7 @@
         "controller/ControllerKeyboard.ts",
         "controller/ControllerType.ts",
         "events/PlayerEvent.ts",
+        "UI/UICapacity.ts",
         "Config.ts",
         "Preloader.ts",
         "ICollisionable.ts",

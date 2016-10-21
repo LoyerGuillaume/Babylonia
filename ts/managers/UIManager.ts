@@ -3,7 +3,7 @@ class UIManager {
     private static get HEART_SIZE()     :number { return 64 };
     private static get SCORE_SIZE()     :number { return 40 };
     private static get MESSAGE_SIZE()   :number { return 20 };
-    private static get CAPACITY_OFFSET():number { return 150 };
+    private static get CAPACITY_OFFSET():number { return 250 };
 
     private static heartTexture:BABYLON.Texture;
     private static heartScale:number;
@@ -121,9 +121,9 @@ class UIManager {
     public static addCapacity (pCapacity:{}) {
         var length:number = UIManager.capacityGroup.children.length;
         var capacity:UICapacity = new UICapacity({
-            parent: UIManager.hudContainer
+            parent: UIManager.capacityGroup
         }, pCapacity);
-        capacity.position.x = length * UIManager.CAPACITY_OFFSET - capacity.width / 2;
+        capacity.x = length * UIManager.CAPACITY_OFFSET - capacity.width / 2;
         UIManager.placeCapacityContainer();
     }
 

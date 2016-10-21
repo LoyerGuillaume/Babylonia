@@ -15,11 +15,15 @@ class Player extends Character {
 
     private attacks:{} = {
         attack: {
+            name            : 'BabyBoule',
+            key             : 'A',
             cooldown        : 30,
             attackFunction  : this.shotOneFireBall,
             countFrameAttack: 0
         },
         special_1: {
+            name            : 'BabySpread',
+            key             : 'Z',
             cooldown        : 120,
             attackFunction  : this.shotThreeFireBalls,
             countFrameAttack: 0

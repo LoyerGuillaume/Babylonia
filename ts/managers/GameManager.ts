@@ -33,6 +33,8 @@ class GameManager {
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
 
         this.gameLoop();
+
+        this.enemyManager.startWave(0);
     }
 
     private initEnemyManager () {

@@ -8,9 +8,7 @@ class PlayerEvent extends BEvent {
     public player:Player;
     public enemyScore:number;
 
-    constructor(pEventName:string, pPlayer:Player, pEnemyScore:number = 0) {
-        super(pEventName);
-        this.player     = pPlayer;
-        this.enemyScore = pEnemyScore;
+    constructor(pEventName:string, pParams:any = undefined) {
+        super(pEventName, pParams);
     }
 }

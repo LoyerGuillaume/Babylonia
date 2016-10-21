@@ -28,6 +28,8 @@ class GameManager {
 
         this.initPlayer(0);
 
+        var enemy:EnemyOne = new EnemyOne(new BABYLON.Vector3(200, 0, 0), this.mainScene);
+        enemy.start();
         // new EnemySpawner('EnemyOne', this.mainScene);
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
@@ -46,10 +48,10 @@ class GameManager {
 
     }
 
-    private onPlayerDeath (pEvent:PlayerEvent) {
-        var playerIndex = pEvent.player.getPlayerIndex();
+    private onPlayerDeath (pPlayerEvent:any) {
+        var playerIndex = pPlayerEvent.player.getPlayerIndex();
 
-        pEvent.player.destroy();
+        pPlayerEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
 
         var playerRemaining = Player.list.length;

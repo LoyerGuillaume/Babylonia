@@ -84,7 +84,10 @@ class Enemy extends Character {
 
 
     protected die ():void {
-        BEvent.emit(new PlayerEvent(PlayerEvent.HAS_HIT, this.lastPlayerHitMe, this.getScore));
+        BEvent.emit(new PlayerEvent(PlayerEvent.HAS_HIT, {
+            player: this.lastPlayerHitMe,
+            score: this.getScore
+        }));
         this.dropCoins();
         this.destroy();
     }

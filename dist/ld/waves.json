@@ -1,0 +1,37 @@
+{
+    "1" : {
+        "situations" : [
+            {
+                "enemies" : [
+                    { "spawner": 0,     "delay": 0,     "enemy": "EnemyOne"},
+                    { "spawner": 1,     "delay": 150,   "enemy": "EnemyOne"},
+                    { "spawner": 2,     "delay": 300,   "enemy": "EnemyOne"},
+                    { "spawner": 3,     "delay": 450,   "enemy": "EnemyOne"},
+                    { "spawner": 4,     "delay": 600,   "enemy": "EnemyOne"},
+                    { "spawner": 5,     "delay": 750,   "enemy": "EnemyOne"},
+                    { "spawner": 6,     "delay": 900,   "enemy": "EnemyOne"},
+                    { "spawner": 7,     "delay": 1050,  "enemy": "EnemyOne"},
+                    { "spawner": 8,     "delay": 1200,   "enemy": "EnemyOne"},
+                    { "spawner": 9,     "delay": 1350,   "enemy": "EnemyOne"},
+                    { "spawner": 10,    "delay": 1500,   "enemy": "EnemyOne"},
+                    { "spawner": 11,    "delay": 1650,   "enemy": "EnemyOne"},
+                    { "spawner": 12,    "delay": 1800,   "enemy": "EnemyOne"}
+                ]
+            },
+            {
+                "foreachDelay" : 500,
+                "enemies" : [
+                    { "spawner": 0,     "enemy": "EnemyOne"},
+                    { "spawner": 1,     "enemy": "EnemyOne"},
+                    { "spawner": 2,     "enemy": "EnemyOne"}
+                ],
+                "nextForeachDelay" : 350,
+                "nextEnemies" : [
+                    { "spawner": 1,     "enemy": "EnemyOne"},
+                    { "spawner": 0,     "enemy": "EnemyOne"},
+                    { "spawner": 2,     "enemy": "EnemyOne"}
+                ]
+            }
+        ]
+    }
+}

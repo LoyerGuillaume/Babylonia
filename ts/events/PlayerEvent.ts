@@ -4,13 +4,9 @@ class PlayerEvent extends BEvent {
     public static HAS_HIT  :string = 'PLAYER_HAS_HIT';
     public static HIT      :string = 'PLAYER_HIT';
     public static GOT_COIN :string = 'GOT_COIN';
+    public static ATTACK   :string = 'ATTACK';
 
-    public player:Player;
-    public enemyScore:number;
-
-    constructor(pEventName:string, pPlayer:Player, pEnemyScore:number = 0) {
-        super(pEventName);
-        this.player     = pPlayer;
-        this.enemyScore = pEnemyScore;
+    constructor(pEventName:string, pParams:any = undefined) {
+        super(pEventName, pParams);
     }
 }

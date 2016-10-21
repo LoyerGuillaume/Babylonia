@@ -4,8 +4,11 @@ class BEvent {
 
     public id:string;
 
-    constructor (pId:string) {
+    private params:any;
+
+    constructor (pId:string, pParams:any = undefined) {
         this.id = pId;
+        this.params = pParams;
     }
 
     public static on (pId:string, pFunc:any, pThis:any = undefined) {
@@ -28,13 +31,11 @@ class BEvent {
     }
 
     public static emit (pEvent:BEvent) {
-
         if (BEvent.callbacks[pEvent.id]) {
 
             var len:number = BEvent.callbacks[pEvent.id].length;
-
             for (var i = 0; i < len; i++) {
-                BEvent.callbacks[pEvent.id][i](pEvent);
+                BEvent.callbacks[pEvent.id][i](pEvent.params);
             }
         }
     }

@@ -99,9 +99,9 @@ class Player extends Character {
     }
 
 
-    private hasHit (pPlayerEvent:PlayerEvent) {
-        if (this === pPlayerEvent.player) {
-            this.score += pPlayerEvent.enemyScore;
+    private hasHit (pPlayerEventParams:any) {
+        if (this === pPlayerEventParams.player) {
+            this.score += pPlayerEventParams.enemyScore;
             UIManager.setScore(this.score);
         }
     }
@@ -144,6 +144,9 @@ class Player extends Character {
             if (this.controller[attackName]) {
                 var attack = this.attacks[attackName];
                 if (attack.countFrameAttack >= attack.cooldown) {
+                    BEvent.emit(new PlayerEvent(PlayerEvent.ATTACK, {
+                        name: attack.name
+                    }));
                     attack.countFrameAttack = 0;
                     attack.attackFunction.apply(this);
                 }
@@ -183,7 +186,7 @@ class Player extends Character {
     private checkEnemyCollision () {
         for (var i in Enemy.list) {
             if (this.meshe.intersectsMesh(Enemy.list[i], false)) {
-                BEvent.emit(new PlayerEvent(PlayerEvent.HIT, this));
+                BEvent.emit(new PlayerEvent(PlayerEvent.HIT));
                 super.onHit();
                 return;
             }
@@ -195,7 +198,7 @@ class Player extends Character {
         for (var i in Coin.list) {
             if (this.meshe.intersectsMesh(Coin.list[i], false)) {
                 Coin.list[i].destroy();
-                BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, this));
+                BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN));
             }
         }
     }
@@ -208,7 +211,9 @@ class Player extends Character {
 
 
     protected die () {
-        BEvent.emit(new PlayerEvent(PlayerEvent.DEATH, this));
+        BEvent.emit(new PlayerEvent(PlayerEvent.DEATH, {
+            player: this
+        }));
     }
 
 

@@ -5,11 +5,12 @@ class GameManager {
     private levelManager: LevelManager;
     private lightManager:LightManager;
 
+    // GAME RULES
+    private enemyManager: EnemyManager;
+
     private onPause:boolean = false;
     private oldPausePress:boolean = false;
     private frameCount:number = 0;
-
-    private playerOne:Player;
 
     private static get RESPAWN_SECONDS() { return 3;};
 
@@ -29,6 +30,7 @@ class GameManager {
         this.lightManager = new LightManager(this.mainScene);
 
         this.initPlayer(0);
+
         this.initEnemyManager();
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
@@ -37,13 +39,15 @@ class GameManager {
     }
 
     private initEnemyManager () {
-
+        this.enemyManager = new EnemyManager(this.mainScene);
+        var lWavesDesc = Babylonia.getLoadedContent('waves');
+        this.enemyManager.setWavesDescription( JSON.parse(lWavesDesc) );
     }
 
-    private onPlayerDeath (pEvent:PlayerEvent) {
-        var playerIndex = pEvent.player.getPlayerIndex();
+    private onPlayerDeath (pPlayerEvent:any) {
+        var playerIndex = pPlayerEvent.player.getPlayerIndex();
 
-        pEvent.player.destroy();
+        pPlayerEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
 
         var playerRemaining = Player.list.length;

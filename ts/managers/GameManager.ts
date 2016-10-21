@@ -6,6 +6,7 @@ class GameManager {
 
     private onPause:boolean = false;
     private oldPausePress:boolean = false;
+    private frameCount:number = 0;
 
     private playerOne:Player;
 
@@ -22,12 +23,17 @@ class GameManager {
     }
 
     public start () {
+        var that = this;
+
 
         this.initPlayer(0);
 
         new EnemySpawner('EnemyOne', this.mainScene);
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
+
+        var testCoin = new Coin(this.mainScene, new BABYLON.Vector3(0, 150, 500));
+        testCoin.start();
 
         this.gameLoop();
     }
@@ -52,11 +58,12 @@ class GameManager {
 
         var that = this;
         var secondsRemaining = GameManager.RESPAWN_SECONDS;
-        console.log('Player ' + (playerIndex + 1) + ' : Vous êtes mort, respawn dans ' + secondsRemaining);
+        UIManager.displayMessage('Player ' + (playerIndex + 1) + ' : Vous êtes mort, respawn dans ' + secondsRemaining);
         var interval = setInterval(function () {
             secondsRemaining--;
-            console.log('Player ' + (playerIndex + 1) + ' : Vous êtes mort, respawn dans ' + secondsRemaining);
+            UIManager.displayMessage('Player ' + (playerIndex + 1) + ' : Vous êtes mort, respawn dans ' + secondsRemaining);
             if (secondsRemaining === 0) {
+                UIManager.removeMessage();
                 clearTimeout(interval);
                 that.initPlayer(playerIndex);
                 if (playerRemaining === 0) {
@@ -79,7 +86,7 @@ class GameManager {
         Player.list[indexPlayer] = new Player(this.mainScene, lPos);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
-        HUDManager.gainLife(Player.LIFE_POINT);
+        UIManager.gainLife(Player.LIFE_POINT);
     }
 
     private checkController() {
@@ -107,11 +114,10 @@ class GameManager {
 
     }
 
+
     private gameLoop () {
         this.engine.runRenderLoop(() => {
             this.checkController();
-
-            this.mainScene.render();
 
             var deltaTime:number = this.engine.getDeltaTime();
 
@@ -131,8 +137,17 @@ class GameManager {
                 Player.list[l].doAction(deltaTime);
             }
 
+            for (var m in Coin.list) {
+                Coin.list[m].doAction(deltaTime);
+            }
+
             CameraManager.updatePosition();
 
+            if (this.frameCount % 2) {
+                this.mainScene.render();
+            }
+
+            this.frameCount++;
         });
     }
 

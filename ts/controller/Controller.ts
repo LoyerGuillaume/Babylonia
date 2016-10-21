@@ -1,5 +1,5 @@
 /**
- * Classe définissant ce que les controleurs doivent retourner aux objets qui les manipulent
+ * Classe dï¿½finissant ce que les controleurs doivent retourner aux objets qui les manipulent
  */
 class Controller {
 
@@ -15,10 +15,14 @@ class Controller {
     public static type:ControllerType = ControllerType.KEYBOARD;
 
     constructor() {
-        
+
     }
 
     get attack(): boolean {
+        return false;
+    }
+
+    get special_1(): boolean {
         return false;
     }
 
@@ -39,7 +43,7 @@ class Controller {
     }
 
     public destroy (): void {
-		
+
     }
 
 }

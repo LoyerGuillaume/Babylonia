@@ -29,7 +29,7 @@ class Babylonia {
         this.gameManager = new GameManager(pScene, pEngine, this.levelManager);
 
         CameraManager.init(this.mainScene, this.engine);
-        HUDManager.initHud(this.mainScene);
+        UIManager.initHud(this.mainScene);
 
         // loading
         var loadedCount = 3;
@@ -37,7 +37,7 @@ class Babylonia {
 
         this.loadAssets(Babylonia.ASSETS_NAME, true, onAssetLoaded);
         this.loadAssets(Babylonia.LEVELS_NAME, false, onAssetLoaded);
-        HUDManager.loadTextures(this.mainScene, onAssetLoaded);
+        UIManager.loadTextures(this.mainScene, onAssetLoaded);
 
         var self:Babylonia = this;
         function onAssetLoaded () {

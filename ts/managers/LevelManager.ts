@@ -103,7 +103,7 @@ class LevelManager {
         }
 
         this.ldElements.push( lLDElem );
-    }
+    } 
 
     private addGameplayPosition (pName:string, pPos:BABYLON.Vector3) {
 

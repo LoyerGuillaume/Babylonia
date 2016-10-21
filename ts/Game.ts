@@ -29,9 +29,9 @@ class Game {
 
             this._initGame();
 
-            this.engine.runRenderLoop(() => {
-                this.scene.render();
-            });
+            // this.engine.runRenderLoop(() => {
+            //     this.scene.render();
+            // });
         });
     }
 

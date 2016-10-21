@@ -3,15 +3,29 @@ class Player extends Character {
     public static list:Player[] = [];
 
     public controller:Controller;
-    private static get ASSET_NAME()       :string { return 'elf';};
-    private static get MOVE_SPEED()       :number { return 0.5;};
-    private static get ROTATION_SPEED()   :number { return 0.3;};
-    private static get COUNTDOWN_ATTACK() :number { return 30;};
-    private static get INVICIBILITY_TIME():number { return 120;};
-    public static get LIFE_POINT()        :number { return 2;};
+    private static get ASSET_NAME()             :string { return 'elf';};
+    private static get MOVE_SPEED()             :number { return 0.5;};
+    private static get ROTATION_SPEED()         :number { return 0.3;};
+    private static get INVICIBILITY_TIME()      :number { return 120;};
+    private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
+    public static get LIFE_POINT()              :number { return 1;};
 
-    private countFrameAttack:number = 0;
     private score:number;
+    private coins:number;
+
+    private attacks:{} = {
+        'attack': {
+            'cooldown': 30,
+            'attackFunction': this.shotOneFireBall,
+            'countFrameAttack': 0
+        },
+        'special_1': {
+            'cooldown': 120,
+            'attackFunction': this.shotThreeFireBalls,
+            'countFrameAttack': 0
+        },
+    };
+
 
 
     constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3) {
@@ -19,6 +33,7 @@ class Player extends Character {
         Player.list.push(this);
 
         this.score      = 0;
+        this.coins      = 0;
         this.controller = new ControllerKeyboard();
         this.initEvents();
         this.initAnimation();
@@ -38,6 +53,7 @@ class Player extends Character {
 
     protected initEvents () {
         BEvent.on(PlayerEvent.HAS_HIT, this.hasHit, this);
+        BEvent.on(PlayerEvent.GOT_COIN, this.onCoinCollision, this);
     }
 
 
@@ -71,7 +87,7 @@ class Player extends Character {
     private hasHit (pPlayerEvent:PlayerEvent) {
         if (this === pPlayerEvent.player) {
             this.score += pPlayerEvent.enemyScore;
-            HUDManager.setScore(this.score);
+            UIManager.setScore(this.score);
         }
     }
 
@@ -92,32 +108,60 @@ class Player extends Character {
 
 
     protected doActionNormal (deltaTime:number) {
-        this.countFrameAttack++;
+        this.addFrameAttack();
 
         this.move(deltaTime);
-        this.attack();
+        this.checkAttack();
 
         if (this.isInvicible) {
             super.invicibilityCooldown(Player.INVICIBILITY_TIME);
         } else {
             this.checkEnemyCollision();
         }
+
+        this.checkCoinCollision();
     }
 
 
-    private attack () {
-        if (this.controller.attack) {
-            if (this.countFrameAttack >= Player.COUNTDOWN_ATTACK) {
-                this.countFrameAttack = 0;
-                this.createFireBall();
+    private checkAttack () {
+        var attackName:string;
+        for (attackName in this.attacks) {
+            if (this.controller[attackName]) {
+                var attack = this.attacks[attackName];
+                if (attack.countFrameAttack >= attack.cooldown) {
+                    attack.countFrameAttack = 0;
+                    attack.attackFunction.apply(this);
+                }
             }
         }
     }
 
 
-    private createFireBall () {
-        var fireBall = new FireBall(this.getScene(), this.position, this.rotationQuaternion, this);
+    private addFrameAttack () {
+        var attackName:string;
+        for (attackName in this.attacks) {
+            this.attacks[attackName].countFrameAttack++;
+        }
+    }
+
+//==== ATTACKS ====
+
+    private createFireBall (pRotationQuaternion:BABYLON.Quaternion) {
+        var fireBall = new FireBall(this.getScene(), this.position, pRotationQuaternion, this);
         fireBall.start();
+    }
+
+
+    private shotOneFireBall () {
+        this.createFireBall(this.rotationQuaternion);
+    }
+
+
+    private shotThreeFireBalls () {
+        var rotationQuaternion:BABYLON.Quaternion = this.rotationQuaternion;
+        this.createFireBall(rotationQuaternion);
+        this.createFireBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( Player.ANGLE_SPECIAL_ATTACK_1))));
+        this.createFireBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(-Player.ANGLE_SPECIAL_ATTACK_1))));
     }
 
 
@@ -132,15 +176,29 @@ class Player extends Character {
     }
 
 
+    private checkCoinCollision () {
+        for (var i in Coin.list) {
+            if (this.meshe.intersectsMesh(Coin.list[i], false)) {
+                Coin.list[i].destroy();
+                BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, this));
+            }
+        }
+    }
+
+
+    private onCoinCollision ():void {
+        this.coins++;
+        console.log('Coins : ' + this.coins);
+    }
+
+
     protected die () {
         BEvent.emit(new PlayerEvent(PlayerEvent.DEATH, this));
     }
 
 
     public destroy () {
-        console.log('Destroy');
         this.controller.destroy();
-        // Player.list.splice(Player.list.indexOf(this), 1);
         super.destroy();
     }
 

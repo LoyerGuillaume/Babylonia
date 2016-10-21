@@ -26,4 +26,9 @@
         s.computeWorldMatrix(true);
     };
 
+
+    public static getRandomRotation ():number {
+        return Math.floor(Math.random() * 360);
+    }
+
 }

@@ -74,7 +74,11 @@ class Enemy extends Character {
 
     private dropCoins ():void {
         for (var i = 0; i < this.getDropedCoinsNumber; i++) {
-            
+            var minRand        :number          = -1;
+            var vectorDirection:BABYLON.Vector3 = new BABYLON.Vector3(minRand + Math.random() * 2, 0, minRand + Math.random() * 2);
+            vectorDirection.normalize();
+            var coin           :Coin            = new Coin(this.getScene(), this.position, vectorDirection);
+            coin.start();
         }
     }
 

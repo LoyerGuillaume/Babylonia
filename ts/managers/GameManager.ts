@@ -32,8 +32,8 @@ class GameManager {
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
 
-        var testCoin = new Coin(this.mainScene, new BABYLON.Vector3(0, 150, 500), new BABYLON.Vector3(1, 0, 0));
-        testCoin.start();
+        // var testCoin = new Coin(this.mainScene, new BABYLON.Vector3(0, 150, 500), new BABYLON.Vector3(1, 0, 0));
+        // testCoin.start();
 
         this.gameLoop();
     }

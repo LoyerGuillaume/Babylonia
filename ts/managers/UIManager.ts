@@ -15,7 +15,7 @@ class UIManager {
     private static hudContainer:BABYLON.ScreenSpaceCanvas2D;
 
     private static capacityGroup:BABYLON.Group2D;
-
+ 
 
     public static loadTextures(scene:BABYLON.Scene, pCallback:any) {
         UIManager.heartTexture = new BABYLON.Texture('../assets/heart.png', scene, false, true, 0, function () {

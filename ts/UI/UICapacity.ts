@@ -13,7 +13,7 @@ class UICapacity extends BABYLON.Group2D {
     private name:string;
     private capacity:any;
 
-    constructor (property:any, capacity:any) {
+    constructor (property:any, capacity:any) { 
         property.width = UICapacity.WIDTH;
         super(property);
         this.capacity = capacity;

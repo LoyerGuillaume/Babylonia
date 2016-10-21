@@ -28,12 +28,14 @@ class GameManager {
 
         this.initPlayer(0);
 
+<<<<<<< HEAD
         this.initEnemyManager();
+=======
+        // new EnemySpawner('EnemyOne', this.mainScene);
+>>>>>>> 45109bee7ed1ffe0cbe9df1d1868765c2b2f4577
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
 
-        var testCoin = new Coin(this.mainScene, new BABYLON.Vector3(0, 150, 500));
-        testCoin.start();
 
         this.gameLoop();
     }

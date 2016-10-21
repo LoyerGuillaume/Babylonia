@@ -25,26 +25,16 @@ class GameManager {
     public start () {
         var that = this;
 
-
         this.initPlayer(0);
 
-        var enemy:EnemyOne = new EnemyOne(new BABYLON.Vector3(200, 0, 0), this.mainScene);
-        enemy.start();
-        // new EnemySpawner('EnemyOne', this.mainScene);
+        this.initEnemyManager();
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
-
 
         this.gameLoop();
     }
 
-    /**
-     * @params pCount if null, the count is random
-     */
-    private spawnEnemy (pCount:number = null) {
-
-        var lPoppers = this.levelManager.getGameplayObjects('EnemyPopper');
-        var lPopperSupers = this.levelManager.getGameplayObjects('EnemyPopper_S');
+    private initEnemyManager () {
 
     }
 

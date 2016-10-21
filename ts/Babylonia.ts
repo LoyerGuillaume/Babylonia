@@ -13,13 +13,15 @@ class Babylonia {
 
     private playerOne:Player;
 
-    private static get ASSETS_NAME() { return [
+    private static get ASSETS_NAME () { return [
         'elf'
     ];};
 
-    private static get LEVELS_NAME() { return [
+    private static get LEVELS_NAME () { return [
         'Base'
     ];};
+
+    private static get WAVES_DESCRIPTION_NAME () { return 'waves'; };
 
     constructor (pScene, pEngine) {
 
@@ -55,6 +57,21 @@ class Babylonia {
           this.levelManager.build(pMeshes);
     }
 
+    private loadJson (pSource: string, pCallback) {
+
+        var loader = new BABYLON.AssetsManager(this.mainScene);
+
+        var lTask = loader.addTextFileTask(pSource, Config.JSON_PATH + pSource + '.json');
+        lTask.onSuccess = onSucces;
+
+        function onSucces (pTask:BABYLON.TextFileAssetTask) {
+            console.log('JSON loaded: ', pTask.text);
+            //for (var i = 0; i < lLen; i++) {
+            //    AssetGraphic.addObject(pTask.loadedMeshes[i].name, pTask.loadedMeshes[i], pTask.loadedSkeletons[i], pTask.loadedParticleSystems[i]);
+            //}
+        }
+    }
+
     private loadAssets(pSources:string[], pInstantiable:boolean, pCallback) {
 
         var self:Babylonia = this;
@@ -71,7 +88,6 @@ class Babylonia {
 
         function onSuccess(pTask:BABYLON.MeshAssetTask): void {
 
-                console.info('-- loading succes');
             var lLen = pTask.loadedMeshes.length;
             for (var i = 0; i < lLen; i++) {
                 AssetGraphic.addObject(pTask.loadedMeshes[i].name, pTask.loadedMeshes[i], pTask.loadedSkeletons[i], pTask.loadedParticleSystems[i]);
@@ -79,7 +95,6 @@ class Babylonia {
         }
 
         function onLevelMeshSuccess(pTask:BABYLON.MeshAssetTask): void {
-            console.info('-- loading level succes');
             self.initLevel(pTask.loadedMeshes as BABYLON.Mesh[]);
         }
 

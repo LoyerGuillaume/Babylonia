@@ -11,6 +11,7 @@
         "managers/GameManager.ts",
         "managers/CameraManager.ts",
         "managers/LevelManager.ts",
+        "managers/EnemyManager.ts",
         "managers/UIManager.ts",
         "assets/attacks/FireBall.ts",
         "assets/characters/Player.ts",
@@ -37,8 +38,7 @@
         "Config.ts",
         "Preloader.ts",
         "ICollisionable.ts",
-        "CollisionBoxCreator.ts",
-        "EnemySpawner.ts"
+        "CollisionBoxCreator.ts"
     ],
     "compileOnSave": true
 }

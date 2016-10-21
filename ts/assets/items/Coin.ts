@@ -2,12 +2,12 @@ class Coin extends AssetGraphic {
 
     public static list:Coin[] = [];
 
-    private static get ASSET_NAME():string { return 'elf';};
-    private static get ROTATION_SPEED():number { return 0.1;};
+    private static get ASSET_NAME()           :string { return 'elf';};
+    private static get ROTATION_SPEED()       :number { return 0.1;};
     private static get MIN_MULTIPLY_MOVEMENT():number { return 500;};
     private static get MAX_MULTIPLY_MOVEMENT():number { return 2000;};
-    private static get MOVEMENT_FRICTION():number { return 0.95;};
-    private static get BOUNCING_FRICTION():number { return 0.95;};
+    private static get MOVEMENT_FRICTION()    :number { return 0.95;};
+    private static get BOUNCING_FRICTION()    :number { return 0.95;};
 
     private vectorMovement:BABYLON.Vector3;
     private startYPosition:number;
@@ -38,7 +38,6 @@ class Coin extends AssetGraphic {
 
 
     protected movement (deltaTime:number):void {
-
         var minVelocity:number = 10;
         if (this.vectorMovement.x <= minVelocity && this.vectorMovement.y <= minVelocity && this.vectorMovement.z <= minVelocity) {
             this.vectorMovement = BABYLON.Vector3.Zero();
@@ -57,8 +56,6 @@ class Coin extends AssetGraphic {
 
     private boundingMovement ():void {
         this.position.y = this.startYPosition + Math.sin(this.frameCount / 5) * this.bouncingRatio + this.bouncingRatio;
-
-        console.log(this.position.y);
         this.frameCount++;
         this.bouncingRatio *= Coin.BOUNCING_FRICTION;
     }

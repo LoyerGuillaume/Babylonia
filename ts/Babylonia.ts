@@ -11,7 +11,7 @@ class Babylonia {
     private onPause:boolean = false;
     private oldPausePress:boolean = false;
 
-    private playerOne:Player;
+    private static loadedContent: any = {};
 
     private static get ASSETS_NAME () { return [
         'elf'
@@ -34,17 +34,26 @@ class Babylonia {
         UIManager.initHud(this.mainScene);
 
         // loading
-        var loadedCount = 3;
+        var loadedCount = 4;
         var loadedCounter = 0;
 
         this.loadAssets(Babylonia.ASSETS_NAME, true, onAssetLoaded);
         this.loadAssets(Babylonia.LEVELS_NAME, false, onAssetLoaded);
         UIManager.loadTextures(this.mainScene, onAssetLoaded);
+        this.loadJson(Babylonia.WAVES_DESCRIPTION_NAME, onAssetLoaded);
 
         var self:Babylonia = this;
-        function onAssetLoaded () {
+        function onAssetLoaded (p) {
             if (++loadedCounter >= loadedCount) self.gameManager.start();
         }
+    }
+
+    public static getLoadedContent (pName:string): any {
+        return Babylonia.loadedContent[pName];
+    }
+
+    private static addLoadedContent (pName:string, pContent:any) {
+        Babylonia.loadedContent[pName] = pContent;
     }
 
     public destroy () {
@@ -63,12 +72,11 @@ class Babylonia {
 
         var lTask = loader.addTextFileTask(pSource, Config.JSON_PATH + pSource + '.json');
         lTask.onSuccess = onSucces;
+        loader.onFinish = pCallback;
+        loader.load();
 
         function onSucces (pTask:BABYLON.TextFileAssetTask) {
-            console.log('JSON loaded: ', pTask.text);
-            //for (var i = 0; i < lLen; i++) {
-            //    AssetGraphic.addObject(pTask.loadedMeshes[i].name, pTask.loadedMeshes[i], pTask.loadedSkeletons[i], pTask.loadedParticleSystems[i]);
-            //}
+            Babylonia.addLoadedContent(pTask.name, pTask.text);
         }
     }
 
@@ -102,7 +110,6 @@ class Babylonia {
 
         loader.useDefaultLoadingScreen = false; // FIXME : Path loading screen
         loader.load();
-            console.info('-- loading');
     }
 
 

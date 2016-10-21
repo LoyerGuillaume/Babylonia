@@ -1,5 +1,9 @@
 class EnemyManager {
 
+    private wavesDescription: any;
+
+    //////////////
+
     private static get SPAWN_INTERVAL():number { return 3000; };
     private static get SPAWN_NUMBER():number { return 5; };
 
@@ -29,7 +33,7 @@ class EnemyManager {
      * @params pBaseEnemyIndex Sélectionne les enemis de `pEnemyClasses` pour la base de la difficultéde. Sélectionne les enemis de l'index 0 jusqu'à celui donné (ex pour 2: 0, 1 et 2)
      * @params pBaseEnemyCount Nombre d'enemi utiliser comme base pour la difficulté
      */
-    constructor(pScene:BABYLON.Scene, pEnemyClasses:string[], pBaseEnemyCount:number, pBaseEnemyIndex:number) {
+    constructor(pScene:BABYLON.Scene) {
 
         this.scene = pScene;
 
@@ -38,17 +42,18 @@ class EnemyManager {
 
         // difficulty system
         this.currentDifficulty = 0;
-        this.baseEnemyCount = Math.ceil(pBaseEnemyCount);
-        this.baseEnemyIndex = Math.ceil(pBaseEnemyIndex);
-
-        this.enemies             = pEnemyClasses;
-        this.enemyDiversityCount = pEnemyClasses.length;
 
         // set constructors
-        this.enemyConstructors = [];
-        for (var i = 0; i < this.enemyDiversityCount; i++) {
-            this.enemyConstructors[pEnemyClasses[i]] = Type.getConstructorByName(pEnemyClasses[i]);
-        }
+        //this.enemyConstructors = [];
+        //for (var i = 0; i < this.enemyDiversityCount; i++) {
+        //    this.enemyConstructors[pEnemyClasses[i]] = Type.getConstructorByName(pEnemyClasses[i]);
+        //}
+    }
+
+    public setWavesDescription (pJson:any) {
+        this.wavesDescription = pJson;
+
+
     }
 
     public addPositionsGroup (pLocations: (LDElement[]|BABYLON.Vector3[]) ) {

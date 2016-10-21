@@ -10,17 +10,27 @@ class UICapacity extends BABYLON.Group2D {
 
     private static textures:Dictionnary = {};
 
-    private name:string;
     private capacity:any;
 
     private picto:BABYLON.Sprite2D;
+
 
     constructor (property:any, capacity:any) {
         property.width = UICapacity.WIDTH;
         super(property);
         this.capacity = capacity;
         this.initContent();
-        this.shadePicto();
+        this.initEvents();
+    }
+
+
+    private initEvents () {
+        var that = this;
+        BEvent.on(PlayerEvent.ATTACK, function (pParams) {
+            if (pParams.name === that.capacity.name) {
+                that.cooldown();
+            }
+        })
     }
 
 
@@ -64,17 +74,43 @@ class UICapacity extends BABYLON.Group2D {
     }
 
 
-    private shadePicto () {
-        new BABYLON.Rectangle2D({
+    private cooldown () {
+        var rect:BABYLON.Rectangle2D = this.shadePicto();
+        var initialHeight:number = rect.height;
+        var callback = this.cooldownTimeout.bind(this, rect)
+
+        setTimeout(function () {
+            callback();
+        }, 16);
+    }
+
+
+    private cooldownTimeout (rect:BABYLON.Rectangle2D) {
+        rect.height = this.picto.height - (this.capacity.countFrameAttack / this.capacity.cooldown * this.picto.height);
+        if (this.capacity.countFrameAttack >= this.capacity.cooldown) {
+            this.unshadePicto();
+        } else {
+            setTimeout(this.cooldownTimeout.bind(this, rect), 16);
+        }
+    }
+
+
+    private shadePicto ():BABYLON.Rectangle2D {
+        this.unshadePicto();
+        var rect:BABYLON.Rectangle2D = new BABYLON.Rectangle2D({
             id: 'secondRect',
             parent: this.picto,
-            size: this.picto.size,
+            size: this.picto.size.clone(),
             fill: '#000000AF'
         })
+
+        return rect;
     }
 
 
     private unshadePicto () {
-        this.picto.children.splice(0, 1)[0].dispose();
+        if (this.picto.children.length > 0) {
+            this.picto.children.splice(0, 1)[0].dispose();
+        }
     }
 }

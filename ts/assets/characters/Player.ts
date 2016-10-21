@@ -20,7 +20,7 @@ class Player extends Character {
             cooldown        : 30,
             attackFunction  : this.shotOneFireBall,
             countFrameAttack: 0
-        },
+        }, 
         special_1: {
             name            : 'BabySpread',
             key             : 'Z',

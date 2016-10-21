@@ -25,17 +25,10 @@ class GameManager {
     public start () {
         var that = this;
 
-
         this.initPlayer(0);
-
-<<<<<<< HEAD
         this.initEnemyManager();
-=======
-        // new EnemySpawner('EnemyOne', this.mainScene);
->>>>>>> 45109bee7ed1ffe0cbe9df1d1868765c2b2f4577
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
-
 
         this.gameLoop();
     }

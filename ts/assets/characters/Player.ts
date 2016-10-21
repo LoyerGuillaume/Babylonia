@@ -27,7 +27,7 @@ class Player extends Character {
             cooldown        : 120,
             attackFunction  : this.shotThreeFireBalls,
             countFrameAttack: 0
-        },
+        }
     };
 
 

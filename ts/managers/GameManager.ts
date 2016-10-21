@@ -4,11 +4,12 @@ class GameManager {
     private engine:BABYLON.Engine;
     private levelManager: LevelManager;
 
+    // GAME RULES
+    private enemyManager: EnemyManager;
+
     private onPause:boolean = false;
     private oldPausePress:boolean = false;
     private frameCount:number = 0;
-
-    private playerOne:Player;
 
     private static get RESPAWN_SECONDS() { return 3;};
 
@@ -35,7 +36,9 @@ class GameManager {
     }
 
     private initEnemyManager () {
-
+        this.enemyManager = new EnemyManager(this.mainScene);
+        var lWavesDesc = Babylonia.getLoadedContent('waves');
+        this.enemyManager.setWavesDescription( JSON.parse(lWavesDesc) );
     }
 
     private onPlayerDeath (pPlayerEvent:any) {

@@ -27,6 +27,7 @@ class GameManager {
         var that = this;
 
         this.initPlayer(0);
+
         this.initEnemyManager();
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
@@ -40,10 +41,10 @@ class GameManager {
         this.enemyManager.setWavesDescription( JSON.parse(lWavesDesc) );
     }
 
-    private onPlayerDeath (pEvent:PlayerEvent) {
-        var playerIndex = pEvent.player.getPlayerIndex();
+    private onPlayerDeath (pPlayerEvent:any) {
+        var playerIndex = pPlayerEvent.player.getPlayerIndex();
 
-        pEvent.player.destroy();
+        pPlayerEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
 
         var playerRemaining = Player.list.length;

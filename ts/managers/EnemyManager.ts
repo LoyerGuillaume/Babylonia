@@ -61,7 +61,7 @@ class EnemyManager {
         var lSituations = this.getSituationsFromWave(this.waves[pWaveName]);
         var lSituation = this.getRandomElementFromArray(lSituations);
 
-        this.initSituation(lSituation);
+        var lEnemyStack = this.getStackFromSituation(lSituation);
     }
 
     /**
@@ -73,11 +73,7 @@ class EnemyManager {
     }
 
     public spawnEnemy (pEnemy:string, pPos: BABYLON.Vector3) {
-
-        console.info('Spawn of: '+pEnemy, pPos);
-
         pPos = pPos.add(new BABYLON.Vector3(0, 100, 0)); // FIXME
-
         var lEnemy = new this.enemyConstructors[pEnemy](pPos, this.scene);
         lEnemy.start();
     }
@@ -90,8 +86,29 @@ class EnemyManager {
         return Math.floor(Math.random() * pArray.length);
     }
 
-    private initSituation (pSituation:any) {
+    private getStackFromSituation (pSituation:any) {
 
+        var lEnemyStack = pSituation.enemies.slice(0);
+
+        // add delay
+
+        pSituation.foreachDelay = pSituation.foreachDelay || 0;
+
+        var lEnemyCount = lEnemyStack.length;
+        for ( var i = 0; i < lEnemyCount; i++) {
+            lEnemyStack[i].delay = lEnemyStack[i].delay || 0;
+            lEnemyStack[i].delay += pSituation.foreachDelay * i;
+        }
+
+        // stack order
+
+        lEnemyStack.sort(this.delaySortting);
+    }
+
+    private delaySortting (pEnemyA:any, pEnemyB:any) {
+        if (pEnemyA.delay < pEnemyB.delay) return -1;
+        else if (pEnemyA.delay > pEnemyB.delay) return 1;
+        else return 0;
     }
 
 }

@@ -13,6 +13,7 @@
         "managers/LevelManager.ts",
         "managers/EnemyManager.ts",
         "managers/UIManager.ts",
+        "managers/LightManager.ts",
         "assets/attacks/FireBall.ts",
         "assets/characters/Player.ts",
         "assets/characters/Character.ts",

@@ -3,6 +3,7 @@ class GameManager {
     private mainScene:BABYLON.Scene;
     private engine:BABYLON.Engine;
     private levelManager: LevelManager;
+    private lightManager:LightManager;
 
     // GAME RULES
     private enemyManager: EnemyManager;
@@ -25,6 +26,8 @@ class GameManager {
 
     public start () {
         var that = this;
+
+        this.lightManager = new LightManager(this.mainScene);
 
         this.initPlayer(0);
 
@@ -77,7 +80,7 @@ class GameManager {
 
     private initPlayer(indexPlayer) {
         var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();
-        lPos.y += 150;
+        lPos.y += 100;
         Player.list[indexPlayer] = new Player(this.mainScene, lPos);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);

@@ -41,7 +41,6 @@ class Game {
 
         let light = new BABYLON.HemisphericLight('', new BABYLON.Vector3(0, 1, 0), this.scene);
         light.intensity = 0.7;
-
     }
 
 

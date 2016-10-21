@@ -1,3 +1,6 @@
+/**
+ * Timeout based on framerate with delta time
+ */
 class Timeout {
 
     public static list: Timeout[] = [];
@@ -10,6 +13,10 @@ class Timeout {
     private timeoutCounter;
     private timeoutTotal;
 
+    /**
+     *  @parms pCallback
+     *  @parms pDelay ms
+     */
     constructor(pCallback:any, pDelay:number) {
 
         this.timeoutCallback = pCallback;

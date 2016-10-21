@@ -10,6 +10,12 @@ class GameManager {
 
     private playerOne:Player;
 
+    // GAME RULES
+    private enemyPopper:EnemyManager;
+    private static enemies:string[] = [
+        'EnemyOne'
+    ];
+
     private static get RESPAWN_SECONDS() { return 3;};
 
 	constructor(pScene, pEngine, pLevelManager) {
@@ -28,7 +34,7 @@ class GameManager {
 
         this.initPlayer(0);
 
-        //new EnemySpawner('EnemyOne', this.mainScene);
+        this.initEnemyPopper();
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
 
@@ -38,13 +44,25 @@ class GameManager {
         this.gameLoop();
     }
 
+    private initEnemyPopper () {
+
+        var lPoppers = this.levelManager.getGameplayObjects('EnemyPopper');
+        var lSuperPoppes = this.levelManager.getGameplayObjects('EnemyPopper_S');
+
+        this.enemyPopper = new EnemyManager(this.mainScene, GameManager.enemies, 3, 0);
+
+        this.enemyPopper.addPositionsGroup(lPoppers);
+        this.enemyPopper.addPositionsGroup(lSuperPoppes);
+
+        setTimeout(this.enemyPopper.startWave.bind(this.enemyPopper), 5000);
+    }
+
     /**
      * @params pCount if null, the count is random
      */
     private spawnEnemy (pCount:number = null) {
 
-        var lPoppers = this.levelManager.getGameplayObjects('EnemyPopper');
-        var lPopperSupers = this.levelManager.getGameplayObjects('EnemyPopper_S');
+
 
     }
 

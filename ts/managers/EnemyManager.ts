@@ -43,7 +43,7 @@ class EnemyManager {
         if (this.waveExists(pWaveName)) {
             BEvent.on( EnemyEvent.ALL_DEAD, this.onEnemiesDead, this );
             this._startWave(pWaveName);
-        } else { 
+        } else {
             console.warn('The wave named "'+pWaveName+'" does not exists.');
         }
     }
@@ -58,10 +58,7 @@ class EnemyManager {
             this.enemyConstructors[pEnemy] = Type.getConstructorByName(pEnemy);
         }
 
-        pPos = pPos.add(new BABYLON.Vector3(0, 100, 0)); // FIXME
-
-        pPos.x *= 100;
-        pPos.z *= 100;
+        pPos = pPos.add(new BABYLON.Vector3(0, .5, 0)); // FIXME
 
         var lEnemy = new this.enemyConstructors[pEnemy](pPos, this.scene);
         lEnemy.start();

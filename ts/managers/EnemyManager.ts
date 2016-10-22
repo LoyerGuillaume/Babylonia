@@ -121,7 +121,6 @@ class EnemyManager {
 
     private playStackStep (pStep:any) {
         this.currentStackStep = pStep;
-
         this.currentTimeout = new Timeout(this.execCurrentStep.bind(this), this.currentStackStep.delay);
     }
 

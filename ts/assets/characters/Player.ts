@@ -45,9 +45,9 @@ class Player extends Character {
         this.controller     = new ControllerKeyboard();
         this.startYPositionMeshe = this.meshe.position.y;
 
-        this.initEvents();
         this.initAnimation();
         this.initCollision();
+        this.initEvents();
 
         UIManager.initCapacities(this.attacks);
     }
@@ -65,7 +65,6 @@ class Player extends Character {
 
     protected initEvents () {
         BEvent.on(PlayerEvent.HAS_HIT, this.hasHit, this);
-        BEvent.on(PlayerEvent.GOT_COIN, this.onCoinCollision, this);
     }
 
 
@@ -206,7 +205,7 @@ class Player extends Character {
         for (var i in Coin.list) {
             if (this.meshe.intersectsMesh(Coin.list[i], false)) {
                 Coin.list[i].destroy();
-                BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN));
+                this.onCoinCollision();
             }
         }
     }
@@ -214,7 +213,9 @@ class Player extends Character {
 
     private onCoinCollision ():void {
         this.coins++;
-        console.log('Coins : ' + this.coins);
+        BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, {
+            coins: this.coins
+        }))
     }
 
 

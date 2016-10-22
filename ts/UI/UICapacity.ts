@@ -30,7 +30,7 @@ class UICapacity extends BABYLON.Group2D {
             if (pParams.name === that.capacity.name) {
                 that.cooldown();
             }
-        })
+        }, this)
     }
 
 

@@ -14,12 +14,18 @@ class GameManager {
 
     // GAME RULES
     private static get RESPAWN_SECONDS() { return 3;};
-    private static get DEFAULT_WAVES_INTERVAL_MS() { return 5000;};
+    private static get WAVES_INTERVAL_MS() { return 5000;};
+
+    // GAME VARS
+    private currentWaveNumber: number;
 
 	constructor(pScene, pEngine, pLevelManager) {
         this.mainScene = pScene;
         this.engine = pEngine;
         this.levelManager = pLevelManager;
+
+        // GAME VARS
+        this.currentWaveNumber = 1;
     }
 
     public destroy () {
@@ -35,18 +41,36 @@ class GameManager {
 
         // this.initEnemyManager();
 
+        // events
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
+        BEvent.on(EnemyManager.ON_WAVE_END, this.onEnemyWaveEnd, this);
+
+        // start game
+        this.currentWaveNumber = 1;
+        this.enemyManager.startWave(this.currentWaveNumber);
 
         this.gameLoop();
+    }
 
-        this.enemyManager.startWave(1);
+    private onEnemyWaveEnd (pEvent) {
+
+        console.info('vague vaincu !');
+
+        if (this.enemyManager.waveExists(this.currentWaveNumber + 1)) {
+            new Timeout(this.enemyManager.startWave.bind(this.enemyManager, ++this.currentWaveNumber), GameManager.WAVES_INTERVAL_MS);
+        } else {
+             this.onLastWaveWon();
+        }
+    }
+
+    private onLastWaveWon () {
+        console.info('Big victory !');
     }
 
     private initEnemyManager () {
         this.enemyManager = new EnemyManager(this.mainScene, this.levelManager);
         var lWavesDesc = Babylonia.getLoadedContent('waves');
         this.enemyManager.setWavesDescription( JSON.parse(lWavesDesc) );
-        this.enemyManager.setDefaultWavesInterval( GameManager.DEFAULT_WAVES_INTERVAL_MS );
     }
 
     private onPlayerDeath (pPlayerEvent:any) {

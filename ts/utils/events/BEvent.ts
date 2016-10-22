@@ -35,8 +35,6 @@ class BEvent {
 
     public static off (pId:string, pFunc:any, pThis:any) {
 
-        console.warn('want delete ', pId, pFunc, pThis);
-
         if (BEvent.callbacks[pId]) {
 
             var len:number = BEvent.callbacks[pId].length;
@@ -45,7 +43,6 @@ class BEvent {
                 if (BEvent.callbacks[pId][i+1] === pThis) {
 
                     if (pThis !== undefined && BEvent.callbacks[pId][i].name === pFunc.name || BEvent.callbacks[pId][i].toString() === pFunc.toString()) {
-                        console.warn('delete of ', pId, pFunc, pThis);
                         BEvent.callbacks[pId].splice(i, 2);
                         break;
                     }

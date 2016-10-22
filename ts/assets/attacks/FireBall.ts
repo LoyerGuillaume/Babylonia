@@ -3,9 +3,9 @@ class FireBall extends AssetGraphic {
     public static list: FireBall[] = [];
 
     private static get ASSET_NAME():string { return 'elfe';};
-    private static get SPEED():number { return 25;};
+    private static get SPEED():number { return 0.1;};
     private static get MAX_LIFE_TIME():number { return 60;};
-    private static get RATIO_SCALE_PARTICLE():number { return 10;};
+    private static get RATIO_SCALE_PARTICLE():number { return 1;};
 
     private launcher:Player;
 
@@ -24,6 +24,7 @@ class FireBall extends AssetGraphic {
         this.rotationQuaternion = pRotation;
         this.lifeTime           = 0;
 
+        this.meshe.isVisible = false;
         this.initParticlesSystem();
 
         // this.scaling = new BABYLON.Vector3(1, 0.5, 1);

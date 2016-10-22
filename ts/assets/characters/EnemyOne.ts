@@ -1,6 +1,6 @@
 class EnemyOne extends Enemy {
 
-    private static get ASSET_NAME()          :string { return 'elf';};
+    private static get ASSET_NAME()          :string { return 'ChaWitch';};
     private static get LIFE_POINT()          :number { return 2;};
     private static get INVICIBILITY_TIME()   :number { return 30;};
     private static get SCORE_GET()           :number { return 100;};
@@ -29,10 +29,10 @@ class EnemyOne extends Enemy {
         //double saut 49-73
         //Mort 74-138
         //
-        this.addAnimation('Run', 0, 21);
-        this.addAnimation('Jump', 22, 48);
-        this.addAnimation('Double Jump', 49, 73);
-        this.addAnimation('Death', 74, 138);
+        // this.addAnimation('Run', 0, 21);
+        // this.addAnimation('Jump', 22, 48);
+        // this.addAnimation('Double Jump', 49, 73);
+        // this.addAnimation('Death', 74, 138);
 
         // this.runAnimationName('IDLE');
 

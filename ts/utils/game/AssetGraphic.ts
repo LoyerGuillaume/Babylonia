@@ -30,15 +30,9 @@ class AssetGraphic extends GameObject {
 
     public static addObject(id: string, pMeshes: BABYLON.AbstractMesh = undefined, pSkeletons : any = undefined, pParticleSystems: any = undefined) {
         pMeshes.setEnabled(false);
-        if (id === 'ChaWitch') {
-            AssetGraphic.meshesList[id]           = pMeshes;
-            AssetGraphic.skeletonsList[id]        = pSkeletons;
-            AssetGraphic.particlesSystemsList[id] = pParticleSystems;
-        } else {
-            AssetGraphic.meshesList[id]           = pMeshes;
-            AssetGraphic.skeletonsList[id]        = pSkeletons;
-            AssetGraphic.particlesSystemsList[id] = pParticleSystems;
-        }
+        AssetGraphic.meshesList[id]           = pMeshes;
+        AssetGraphic.skeletonsList[id]        = pSkeletons;
+        AssetGraphic.particlesSystemsList[id] = pParticleSystems;
     }
 
     public static clear () {
@@ -93,7 +87,6 @@ class AssetGraphic extends GameObject {
     }
 
     private runAnimation(startFrame:number, endFrame:number, loop:boolean = true) {
-        console.log('runAnimation');
         this.getScene().beginAnimation(this.meshe, startFrame, endFrame, loop);
     }
 

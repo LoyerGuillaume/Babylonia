@@ -4,15 +4,17 @@ class Player extends Character {
 
     public controller:Controller;
     private static get ASSET_NAME()             :string { return 'ChaWitch';};
-    private static get MOVE_SPEED()             :number { return 0.5;};
+    private static get MOVE_SPEED()             :number { return 0.005;};
     private static get ROTATION_SPEED()         :number { return 0.3;};
     private static get INVICIBILITY_TIME()      :number { return 120;};
     private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
+    private static get BOUNCING_RATIO()         :number { return 0.5;};
+    private static get BOUNCING_FREQUENCE()     :number { return 20;};
     public static get LIFE_POINT()              :number { return 1;};
 
     private score:number;
     private coins:number;
-    private startYPosition:number;
+    private startYPositionMeshe:number;
     private frameCount:number = 0;
 
     private attacks:{} = {
@@ -41,13 +43,13 @@ class Player extends Character {
         this.score          = 0;
         this.coins          = 0;
         this.controller     = new ControllerKeyboard();
-        this.startYPosition = this.position.y;
+        this.startYPositionMeshe = this.meshe.position.y;
 
         this.initEvents();
         this.initAnimation();
         this.initCollision();
 
-        UIManager.initCapacities(this.attacks); 
+        UIManager.initCapacities(this.attacks);
     }
 
 
@@ -69,7 +71,7 @@ class Player extends Character {
 
     protected initCollision () {
         this.checkCollisions = true;
-        this.ellipsoid = new BABYLON.Vector3(50, 50, 50);
+        this.ellipsoid = new BABYLON.Vector3(0.5, 0.5, 0.5);
         // Tools.displayEllipsoid(this.getScene(), this);
     }
 
@@ -127,7 +129,8 @@ class Player extends Character {
         var vectorMovement:BABYLON.Vector3 = new BABYLON.Vector3(this.controller.horizontal, 0, this.controller.vertical);
         vectorMovement.normalize();
 
-        this.moveWithCollisions(vectorMovement.scaleInPlace(-Player.MOVE_SPEED * deltaTime));
+        vectorMovement.scaleInPlace(-Player.MOVE_SPEED * deltaTime);
+        this.moveWithCollisions(vectorMovement);
 
         if (this.controller.vertical != 0 || this.controller.horizontal != 0) {
             // this.runAnimationName('Run');
@@ -139,7 +142,7 @@ class Player extends Character {
 
 
     private animationMovement (deltaTime:number):void {
-        this.position.y = this.startYPosition + Math.sin(this.frameCount / 10) * 20 + 20;
+        this.meshe.position.y = this.startYPositionMeshe + Math.sin(this.frameCount / Player.BOUNCING_FREQUENCE - 0.5) * Player.BOUNCING_RATIO;
     }
 
 

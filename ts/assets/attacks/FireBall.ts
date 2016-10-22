@@ -6,7 +6,7 @@ class FireBall extends AssetGraphic {
     private static get SPEED()               :number { return 0.25;};
     private static get MAX_LIFE_TIME()       :number { return 120;};
     private static get RATIO_SCALE_PARTICLE():number { return 0.15;};
- 
+
     private launcher:Player;
 
     private lifeTime:number;
@@ -55,7 +55,7 @@ class FireBall extends AssetGraphic {
 
 
     private initFireParticle (pScene:BABYLON.Scene):void {
-        this.fireParticleSystem                 = new BABYLON.ParticleSystem('particleSystem', 3000, pScene);
+        this.fireParticleSystem                 = new BABYLON.ParticleSystem('particleSystem', 1500, pScene);
         this.fireParticleSystem.particleTexture = new BABYLON.Texture("assets/Flare.png", pScene);
         this.fireParticleSystem.emitter         = this;
 
@@ -70,9 +70,9 @@ class FireBall extends AssetGraphic {
         this.fireParticleSystem.maxSize   = 5 * FireBall.RATIO_SCALE_PARTICLE;
 
         this.fireParticleSystem.minLifeTime = 0.05;
-        this.fireParticleSystem.maxLifeTime = 0.3;
+        this.fireParticleSystem.maxLifeTime = 0.5;
 
-        this.fireParticleSystem.emitRate = 1500;
+        this.fireParticleSystem.emitRate = 1000;
 
         this.fireParticleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
@@ -93,7 +93,7 @@ class FireBall extends AssetGraphic {
 
 
     private initSmokeParticle (pScene:BABYLON.Scene):void {
-        this.smokeParticleSystem                 = new BABYLON.ParticleSystem("particles", 1500, pScene);
+        this.smokeParticleSystem                 = new BABYLON.ParticleSystem("particles", 1000, pScene);
         this.smokeParticleSystem.particleTexture = new BABYLON.Texture("assets/Flare.png", pScene);
         this.smokeParticleSystem.emitter         = this;
         this.smokeParticleSystem.minEmitBox      = new BABYLON.Vector3(-0.1, -0.1, -0.1);

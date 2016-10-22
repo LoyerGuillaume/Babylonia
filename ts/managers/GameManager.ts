@@ -37,7 +37,7 @@ class GameManager {
 
         this.gameLoop();
 
-        this.enemyManager.startWave(0);
+        this.enemyManager.startWave(1);
     }
 
     private initEnemyManager () {

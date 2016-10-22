@@ -26,7 +26,7 @@ class BEvent {
         if (BEvent.callbacks[pId]) {
 
             var len:number = BEvent.callbacks[pId].length;
-            for (var i = 0; i < len; i+=2) {
+            for (var i = len - 3; i >= 0; i-=2) {
 
                 if (BEvent.callbacks[pId][i+1] === pThis) {
 

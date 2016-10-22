@@ -9,13 +9,13 @@ class UIManager {
 
     private static heartTexture:BABYLON.Texture;
     private static heartScale:number;
-    private static heartsSprites:BABYLON.Sprite2D[] = [];
+    private static heartsContainer:BABYLON.Group2D;
 
     private static scoreText:BABYLON.Text2D;
     private static babyCoins:BABYLON.Text2D;
     private static displayText:BABYLON.Text2D;
     private static displayTextPanel:BABYLON.Rectangle2D;
- 
+
     private static hudContainer:BABYLON.ScreenSpaceCanvas2D;
 
     private static capacityGroup:BABYLON.Group2D;
@@ -47,6 +47,12 @@ class UIManager {
             y       : UIManager.scoreText.height + UIManager.COINS_OFFSET
         })
 
+        UIManager.heartsContainer = new BABYLON.Group2D({
+            parent: UIManager.hudContainer,
+            origin: new BABYLON.Vector2(0, 0),
+            y     : window.innerHeight - UIManager.HEART_SIZE
+        })
+
         BEvent.on(PlayerEvent.GOT_COIN, UIManager.updateCoins, UIManager);
         BEvent.on(PlayerEvent.HIT, UIManager.looseLife, UIManager);
         window.onresize = UIManager.onResize;
@@ -54,9 +60,7 @@ class UIManager {
 
 
     private static onResize () {
-        for (var i in UIManager.heartsSprites) {
-            UIManager.heartsSprites[i].y = window.innerHeight - UIManager.HEART_SIZE;
-        }
+        UIManager.heartsContainer.y = window.innerHeight - UIManager.HEART_SIZE;
         UIManager.placeCapacityContainer();
         if (typeof UIManager.displayTextPanel !== 'undefined') {
             UIManager.displayTextPanel.y = window.innerHeight / 2 - UIManager.displayTextPanel.height / 2;
@@ -65,15 +69,13 @@ class UIManager {
 
 
     private static addHeart () {
-        var sprite = new BABYLON.Sprite2D(UIManager.heartTexture, {
-            id: 'heart' + UIManager.heartsSprites.length,
-            parent: UIManager.hudContainer,
-            y: window.innerHeight - UIManager.HEART_SIZE,
-            x: UIManager.HEART_SIZE * UIManager.heartsSprites.length,
+        new BABYLON.Sprite2D(UIManager.heartTexture, {
+            id: 'heart' + UIManager.heartsContainer.children.length,
+            parent: UIManager.heartsContainer,
+            x: UIManager.HEART_SIZE * UIManager.heartsContainer.children.length,
             scale: UIManager.heartScale,
             origin: new BABYLON.Vector2(0, 0)
         });
-        UIManager.heartsSprites.push(sprite);
     }
 
 
@@ -82,8 +84,9 @@ class UIManager {
             pAmount = 1;
         }
         for (var i = 0; i < pAmount; i++) {
-            var sprite = UIManager.heartsSprites.splice(-1, 1);
-            sprite[0].dispose();
+            var sprite = UIManager.heartsContainer.children.pop();
+            //UGLY but .dispose is full buggy
+            sprite.y = 1500;
         }
     }
 

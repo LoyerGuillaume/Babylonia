@@ -21,7 +21,7 @@ class Character extends AssetGraphic {
 
 
     protected _rotate (vectorMovement:BABYLON.Vector3, rotationSpeed:number) {
-        vectorMovement = vectorMovement.multiplyByFloats(-1, -1, -1);
+        // vectorMovement = vectorMovement.multiplyByFloats(-1, -1, -1);
         var rotation = BABYLON.Tools.ToDegrees(Math.atan2(vectorMovement.z, vectorMovement.x));
         rotation -= 90;
         var q = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(-rotation));

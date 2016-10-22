@@ -14,6 +14,7 @@ class Enemy extends Character {
         super(pScene, pAssetName, pPosition, pLifePoint);
         this.invincibilityTime = pInvincibilityTime;
         this.lastPlayerPosition = new BABYLON.Vector3(0, 0, 0);
+
         Enemy.list.push(this);
     }
 

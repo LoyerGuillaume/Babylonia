@@ -1,6 +1,6 @@
 class EnemyOne extends Enemy {
 
-    private static get ASSET_NAME()          :string { return 'ChaDragon';};
+    private static get ASSET_NAME()          :string { return 'Mummy_char';};
     private static get LIFE_POINT()          :number { return 2;};
     private static get INVICIBILITY_TIME()   :number { return 30;};
     private static get SCORE_GET()           :number { return 100;};
@@ -8,7 +8,9 @@ class EnemyOne extends Enemy {
 
     constructor(pPosition:BABYLON.Vector3, pScene:BABYLON.Scene) {
         super(EnemyOne.ASSET_NAME, pPosition, pScene, EnemyOne.LIFE_POINT, EnemyOne.INVICIBILITY_TIME);
-        this.initAnimation();
+        // this.initAnimation();
+        console.log(this.meshe.rotation);
+        console.log(this.rotation);
     }
 
 
@@ -21,6 +23,12 @@ class EnemyOne extends Enemy {
         return EnemyOne.DROPED_COINS_NUMBER;
     }
 
+
+    //FIXME
+    // protected _rotate (vectorMovement:BABYLON.Vector3, rotationSpeed:number) {
+    //     vectorMovement = vectorMovement.multiplyByFloats(-1, -1, -1);
+    //     super._rotate(vectorMovement, rotationSpeed);
+    // }
 
     private initAnimation() {
 

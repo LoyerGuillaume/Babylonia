@@ -30,10 +30,15 @@ class AssetGraphic extends GameObject {
 
     public static addObject(id: string, pMeshes: BABYLON.AbstractMesh = undefined, pSkeletons : any = undefined, pParticleSystems: any = undefined) {
         pMeshes.setEnabled(false);
-
-        AssetGraphic.meshesList[id]           = pMeshes;
-        AssetGraphic.skeletonsList[id]        = pSkeletons;
-        AssetGraphic.particlesSystemsList[id] = pParticleSystems;
+        if (id === 'ChaWitch') {
+            AssetGraphic.meshesList[id]           = pMeshes;
+            AssetGraphic.skeletonsList[id]        = pSkeletons;
+            AssetGraphic.particlesSystemsList[id] = pParticleSystems;
+        } else {
+            AssetGraphic.meshesList[id]           = pMeshes;
+            AssetGraphic.skeletonsList[id]        = pSkeletons;
+            AssetGraphic.particlesSystemsList[id] = pParticleSystems;
+        }
     }
 
     public static clear () {
@@ -53,8 +58,8 @@ class AssetGraphic extends GameObject {
 
         if (AssetGraphic.meshesList[pAssetName]) {
             this.meshe = AssetGraphic.meshesList[pAssetName].clone("meshes_" + pAssetName);
-            if (AssetGraphic.meshesList[pAssetName].skeleton) {
-                this.meshe.skeleton = AssetGraphic.meshesList[pAssetName].skeleton.clone();
+            if (AssetGraphic.skeletonsList[pAssetName]) {
+                this.meshe.skeleton = AssetGraphic.skeletonsList[pAssetName].clone();
             }
         } else {
             console.warn('The AssetGraphic with the name "'+pAssetName+'" don\'t have any loaded mesh with the same name. Is that ok ?');

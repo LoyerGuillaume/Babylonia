@@ -14,7 +14,8 @@ class Babylonia {
     private static loadedContent: any = {};
 
     private static get ASSETS_NAME () { return [
-        'elf'
+        'elf',
+        'Instances'
     ];};
 
     private static get LEVELS_NAME () { return [

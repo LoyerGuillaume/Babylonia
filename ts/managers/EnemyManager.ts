@@ -5,6 +5,7 @@ class EnemyManager {
     private levelManager: LevelManager;
 
     private waves: any;
+    private defaultWavesInterval: number;
 
     private enemyStack:any[];
     private currentStackStep: any;
@@ -27,6 +28,7 @@ class EnemyManager {
         this.levelManager = pLevelManager;
 
         this.currentWaveNumber = 0;
+        this.defaultWavesInterval = 0;
 
         this.enemyStack = [];
 
@@ -44,6 +46,13 @@ class EnemyManager {
     public setWavesDescription (pJson:any) {
         this.destroy();
         this.waves = pJson;
+    }
+
+    /**
+     * @parms pValue in ms
+     */
+    public setDefaultWavesInterval (pValue:number) {
+        this.defaultWavesInterval = pValue;
     }
 
     public startSpecialWave (pWaveName:string) {
@@ -121,6 +130,8 @@ class EnemyManager {
     private playCurrentStack () {
         if (this.enemyStack[0]) {
             this.playStackStep( this.enemyStack.shift() );
+        } else {
+            this.currentTimeout = undefined;
         }
     }
 
@@ -138,7 +149,8 @@ class EnemyManager {
         }
 
         this.currentStackStep = undefined;
-        this.playCurrentStack();
+
+        this.currentTimeout = new Timeout(this.playCurrentStack.bind(this), this.defaultWavesInterval);
     }
 
     private getRandomPositionFromLevel (pGameplayItemName:string) {

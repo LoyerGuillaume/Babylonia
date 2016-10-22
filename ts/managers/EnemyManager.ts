@@ -57,7 +57,7 @@ class EnemyManager {
         if (this.waveExists(pWaveName)) {
             BEvent.on( EnemyEvent.ALL_DEAD, this.onEnemiesDead, this );
             this._startWave(pWaveName);
-        } else {
+        } else { 
             console.warn('The wave named "'+pWaveName+'" does not exists.');
         }
     }

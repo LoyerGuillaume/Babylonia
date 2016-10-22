@@ -8,5 +8,5 @@ class PlayerEvent extends BEvent {
 
     constructor(pEventName:string, pParams:any = undefined) {
         super(pEventName, pParams);
-    }
+    } 
 }

@@ -15,7 +15,7 @@ class UIManager {
     private static babyCoins:BABYLON.Text2D;
     private static displayText:BABYLON.Text2D;
     private static displayTextPanel:BABYLON.Rectangle2D;
-
+ 
     private static hudContainer:BABYLON.ScreenSpaceCanvas2D;
 
     private static capacityGroup:BABYLON.Group2D;

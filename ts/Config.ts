@@ -4,3 +4,4 @@ class Config {
     public static get JSON_PATH():string { return '../assets/jsons/';};
 
 }
+ 

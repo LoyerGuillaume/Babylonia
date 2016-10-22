@@ -14,7 +14,7 @@ class UICapacity extends BABYLON.Group2D {
 
     private picto:BABYLON.Sprite2D;
 
-
+ 
     constructor (property:any, capacity:any) {
         property.width = UICapacity.WIDTH;
         super(property);

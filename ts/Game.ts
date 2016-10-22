@@ -31,7 +31,7 @@ class Game {
 
             // this.engine.runRenderLoop(() => {
             //     this.scene.render();
-            // });
+            // }); 
         });
     }
 

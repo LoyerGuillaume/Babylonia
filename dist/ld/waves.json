@@ -18,7 +18,7 @@
                     { "spawner": 12,    "delay": 1800,   "enemy": "EnemyOne"}
                 ]
             },
-            {
+            { 
                 "foreachDelay" : 500,
                 "enemies" : [
                     { "spawner": 0,     "enemy": "EnemyOne"},

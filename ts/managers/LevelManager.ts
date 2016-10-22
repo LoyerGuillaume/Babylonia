@@ -12,7 +12,7 @@ class LevelManager {
     // list of positions by name
     private gameplayPositions: {};
 
-    /**
+    /** 
     * list of ld elements
     */
     public ldElements: LDElement[];
@@ -103,7 +103,7 @@ class LevelManager {
         }
 
         this.ldElements.push( lLDElem );
-    } 
+    }
 
     private addGameplayPosition (pName:string, pPos:BABYLON.Vector3) {
 

@@ -6,7 +6,7 @@ class FireBall extends AssetGraphic {
     private static get SPEED()               :number { return 0.25;};
     private static get MAX_LIFE_TIME()       :number { return 120;};
     private static get RATIO_SCALE_PARTICLE():number { return 0.15;};
-
+ 
     private launcher:Player;
 
     private lifeTime:number;

@@ -39,7 +39,7 @@ class GameManager {
 
         this.initPlayer(0);
 
-        // this.initEnemyManager();
+        this.initEnemyManager();
 
         // events
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);

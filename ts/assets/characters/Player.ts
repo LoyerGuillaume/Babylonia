@@ -1,7 +1,7 @@
 class Player extends Character {
 
     public static list:Player[] = [];
-
+ 
     public controller:Controller;
     private static get ASSET_NAME()             :string { return 'ChaWitch';};
     private static get MOVE_SPEED()             :number { return 0.005;};

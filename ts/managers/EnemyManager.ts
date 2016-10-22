@@ -9,6 +9,7 @@ class EnemyManager {
 
     private enemyStack:any[];
     private currentStackStep: any;
+    private isStackPlaying: boolean;
     private currentTimeout: Timeout;
 
     private currentWaveNumber: number;
@@ -30,6 +31,7 @@ class EnemyManager {
         this.currentWaveNumber = 0;
 
         this.enemyStack = [];
+        this.isStackPlaying = false;
 
         // set constructors
         this.enemyConstructors = {};
@@ -71,6 +73,10 @@ class EnemyManager {
         }
 
         pPos = pPos.add(new BABYLON.Vector3(0, 100, 0)); // FIXME
+
+        pPos.x *= 100;
+        pPos.z *= 100;
+
         var lEnemy = new this.enemyConstructors[pEnemy](pPos, this.scene);
         lEnemy.start();
     }
@@ -85,9 +91,20 @@ class EnemyManager {
         var lSIndex = this.getRandomIndexFromArray(lSituations);
         var lSituation = lSituations[lSIndex];
 
-        this.enemyStack = this.getStackFromSituation(lSituation);
+        this.fillStackRecursively( lSituation );
 
-        this.playCurrentStack();
+        if (!this.isStackPlaying) {
+            this.playCurrentStack();
+        }
+    }
+
+    private fillStackRecursively (pSituation: any) {
+        this.enemyStack = this.enemyStack.concat( this.getStackFromSituation( pSituation ) );
+
+        if (pSituation.nextSituation) {
+            console.info('fill recu');
+            this.fillStackRecursively( pSituation.nextSituation );
+        }
     }
 
     private getRandomIndexFromArray (pArray:any[]) {
@@ -126,10 +143,13 @@ class EnemyManager {
     }
 
     private playCurrentStack () {
+
         if (this.enemyStack[0]) {
+            this.isStackPlaying = true;
             this.playStackStep( this.enemyStack.shift() );
         } else {
             this.forgetTimeout();
+            this.isStackPlaying = false;
         }
     }
 

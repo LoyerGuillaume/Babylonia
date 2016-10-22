@@ -20,12 +20,14 @@
                     { "spawner": "EnemyPopper02",     "enemy": "EnemyOne"},
                     { "spawner": "EnemyPopper03",     "enemy": "EnemyOne"}
                 ],
-                "nextForeachDelay" : 350,
-                "nextEnemies" : [
-                    { "spawner": "EnemyPopper02",     "enemy": "EnemyOne"},
-                    { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"},
-                    { "spawner": "EnemyPopper03",     "enemy": "EnemyOne"}
-                ]
+                "nextSituation" : {
+                    "foreachDelay" : 500,
+                    "enemies" : [
+                        { "spawner": "EnemyPopper02",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper03",     "enemy": "EnemyOne"}
+                    ]
+                }
             }
         ]
     }

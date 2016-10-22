@@ -12,6 +12,8 @@ class Player extends Character {
 
     private score:number;
     private coins:number;
+    private startYPosition:number;
+    private frameCount:number = 0;
 
     private attacks:{} = {
         attack: {
@@ -36,12 +38,14 @@ class Player extends Character {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
 
-        this.score      = 0;
-        this.coins      = 0;
-        this.controller = new ControllerKeyboard();
-        this.initEvents();
+        this.score          = 0;
+        this.coins          = 0;
+        this.controller     = new ControllerKeyboard();
+        this.startYPosition = this.position.y;
+
         this.initAnimation();
         this.initCollision();
+        this.initEvents();
 
         UIManager.initCapacities(this.attacks);
     }
@@ -59,7 +63,6 @@ class Player extends Character {
 
     protected initEvents () {
         BEvent.on(PlayerEvent.HAS_HIT, this.hasHit, this);
-        BEvent.on(PlayerEvent.GOT_COIN, this.onCoinCollision, this);
     }
 
 
@@ -88,7 +91,6 @@ class Player extends Character {
         //
         // this.runAnimationName('Run');
 
-
         //IDLE 0-39
         //Run 45-85
     }
@@ -99,6 +101,24 @@ class Player extends Character {
             this.score += pPlayerEventParams.score;
             UIManager.setScore(this.score);
         }
+    }
+
+
+    protected doActionNormal (deltaTime:number) {
+        this.addFrameAttack();
+        this.animationMovement(deltaTime);
+
+        this.move(deltaTime);
+        this.checkAttack();
+
+        if (this.isInvicible) {
+            super.invicibilityCooldown(Player.INVICIBILITY_TIME);
+        } else {
+            this.checkEnemyCollision();
+        }
+
+        this.checkCoinCollision();
+        this.frameCount++;
     }
 
 
@@ -117,19 +137,8 @@ class Player extends Character {
     }
 
 
-    protected doActionNormal (deltaTime:number) {
-        this.addFrameAttack();
-
-        this.move(deltaTime);
-        this.checkAttack();
-
-        if (this.isInvicible) {
-            super.invicibilityCooldown(Player.INVICIBILITY_TIME);
-        } else {
-            this.checkEnemyCollision();
-        }
-
-        this.checkCoinCollision();
+    private animationMovement (deltaTime:number):void {
+        this.position.y = this.startYPosition + Math.sin(this.frameCount / 10) * 20 + 20;
     }
 
 
@@ -193,7 +202,7 @@ class Player extends Character {
         for (var i in Coin.list) {
             if (this.meshe.intersectsMesh(Coin.list[i], false)) {
                 Coin.list[i].destroy();
-                BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN));
+                this.onCoinCollision();
             }
         }
     }

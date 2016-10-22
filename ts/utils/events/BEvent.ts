@@ -11,22 +11,33 @@ class BEvent {
         this.params = pParams;
     }
 
-    public static on (pId:string, pFunc:any, pThis:any = undefined) {
+    public static on (pId:string, pFunc:any, pThis:any) {
 
         if (!BEvent.callbacks[pId]) {
             BEvent.callbacks[pId] = []
         }
 
-        BEvent.callbacks[pId].push(pFunc.bind(pThis));
+        BEvent.callbacks[pId].push(pFunc);
+        BEvent.callbacks[pId].push(pThis);
     }
 
-    public static off (pId:string, pFunc:any, pThis:any = undefined) {
+    public static off (pId:string, pFunc:any, pThis:any) {
 
         if (BEvent.callbacks[pId]) {
-            var lI = BEvent.callbacks[pId].indexOf(pFunc.bind(pThis));
-            if (lI >= 0) {
-                BEvent.callbacks[pId].splice(lI, 1);
+
+            var len:number = BEvent.callbacks[pId].length;
+            for (var i = 0; i < len; i+=2) {
+
+                if (BEvent.callbacks[pId][i+1] === pThis) {
+
+                    if (pThis !== undefined && BEvent.callbacks[pId][i].name === pFunc.name || BEvent.callbacks[pId][i].toString() === pFunc.toString()) {
+                        BEvent.callbacks[pId].splice(i, 2);
+                        break;
+                    }
+
+                }
             }
+
         }
     }
 
@@ -34,8 +45,8 @@ class BEvent {
         if (BEvent.callbacks[pEvent.id]) {
 
             var len:number = BEvent.callbacks[pEvent.id].length;
-            for (var i = 0; i < len; i++) {
-                BEvent.callbacks[pEvent.id][i](pEvent.params);
+            for (var i = 0; i < len; i+=2) {
+                BEvent.callbacks[pEvent.id][i].call(BEvent.callbacks[pEvent.id][i+1], pEvent.params);
             }
         }
     }

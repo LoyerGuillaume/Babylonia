@@ -47,8 +47,8 @@ class UIManager {
             y       : UIManager.scoreText.height + UIManager.COINS_OFFSET
         })
 
-        BEvent.on(PlayerEvent.HIT, UIManager.looseLife);
-        BEvent.on(PlayerEvent.GOT_COIN, UIManager.updateCoins);
+        BEvent.on(PlayerEvent.GOT_COIN, UIManager.updateCoins, UIManager);
+        BEvent.on(PlayerEvent.HIT, UIManager.looseLife, UIManager);
         window.onresize = UIManager.onResize;
     }
 

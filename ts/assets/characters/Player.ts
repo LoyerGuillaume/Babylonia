@@ -42,7 +42,8 @@ class Player extends Character {
         this.initEvents();
         this.initAnimation();
         this.initCollision();
-        this.initCapacitiesUI();
+
+        UIManager.initCapacities(this.attacks);
     }
 
 
@@ -68,12 +69,6 @@ class Player extends Character {
         // Tools.displayEllipsoid(this.getScene(), this);
     }
 
-    private initCapacitiesUI () {
-        for (var name in this.attacks) {
-            UIManager.addCapacity(this.attacks[name]);
-        }
-    }
-
 
     private initAnimation () {
 
@@ -97,7 +92,7 @@ class Player extends Character {
 
     private hasHit (pPlayerEventParams:any) {
         if (this === pPlayerEventParams.player) {
-            this.score += pPlayerEventParams.enemyScore;
+            this.score += pPlayerEventParams.score;
             UIManager.setScore(this.score);
         }
     }

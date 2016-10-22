@@ -180,13 +180,8 @@ class Player extends Character {
 
 
     private checkEnemyCollision () {
-        var vector:BABYLON.Vector3;
         for (var i in Enemy.list) {
-            vector = this.position.clone();
-            vector.x -= Enemy.list[i].position.x;
-            vector.y -= Enemy.list[i].position.y;
-            vector.z -= Enemy.list[i].position.z;
-            if (vector.length() < 0.5) {
+            if (Tools.minusVector3(this.position, Enemy.list[i].position).length() < 0.5) {
                 BEvent.emit(new PlayerEvent(PlayerEvent.HIT));
                 super.onHit();
                 return;
@@ -196,13 +191,8 @@ class Player extends Character {
 
 
     private checkCoinCollision () {
-        var vector:BABYLON.Vector3;
         for (var i in Coin.list) {
-            vector = this.position.clone();
-            vector.x -= Coin.list[i].position.x;
-            vector.y -= Coin.list[i].position.y;
-            vector.z -= Coin.list[i].position.z;
-            if (vector.length() < 0.8) {
+            if (Tools.minusVector3(this.position, Coin.list[i].position).length() < 0.8) {
                 Coin.list[i].destroy();
                 this.onCoinCollision();
             }

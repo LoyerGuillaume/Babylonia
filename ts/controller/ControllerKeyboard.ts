@@ -6,13 +6,17 @@ class ControllerKeyboard extends Controller {
 	    /**
 	     * tableau stockant l'etat appuy� ou non des touches
 	     */
-        keys: Object;
+        private keys: Object;
+
+        private _h: number;
+        private _v: number;
 
         constructor() {
 
             super();
 
             this.keys = {};
+            this._h = this._v = 0;
             window.addEventListener(Keyboard.KEY_DOWN, this.onKeyDown.bind(this));
             window.addEventListener(Keyboard.KEY_UP, this.onKeyUp.bind(this));
         }
@@ -34,19 +38,15 @@ class ControllerKeyboard extends Controller {
         }
 
         get horizontal (): number {
-            if (this.keys[Keyboard.LEFT]) return -1;
-            if (this.keys[Keyboard.RIGHT]) return 1;
-            return 0;
+            return this._h;
         }
 
         get vertical (): number {
-            if (this.keys[Keyboard.UP]) return 1;
-            if (this.keys[Keyboard.DOWN]) return -1;
-            return 0;
+            return this._v;
         }
 
 	    /**
-	     * d�truit l'instance unique et met sa r�f�rence interne � null
+	     * detruit l'instance unique et met sa reference interne a null
 	     */
         public destroy(): void {
             window.removeEventListener(Keyboard.KEY_DOWN, this.onKeyDown);
@@ -57,13 +57,25 @@ class ControllerKeyboard extends Controller {
         private onKeyDown(pEvent: KeyboardEvent): void {
             this.keys[pEvent.keyCode] = true;
 
-            // traitement des touches antagonistes en favorisant la derni�re touche appuy�e
-            if (pEvent.keyCode == Keyboard.LEFT) this.keys[Keyboard.RIGHT] = false;
-            else if (pEvent.keyCode == Keyboard.RIGHT) this.keys[Keyboard.LEFT] = false;
+            // traitement des touches antagonistes en favorisant la derniere touche appuyee
+            if (pEvent.keyCode == Keyboard.LEFT) this._h = -1;
+            else if (pEvent.keyCode == Keyboard.RIGHT) this._h = 1;
+
+            if (pEvent.keyCode == Keyboard.DOWN) this._v = -1;
+            else if (pEvent.keyCode == Keyboard.UP) this._v = 1;
         }
 
         private onKeyUp(pEvent: KeyboardEvent): void {
             this.keys[pEvent.keyCode] = false;
+
+            // traitement des touches antagonistes en considerant la touche opposee
+            if (pEvent.keyCode == Keyboard.LEFT && this.keys[Keyboard.RIGHT]) this._h = 1;
+            else if (pEvent.keyCode == Keyboard.RIGHT && this.keys[Keyboard.LEFT]) this._h = -1;
+            else if (pEvent.keyCode == Keyboard.LEFT || pEvent.keyCode == Keyboard.RIGHT) this._h = 0;
+
+            if (pEvent.keyCode == Keyboard.DOWN && this.keys[Keyboard.UP]) this._v = 1;
+            else if (pEvent.keyCode == Keyboard.UP && this.keys[Keyboard.DOWN]) this._v = -1;
+            else if (pEvent.keyCode == Keyboard.UP || pEvent.keyCode == Keyboard.DOWN) this._v = 0;
         }
 
     }

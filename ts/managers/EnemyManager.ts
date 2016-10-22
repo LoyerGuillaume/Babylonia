@@ -12,7 +12,7 @@ class EnemyManager {
 
     private currentWaveNumber: number;
 
-    private enemyConstructors: {}; 
+    private enemyConstructors: {};
 
     /**
      * @params pScene
@@ -31,11 +31,14 @@ class EnemyManager {
         this.enemyStack = [];
 
         // set constructors
-        this.enemyConstructors = [];
+        this.enemyConstructors = {};
     }
 
     public destroy () {
         if (this.currentTimeout) this.currentTimeout.destroy();
+        this.enemyStack = [];
+        this.enemyConstructors = {};
+        this.waves = undefined;
     }
 
     public setWavesDescription (pJson:any) {

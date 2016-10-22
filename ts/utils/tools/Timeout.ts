@@ -5,7 +5,7 @@ class Timeout {
 
     public static list: Timeout[] = [];
 
-    private static TIME_TO_FRAME:number = 1 / 60;
+    private static TIME_TO_FRAME:number = 60 / 1000;
 
     private timeoutCallback;
     private timeoutCounter;

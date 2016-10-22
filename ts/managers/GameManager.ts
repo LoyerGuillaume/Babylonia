@@ -5,14 +5,16 @@ class GameManager {
     private levelManager: LevelManager;
     private lightManager:LightManager;
 
-    // GAME RULES
     private enemyManager: EnemyManager;
 
     private onPause:boolean = false;
     private oldPausePress:boolean = false;
     private frameCount:number = 0;
 
+
+    // GAME RULES
     private static get RESPAWN_SECONDS() { return 3;};
+    private static get DEFAULT_WAVES_INTERVAL_MS() { return 5000;};
 
 	constructor(pScene, pEngine, pLevelManager) {
         this.mainScene = pScene;
@@ -37,13 +39,14 @@ class GameManager {
 
         this.gameLoop();
 
-        this.enemyManager.startWave(0);
+        this.enemyManager.startWave(1);
     }
 
     private initEnemyManager () {
         this.enemyManager = new EnemyManager(this.mainScene, this.levelManager);
         var lWavesDesc = Babylonia.getLoadedContent('waves');
         this.enemyManager.setWavesDescription( JSON.parse(lWavesDesc) );
+        this.enemyManager.setDefaultWavesInterval( GameManager.DEFAULT_WAVES_INTERVAL_MS );
     }
 
     private onPlayerDeath (pPlayerEvent:any) {

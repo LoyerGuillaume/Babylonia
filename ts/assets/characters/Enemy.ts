@@ -88,6 +88,7 @@ class Enemy extends Character {
             player: this.lastPlayerHitMe,
             score: this.getScore
         }));
+
         this.dropCoins();
         this.destroy();
     }
@@ -95,6 +96,11 @@ class Enemy extends Character {
 
     public destroy ():void {
         Enemy.list.splice(Enemy.list.indexOf(this), 1);
+
+        if (!Enemy.list[0]) {
+            BEvent.emit( new EnemyEvent(EnemyEvent.ALL_DEAD) );
+        }
+
         super.destroy();
     }
 

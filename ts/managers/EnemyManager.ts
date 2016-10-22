@@ -5,6 +5,7 @@ class EnemyManager {
     private levelManager: LevelManager;
 
     private waves: any;
+    private defaultWavesInterval: number;
 
     private enemyStack:any[];
     private currentStackStep: any;
@@ -12,7 +13,7 @@ class EnemyManager {
 
     private currentWaveNumber: number;
 
-    private enemyConstructors: {}; 
+    private enemyConstructors: {};
 
     /**
      * @params pScene
@@ -27,23 +28,31 @@ class EnemyManager {
         this.levelManager = pLevelManager;
 
         this.currentWaveNumber = 0;
+        this.defaultWavesInterval = 0;
 
         this.enemyStack = [];
 
         // set constructors
-        //this.enemyConstructors = [];
-        //for (var i = 0; i < this.enemyDiversityCount; i++) {
-        //    this.enemyConstructors[pEnemyClasses[i]] = Type.getConstructorByName(pEnemyClasses[i]);
-        //}
+        this.enemyConstructors = {};
     }
 
     public destroy () {
         if (this.currentTimeout) this.currentTimeout.destroy();
+        this.enemyStack = [];
+        this.enemyConstructors = {};
+        this.waves = undefined;
     }
 
     public setWavesDescription (pJson:any) {
         this.destroy();
         this.waves = pJson;
+    }
+
+    /**
+     * @parms pValue in ms
+     */
+    public setDefaultWavesInterval (pValue:number) {
+        this.defaultWavesInterval = pValue;
     }
 
     public startSpecialWave (pWaveName:string) {
@@ -73,6 +82,11 @@ class EnemyManager {
     }
 
     public spawnEnemy (pEnemy:string, pPos: BABYLON.Vector3) {
+
+        if ( !this.enemyConstructors[pEnemy] ) {
+            this.enemyConstructors[pEnemy] = Type.getConstructorByName(pEnemy);
+        }
+
         pPos = pPos.add(new BABYLON.Vector3(0, 100, 0)); // FIXME
         var lEnemy = new this.enemyConstructors[pEnemy](pPos, this.scene);
         lEnemy.start();
@@ -116,6 +130,8 @@ class EnemyManager {
     private playCurrentStack () {
         if (this.enemyStack[0]) {
             this.playStackStep( this.enemyStack.shift() );
+        } else {
+            this.currentTimeout = undefined;
         }
     }
 
@@ -133,7 +149,8 @@ class EnemyManager {
         }
 
         this.currentStackStep = undefined;
-        this.playCurrentStack();
+
+        this.currentTimeout = new Timeout(this.playCurrentStack.bind(this), this.defaultWavesInterval);
     }
 
     private getRandomPositionFromLevel (pGameplayItemName:string) {
@@ -160,7 +177,5 @@ class EnemyManager {
 
         return lPos;
     }
-
-
 
 }

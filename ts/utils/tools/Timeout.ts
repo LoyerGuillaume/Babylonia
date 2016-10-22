@@ -7,11 +7,11 @@ class Timeout {
 
     private static TIME_TO_FRAME:number = 1 / 60;
 
-    private doAction;
-
     private timeoutCallback;
     private timeoutCounter;
     private timeoutTotal;
+
+    public doAction;
 
     /**
      *  @parms pCallback

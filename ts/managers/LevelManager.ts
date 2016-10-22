@@ -12,7 +12,7 @@ class LevelManager {
     // list of positions by name
     private gameplayPositions: {};
 
-    /** 
+    /**
     * list of ld elements
     */
     public ldElements: LDElement[];
@@ -83,6 +83,7 @@ class LevelManager {
         if (lElems[1]) console.error('The gameplay element "'+pName+'" should not be duplicate.');
         return lElems[0];
     }
+
 
     // PRIVATE OPERATIONS
 

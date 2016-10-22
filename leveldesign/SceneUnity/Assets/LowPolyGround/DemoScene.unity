@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 1, g: 0.8895538, b: 0.27205884, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 0.9029412, b: 0.3602941, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -460,7 +460,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &98465647
 Transform:
   m_ObjectHideFlags: 0
@@ -4494,56 +4494,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1465354506}
   m_Mesh: {fileID: 4300018, guid: 62a1903fd3708d7499742985e02168a7, type: 3}
---- !u!1001 &1477826924
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4000011720442510, guid: b5841fa97b0856743b055216bc8c6f62, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -19.050049
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011720442510, guid: b5841fa97b0856743b055216bc8c6f62, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -248.927
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011720442510, guid: b5841fa97b0856743b055216bc8c6f62, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -117.27002
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011720442510, guid: b5841fa97b0856743b055216bc8c6f62, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011720442510, guid: b5841fa97b0856743b055216bc8c6f62, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011720442510, guid: b5841fa97b0856743b055216bc8c6f62, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011720442510, guid: b5841fa97b0856743b055216bc8c6f62, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011720442510, guid: b5841fa97b0856743b055216bc8c6f62, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000012120607210, guid: b5841fa97b0856743b055216bc8c6f62, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000011016011896, guid: b5841fa97b0856743b055216bc8c6f62, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: b5841fa97b0856743b055216bc8c6f62, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1480704967
 GameObject:
   m_ObjectHideFlags: 0

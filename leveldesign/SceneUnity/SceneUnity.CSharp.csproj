@@ -105,6 +105,7 @@
     <None Include="Assets\Cartoon lowpoly water well\readme.txt" />
     <None Include="Assets\Character_Witch_Dragon\ReadMe.txt" />
     <None Include="Assets\Chibi Mummy\readme.txt" />
+    <None Include="Assets\CrystalPack\Shaders\S_Crystal.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

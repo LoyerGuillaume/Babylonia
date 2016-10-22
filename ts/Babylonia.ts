@@ -91,7 +91,6 @@ class Babylonia {
 
             var assetName: string = pSources[assetIndex];
             var meshTask = loader.addMeshTask(assetName, '', Config.ASSET_PATH, assetName + '.babylon');
-
             meshTask.onSuccess = (pInstantiable) ? onSuccess.bind(this) : onLevelMeshSuccess.bind(this);
         }
 

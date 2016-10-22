@@ -1,11 +1,11 @@
 class EnemyManager {
 
+    public static ON_WAVE_END: string = 'ONWAVEEND';
 
     private scene: BABYLON.Scene;
     private levelManager: LevelManager;
 
     private waves: any;
-    private defaultWavesInterval: number;
 
     private enemyStack:any[];
     private currentStackStep: any;
@@ -28,57 +28,40 @@ class EnemyManager {
         this.levelManager = pLevelManager;
 
         this.currentWaveNumber = 0;
-        this.defaultWavesInterval = 0;
 
         this.enemyStack = [];
 
         // set constructors
         this.enemyConstructors = {};
+
     }
 
     public destroy () {
-        if (this.currentTimeout) this.currentTimeout.destroy();
         this.enemyStack = [];
         this.enemyConstructors = {};
         this.waves = undefined;
     }
 
     public setWavesDescription (pJson:any) {
-        this.destroy();
+        this.reset();
         this.waves = pJson;
     }
 
-    /**
-     * @parms pValue in ms
-     */
-    public setDefaultWavesInterval (pValue:number) {
-        this.defaultWavesInterval = pValue;
+    public getCurrentWaveNumber (): number {
+        return this.currentWaveNumber;
     }
 
-    public startSpecialWave (pWaveName:string) {
-
-        if (!this.waves[pWaveName]) {
+    public startWave (pWaveName:string|number) {
+        if (this.waveExists(pWaveName)) {
+            BEvent.on( EnemyEvent.ALL_DEAD, this.onEnemiesDead, this );
+            this._startWave(pWaveName);
+        } else {
             console.warn('The wave named "'+pWaveName+'" does not exists.');
-            return;
         }
-
-        var lSituations = this.getSituationsFromWave(this.waves[pWaveName]);
-
-        var lSIndex = this.getRandomIndexFromArray(lSituations);
-        var lSituation = lSituations[lSIndex];
-
-        this.enemyStack = this.getStackFromSituation(lSituation);
-
-        this.playCurrentStack();
     }
 
-    /**
-     * start at 0
-     */
-    public startWave (pWave:number = undefined) {
-
-        this.currentWaveNumber = (pWave === undefined) ? this.currentWaveNumber + 1 : pWave;
-        this.startSpecialWave(this.currentWaveNumber.toString());
+    public waveExists (pWaveName:string|number): boolean {
+        return this.waves[pWaveName] != undefined;
     }
 
     public spawnEnemy (pEnemy:string, pPos: BABYLON.Vector3) {
@@ -90,6 +73,21 @@ class EnemyManager {
         pPos = pPos.add(new BABYLON.Vector3(0, 100, 0)); // FIXME
         var lEnemy = new this.enemyConstructors[pEnemy](pPos, this.scene);
         lEnemy.start();
+    }
+
+
+    // PRIVATE OPERATIONS
+
+    private _startWave (pWaveName:string|number) {
+
+        var lSituations = this.getSituationsFromWave(this.waves[pWaveName]);
+
+        var lSIndex = this.getRandomIndexFromArray(lSituations);
+        var lSituation = lSituations[lSIndex];
+
+        this.enemyStack = this.getStackFromSituation(lSituation);
+
+        this.playCurrentStack();
     }
 
     private getRandomIndexFromArray (pArray:any[]) {
@@ -131,7 +129,7 @@ class EnemyManager {
         if (this.enemyStack[0]) {
             this.playStackStep( this.enemyStack.shift() );
         } else {
-            this.currentTimeout = undefined;
+            this.forgetTimeout();
         }
     }
 
@@ -149,8 +147,26 @@ class EnemyManager {
         }
 
         this.currentStackStep = undefined;
+        this.forgetTimeout();
 
-        this.currentTimeout = new Timeout(this.playCurrentStack.bind(this), this.defaultWavesInterval);
+        this.playCurrentStack();
+    }
+
+    private onEnemiesDead (pEvent:EnemyEvent = null) {
+        this.reset();
+        BEvent.emit(new BEvent(EnemyManager.ON_WAVE_END));
+    }
+
+    private forgetTimeout () {
+        this.currentTimeout = undefined;
+    }
+
+    private reset () {
+        if (this.currentTimeout) {
+            this.currentTimeout.destroy();
+            this.forgetTimeout();
+        }
+        BEvent.off( EnemyEvent.ALL_DEAD, this.onEnemiesDead, this );
     }
 
     private getRandomPositionFromLevel (pGameplayItemName:string) {

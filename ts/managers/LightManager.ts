@@ -24,7 +24,7 @@ class LightManager {
         dir1.intensity                    = 0.76;
         dir1.range                        = 3.40282347E+38;
     }
-
+ 
     private initPointLight (pScene:BABYLON.Scene):void {
         this.pointLight           = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(0, 100, 0), pScene);
         this.pointLight.range     = 3000;

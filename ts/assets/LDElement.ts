@@ -12,7 +12,7 @@ class LDElement implements ICollisionable {
     constructor(pMesh:BABYLON.Mesh) {
 
         this.mesh = pMesh;
-        this.name = pMesh.name
+        this.name = pMesh.name 
 
         CollisionBoxCreator.getBox(this.mesh.uniqueId);
     }

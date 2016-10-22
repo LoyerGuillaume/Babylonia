@@ -2,9 +2,9 @@ class CameraManager {
 
     private static camera:BABYLON.FreeCamera;
 
-    private static get HEIGHT():number   { return 1000;};
+    private static get HEIGHT():number   { return 10;};
     private static get X_OFFSET():number { return 0;};
-    private static get RADIUS():number   { return 1200;};
+    private static get RADIUS():number   { return 12;};
 
     private static get LERP_AMOUNT():number { return 0.05;};
 
@@ -15,7 +15,7 @@ class CameraManager {
         CameraManager.camera = new BABYLON.FreeCamera('FreeCamera', new BABYLON.Vector3( CameraManager.X_OFFSET, CameraManager.HEIGHT, CameraManager.RADIUS), pScene);
 
         pScene.activeCamera = CameraManager.camera;
-    }
+    } 
 
 
     public static setTarget(pTarget: GameObject):void {

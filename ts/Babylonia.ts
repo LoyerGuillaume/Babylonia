@@ -30,7 +30,7 @@ class Babylonia {
         this.engine = pEngine;
         this.levelManager = new LevelManager(pScene);
         this.gameManager = new GameManager(pScene, pEngine, this.levelManager);
-
+ 
         CameraManager.init(this.mainScene, this.engine);
         UIManager.initHud(this.mainScene);
 

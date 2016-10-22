@@ -4,15 +4,17 @@ class Player extends Character {
 
     public controller:Controller;
     private static get ASSET_NAME()             :string { return 'ChaWitch';};
-    private static get MOVE_SPEED()             :number { return 0.5;};
-    private static get ROTATION_SPEED()         :number { return 0.3;};
+    private static get MOVE_SPEED()             :number { return 0.007;};
+    private static get ROTATION_SPEED()         :number { return 0.5;};
     private static get INVICIBILITY_TIME()      :number { return 120;};
     private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
+    private static get BOUNCING_RATIO()         :number { return 0.1;};
+    private static get BOUNCING_FREQUENCE()     :number { return 15;};
     public static get LIFE_POINT()              :number { return 1;};
 
     private score:number;
     private coins:number;
-    private startYPosition:number;
+    private startYPositionMeshe:number;
     private frameCount:number = 0;
 
     private attacks:{} = {
@@ -41,11 +43,11 @@ class Player extends Character {
         this.score          = 0;
         this.coins          = 0;
         this.controller     = new ControllerKeyboard();
-        this.startYPosition = this.position.y;
+        this.startYPositionMeshe = this.meshe.position.y;
 
-        this.initEvents();
         this.initAnimation();
         this.initCollision();
+        this.initEvents();
 
         UIManager.initCapacities(this.attacks);
     }
@@ -63,13 +65,12 @@ class Player extends Character {
 
     protected initEvents () {
         BEvent.on(PlayerEvent.HAS_HIT, this.hasHit, this);
-        BEvent.on(PlayerEvent.GOT_COIN, this.onCoinCollision, this);
     }
 
 
     protected initCollision () {
         this.checkCollisions = true;
-        this.ellipsoid = new BABYLON.Vector3(50, 50, 50);
+        this.ellipsoid = new BABYLON.Vector3(0.5, 0.5, 0.5);
         // Tools.displayEllipsoid(this.getScene(), this);
     }
 
@@ -127,7 +128,8 @@ class Player extends Character {
         var vectorMovement:BABYLON.Vector3 = new BABYLON.Vector3(this.controller.horizontal, 0, this.controller.vertical);
         vectorMovement.normalize();
 
-        this.moveWithCollisions(vectorMovement.scaleInPlace(-Player.MOVE_SPEED * deltaTime));
+        vectorMovement.scaleInPlace(-Player.MOVE_SPEED * deltaTime);
+        this.moveWithCollisions(vectorMovement);
 
         if (this.controller.vertical != 0 || this.controller.horizontal != 0) {
             // this.runAnimationName('Run');
@@ -139,7 +141,7 @@ class Player extends Character {
 
 
     private animationMovement (deltaTime:number):void {
-        this.position.y = this.startYPosition + Math.sin(this.frameCount / 10) * 20 + 20;
+        this.meshe.position.y = this.startYPositionMeshe + Math.sin(this.frameCount / Player.BOUNCING_FREQUENCE - 0.5) * Player.BOUNCING_RATIO;
     }
 
 
@@ -203,7 +205,7 @@ class Player extends Character {
         for (var i in Coin.list) {
             if (this.meshe.intersectsMesh(Coin.list[i], false)) {
                 Coin.list[i].destroy();
-                BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN));
+                this.onCoinCollision();
             }
         }
     }
@@ -211,7 +213,9 @@ class Player extends Character {
 
     private onCoinCollision ():void {
         this.coins++;
-        console.log('Coins : ' + this.coins);
+        BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, {
+            coins: this.coins
+        }))
     }
 
 

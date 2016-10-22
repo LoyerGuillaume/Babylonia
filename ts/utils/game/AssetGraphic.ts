@@ -30,15 +30,9 @@ class AssetGraphic extends GameObject {
 
     public static addObject(id: string, pMeshes: BABYLON.AbstractMesh = undefined, pSkeletons : any = undefined, pParticleSystems: any = undefined) {
         pMeshes.setEnabled(false);
-        if (id === 'ChaWitch') {
-            AssetGraphic.meshesList[id]           = pMeshes;
-            AssetGraphic.skeletonsList[id]        = pSkeletons;
-            AssetGraphic.particlesSystemsList[id] = pParticleSystems;
-        } else {
-            AssetGraphic.meshesList[id]           = pMeshes;
-            AssetGraphic.skeletonsList[id]        = pSkeletons;
-            AssetGraphic.particlesSystemsList[id] = pParticleSystems;
-        }
+        AssetGraphic.meshesList[id]           = pMeshes;
+        AssetGraphic.skeletonsList[id]        = pSkeletons;
+        AssetGraphic.particlesSystemsList[id] = pParticleSystems;
     }
 
     public static clear () {
@@ -63,7 +57,7 @@ class AssetGraphic extends GameObject {
             }
         } else {
             console.warn('The AssetGraphic with the name "'+pAssetName+'" don\'t have any loaded mesh with the same name. Is that ok ?');
-            this.meshe = BABYLON.Mesh.CreateBox(pAssetName, 10, pScene);
+            this.meshe = BABYLON.Mesh.CreateBox(pAssetName, 0.5, pScene);
         }
 
         AssetGraphic.addMesh(this.meshe, this);
@@ -93,7 +87,6 @@ class AssetGraphic extends GameObject {
     }
 
     private runAnimation(startFrame:number, endFrame:number, loop:boolean = true) {
-        console.log('runAnimation');
         this.getScene().beginAnimation(this.meshe, startFrame, endFrame, loop);
     }
 

@@ -15,7 +15,7 @@ class CollisionBoxCreator {
         } else {
             CollisionBoxCreator.boxes[pMesh.uniqueId] = pMesh;
         }
-    }
+    } 
 
     public static getBox (pMeshId:number): BABYLON.Mesh {
         return CollisionBoxCreator.boxes[pMeshId];

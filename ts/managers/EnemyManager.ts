@@ -31,10 +31,7 @@ class EnemyManager {
         this.enemyStack = [];
 
         // set constructors
-        //this.enemyConstructors = [];
-        //for (var i = 0; i < this.enemyDiversityCount; i++) {
-        //    this.enemyConstructors[pEnemyClasses[i]] = Type.getConstructorByName(pEnemyClasses[i]);
-        //}
+        this.enemyConstructors = [];
     }
 
     public destroy () {
@@ -73,6 +70,11 @@ class EnemyManager {
     }
 
     public spawnEnemy (pEnemy:string, pPos: BABYLON.Vector3) {
+
+        if ( !this.enemyConstructors[pEnemy] ) {
+            this.enemyConstructors[pEnemy] = Type.getConstructorByName(pEnemy);
+        }
+
         pPos = pPos.add(new BABYLON.Vector3(0, 100, 0)); // FIXME
         var lEnemy = new this.enemyConstructors[pEnemy](pPos, this.scene);
         lEnemy.start();
@@ -160,7 +162,5 @@ class EnemyManager {
 
         return lPos;
     }
-
-
 
 }

@@ -2,20 +2,6 @@ class EnemyManager {
 
     public static ON_WAVE_END: string = 'ONWAVEEND';
 
-    private scene: BABYLON.Scene;
-    private levelManager: LevelManager;
-
-    private waves: any;
-
-    private enemyStack:any[];
-    private currentStackStep: any;
-    private isStackPlaying: boolean;
-    private currentTimeout: Timeout;
-
-    private currentWaveNumber: number;
-
-    private enemyConstructors: {};
-
     /**
      * @params pScene
      * @params pPositions
@@ -57,7 +43,7 @@ class EnemyManager {
         if (this.waveExists(pWaveName)) {
             BEvent.on( EnemyEvent.ALL_DEAD, this.onEnemiesDead, this );
             this._startWave(pWaveName);
-        } else { 
+        } else {
             console.warn('The wave named "'+pWaveName+'" does not exists.');
         }
     }
@@ -72,10 +58,7 @@ class EnemyManager {
             this.enemyConstructors[pEnemy] = Type.getConstructorByName(pEnemy);
         }
 
-        pPos = pPos.add(new BABYLON.Vector3(0, 100, 0)); // FIXME
-
-        pPos.x *= 100;
-        pPos.z *= 100;
+        pPos = pPos.add(new BABYLON.Vector3(0, .5, 0)); // FIXME
 
         var lEnemy = new this.enemyConstructors[pEnemy](pPos, this.scene);
         lEnemy.start();
@@ -83,6 +66,22 @@ class EnemyManager {
 
 
     // PRIVATE OPERATIONS
+
+    private static NEXT_SITUATION_KEY: string = 'nextSituation';
+
+    private scene: BABYLON.Scene;
+    private levelManager: LevelManager;
+
+    private waves: any;
+
+    private enemyStack:any[];
+    private currentStackStep: any;
+    private isStackPlaying: boolean;
+    private currentTimeout: Timeout;
+
+    private currentWaveNumber: number;
+
+    private enemyConstructors: {};
 
     private _startWave (pWaveName:string|number) {
 
@@ -102,7 +101,7 @@ class EnemyManager {
         this.enemyStack = this.enemyStack.concat( this.getStackFromSituation( pSituation ) );
 
         if (pSituation.nextSituation) {
-            console.info('fill recu');
+            this.enemyStack.push( EnemyManager.NEXT_SITUATION_KEY );
             this.fillStackRecursively( pSituation.nextSituation );
         }
     }
@@ -155,7 +154,12 @@ class EnemyManager {
 
     private playStackStep (pStep:any) {
         this.currentStackStep = pStep;
-        this.currentTimeout = new Timeout(this.execCurrentStep.bind(this), this.currentStackStep.delay);
+        var self = this;
+        if (this.currentStackStep === EnemyManager.NEXT_SITUATION_KEY) {
+            BEvent.once(EnemyEvent.ALL_DEAD, self.playCurrentStack, self);
+        } else {
+            this.currentTimeout = new Timeout(this.execCurrentStep.bind(this), this.currentStackStep.delay);
+        }
     }
 
     private execCurrentStep () {
@@ -173,8 +177,10 @@ class EnemyManager {
     }
 
     private onEnemiesDead (pEvent:EnemyEvent = null) {
-        this.reset();
-        BEvent.emit(new BEvent(EnemyManager.ON_WAVE_END));
+        if (!this.enemyStack[0]) {
+            this.reset();
+            BEvent.emit(new BEvent(EnemyManager.ON_WAVE_END));
+        }
     }
 
     private forgetTimeout () {

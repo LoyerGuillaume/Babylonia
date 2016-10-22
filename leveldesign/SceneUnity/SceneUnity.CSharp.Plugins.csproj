@@ -67,28 +67,28 @@
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
+    <Reference Include="BabylonExport.Entities">
+      <HintPath>Assets\Unity3D2Babylon\BabylonExport.Entities.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>Assets\Unity3D2Babylon\Ionic.Zip.dll</HintPath>
-    </Reference>
-    <Reference Include="JsonFx.Json">
-      <HintPath>Assets\Unity3D2Babylon\JsonFx.Json.dll</HintPath>
     </Reference>
     <Reference Include="JsonFx">
       <HintPath>Assets\Unity3D2Babylon\JsonFx.dll</HintPath>
     </Reference>
-    <Reference Include="BabylonExport.Entities">
-      <HintPath>Assets\Unity3D2Babylon\BabylonExport.Entities.dll</HintPath>
+    <Reference Include="JsonFx.Json">
+      <HintPath>Assets\Unity3D2Babylon\JsonFx.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Antialiasing.cs" />
-    <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BrokenVector\FreeLowPolyPack\readme.txt" />
     <None Include="Assets\Cartoon lowpoly water well\readme.txt" />
     <None Include="Assets\Character_Witch_Dragon\ReadMe.txt" />
     <None Include="Assets\Chibi Mummy\readme.txt" />
+    <None Include="Assets\CrystalPack\Shaders\S_Crystal.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\DLAA.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAA2.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAA3Console.shader" />
@@ -96,10 +96,6 @@
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAAPreset3.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\NFAA.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\SSAA.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\LensFlareCreate.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

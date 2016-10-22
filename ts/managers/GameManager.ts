@@ -35,9 +35,6 @@ class GameManager {
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
 
-        var enemy = new EnemyOne(new BABYLON.Vector3(0, 500, 0), this.mainScene);
-        enemy.start();
-
         this.gameLoop();
 
         this.enemyManager.startWave(0);

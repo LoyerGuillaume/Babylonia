@@ -27,6 +27,12 @@
     };
 
 
+    public static clampNumber(value:number, min:number, max:number):number {
+        return Math.max(Math.min(value, min), max);
+
+    }
+
+
     public static getRandomRotation ():number {
         return Math.floor(Math.random() * 360);
     }

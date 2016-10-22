@@ -38,6 +38,7 @@ class UICapacity extends BABYLON.Group2D {
         var pictoTexture:BABYLON.Texture = UICapacity.textures[this.capacity.name.toLowerCase()];
         var pictoScale:number = UICapacity.PICTO_SIZE / pictoTexture.getSize().width;
         this.picto = new BABYLON.Sprite2D(pictoTexture, {
+            id: 'picto' + this.capacity.name,
             parent: this,
             origin: new BABYLON.Vector2(0, 0),
             scale: pictoScale
@@ -45,6 +46,7 @@ class UICapacity extends BABYLON.Group2D {
         this.picto.x = UICapacity.WIDTH / 2 - UICapacity.PICTO_SIZE / 2;
 
         var text:BABYLON.Text2D = new BABYLON.Text2D(this.capacity.name, {
+            id: 'text' + this.capacity.name,
             parent: this,
             fontName: '20pt Arial'
         })
@@ -53,6 +55,7 @@ class UICapacity extends BABYLON.Group2D {
         this.picto.y = text.height;
 
         var key:BABYLON.Text2D = new BABYLON.Text2D(this.capacity.key, {
+            id: 'key' + this.capacity.name,
             parent: this,
             fontName: '20pt Arial',
             y: this.picto.y + UICapacity.PICTO_SIZE
@@ -113,4 +116,5 @@ class UICapacity extends BABYLON.Group2D {
             this.picto.children.splice(0, 1)[0].dispose();
         }
     }
+
 }

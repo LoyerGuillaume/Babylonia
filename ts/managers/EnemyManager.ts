@@ -48,6 +48,11 @@ class EnemyManager {
 
     public startSpecialWave (pWaveName:string) {
 
+        if (!this.waves[pWaveName]) {
+            console.warn('The wave named "'+pWaveName+'" does not exists.');
+            return;
+        }
+
         var lSituations = this.getSituationsFromWave(this.waves[pWaveName]);
 
         var lSIndex = this.getRandomIndexFromArray(lSituations);
@@ -62,7 +67,8 @@ class EnemyManager {
      * start at 0
      */
     public startWave (pWave:number = undefined) {
-        this.currentWaveNumber = pWave || this.currentWaveNumber + 1;
+
+        this.currentWaveNumber = (pWave === undefined) ? this.currentWaveNumber + 1 : pWave;
         this.startSpecialWave(this.currentWaveNumber.toString());
     }
 
@@ -115,7 +121,6 @@ class EnemyManager {
 
     private playStackStep (pStep:any) {
         this.currentStackStep = pStep;
-
         this.currentTimeout = new Timeout(this.execCurrentStep.bind(this), this.currentStackStep.delay);
     }
 

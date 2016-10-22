@@ -11,8 +11,9 @@ class UIManager {
 
     private static scoreText:BABYLON.Text2D;
     private static displayText:BABYLON.Text2D;
+    private static displayTextPanel:BABYLON.Rectangle2D;
 
-    public static hudContainer:BABYLON.ScreenSpaceCanvas2D;
+    private static hudContainer:BABYLON.ScreenSpaceCanvas2D;
 
     private static capacityGroup:BABYLON.Group2D;
 
@@ -36,11 +37,6 @@ class UIManager {
             fontName: UIManager.SCORE_SIZE + "pt Arial"
         });
 
-        UIManager.capacityGroup = new BABYLON.Group2D({
-            parent: UIManager.hudContainer,
-            x: window.innerWidth / 2
-        })
-
         BEvent.on(PlayerEvent.HIT, UIManager.looseLife);
         window.onresize = UIManager.onResize;
     }
@@ -51,9 +47,10 @@ class UIManager {
             UIManager.heartsSprites[i].y = window.innerHeight - UIManager.HEART_SIZE;
         }
         UIManager.placeCapacityContainer();
-        if (typeof UIManager.displayText !== 'undefined') {
-            UIManager.displayText.position = new BABYLON.Vector2(window.innerWidth / 2 - UIManager.displayText.width / 2, window.innerHeight / 2);
+        if (typeof UIManager.displayTextPanel !== 'undefined') {
+            UIManager.displayTextPanel.y = window.innerHeight / 2 - UIManager.displayTextPanel.height / 2;
         }
+        UIManager.hudContainer.scene.render();
     }
 
 
@@ -97,28 +94,65 @@ class UIManager {
 
 
     public static displayMessage (pMessage:string) {
-        if (typeof UIManager.displayText === 'undefined') {
+        if (typeof UIManager.displayTextPanel === 'undefined') {
+            UIManager.displayTextPanel = new BABYLON.Rectangle2D({
+                id: 'displayTextPanel',
+                parent: this.hudContainer,
+                width: 600,
+                height: 300,
+                x: window.innerWidth / 2 - 300,
+                y: window.innerHeight / 2 - 150,
+                roundRadius: 20,
+                fill: '#000000AF'
+            })
+
             UIManager.displayText = new BABYLON.Text2D(pMessage, {
                 id: 'displayedMessage',
-                parent:UIManager.hudContainer,
+                parent: UIManager.displayTextPanel,
                 fontName: UIManager.MESSAGE_SIZE + "pt Arial"
             });
+
+            UIManager.displayText.x = UIManager.displayTextPanel.width / 2 - UIManager.displayText.width / 2;
+            UIManager.displayText.y = UIManager.displayTextPanel.height / 2 - UIManager.displayText.height / 2;
         } else {
+            //UGLY but canvas2D is buggy
+            UIManager.displayTextPanel.x = window.innerWidth / 2 - 300;
+            UIManager.displayTextPanel.y = window.innerHeight / 2 - 150;
             UIManager.displayText.text = pMessage;
+            UIManager.displayText.x = UIManager.displayTextPanel.width / 2 - UIManager.displayText.width / 2;
+            UIManager.displayText.y = UIManager.displayTextPanel.height / 2 - UIManager.displayText.height / 2;
         }
 
-        UIManager.displayText.position = new BABYLON.Vector2(window.innerWidth / 2 - UIManager.displayText.width / 2, window.innerHeight / 2);
     }
 
 
     public static removeMessage () {
-        if (typeof UIManager.displayText !== 'undefined') {
-            UIManager.displayText.text = '';
+        if (typeof UIManager.displayTextPanel !== 'undefined') {
+            //UGLY but canvas2D is buggy
+            UIManager.displayTextPanel.x = -window.innerWidth;
+            UIManager.displayTextPanel.y = -window.innerHeight;
         }
     }
 
 
-    public static addCapacity (pCapacity:{}) {
+    public static initCapacities (pCapacities:{}) {
+        if (typeof UIManager.capacityGroup !== 'undefined') {
+            UIManager.capacityGroup.dispose();
+        }
+
+        UIManager.capacityGroup = new BABYLON.Group2D({
+            id: 'CapacityGroup',
+            parent: UIManager.hudContainer,
+            x: window.innerWidth / 2
+        });
+
+        for (var name in pCapacities) {
+            UIManager.addCapacity(pCapacities[name]);
+        }
+    }
+
+
+    private static addCapacity (pCapacity:{}) {
         var length:number = UIManager.capacityGroup.children.length;
         var capacity:UICapacity = new UICapacity({
             parent: UIManager.capacityGroup

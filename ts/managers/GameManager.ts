@@ -36,10 +36,12 @@ class GameManager {
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
 
         this.gameLoop();
+
+        this.enemyManager.startWave(0);
     }
 
     private initEnemyManager () {
-        this.enemyManager = new EnemyManager(this.mainScene, this.levelManager); 
+        this.enemyManager = new EnemyManager(this.mainScene, this.levelManager);
         var lWavesDesc = Babylonia.getLoadedContent('waves');
         this.enemyManager.setWavesDescription( JSON.parse(lWavesDesc) );
     }
@@ -90,10 +92,10 @@ class GameManager {
             if (Player.list[l].controller.pause != this.oldPausePress) {
                 this.oldPausePress = Player.list[l].controller.pause;
                 if (Player.list[l].controller.pause) {
-                    this.onPause       = !this.onPause;
+                    this.onPause = !this.onPause;
                     if (this.onPause) {
-                         this.engine.stopRenderLoop();
-                         this.pauseGameLoop();
+                        this.engine.stopRenderLoop();
+                        this.pauseGameLoop();
                     } else {
                         this.engine.stopRenderLoop();
                         this.gameLoop();
@@ -116,6 +118,10 @@ class GameManager {
             this.checkController();
 
             var deltaTime:number = this.engine.getDeltaTime();
+
+            for (var q = Timeout.list.length - 1; q >= 0; q--) {
+                Timeout.list[q].doAction(deltaTime);
+            }
 
             for (var i in Tree.list) {
                 Tree.list[i].doAction(deltaTime);

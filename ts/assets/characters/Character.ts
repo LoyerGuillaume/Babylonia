@@ -35,6 +35,7 @@ class Character extends AssetGraphic {
     protected invicibiliyFeedback () {
         if (this.invicibleTime % 5 === 0) {
             // console.log('toto')
+            this.meshe.visibility = 0;
             this.meshe.isVisible = !this.meshe.isVisible;
         }
     }

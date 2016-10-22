@@ -207,8 +207,13 @@ class Player extends Character {
 
 
     private checkCoinCollision () {
+        var vector:BABYLON.Vector3;
         for (var i in Coin.list) {
-            if (this.meshe.intersectsMesh(Coin.list[i], false)) {
+            vector = this.position.clone();
+            vector.x -= Coin.list[i].position.x;
+            vector.y -= Coin.list[i].position.y;
+            vector.z -= Coin.list[i].position.z;
+            if (vector.length() < 0.5) {
                 Coin.list[i].destroy();
                 this.onCoinCollision();
             }

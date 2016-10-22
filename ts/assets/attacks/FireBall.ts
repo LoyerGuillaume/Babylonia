@@ -26,7 +26,7 @@ class FireBall extends AssetGraphic {
         this.addOffset();
         this.lifeTime           = 0;
 
-        // this.meshe.isVisible = false;
+        this.meshe.isVisible = false;
         this.initParticlesSystem();
 
         // this.scaling = new BABYLON.Vector3(1, 0.5, 1);

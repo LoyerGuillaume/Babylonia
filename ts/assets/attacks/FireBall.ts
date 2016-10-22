@@ -40,7 +40,7 @@ class FireBall extends AssetGraphic {
 
     private addOffset ():void {
         this.computeWorldMatrix(true);
-        var movement  = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0, -1), this.getWorldMatrix());
+        var movement  = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0.2, -1), this.getWorldMatrix());
 
         movement.subtractInPlace(this.position).normalize();
         this.position = new BABYLON.Vector3(this.position.x + movement.x, this.position.y + movement.y, this.position.z + movement.z);

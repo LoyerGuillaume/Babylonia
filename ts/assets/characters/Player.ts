@@ -8,8 +8,8 @@ class Player extends Character {
     private static get ROTATION_SPEED()         :number { return 0.3;};
     private static get INVICIBILITY_TIME()      :number { return 120;};
     private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
-    private static get BOUNCING_RATIO()         :number { return 0.5;};
-    private static get BOUNCING_FREQUENCE()     :number { return 20;};
+    private static get BOUNCING_RATIO()         :number { return 0.1;};
+    private static get BOUNCING_FREQUENCE()     :number { return 15;};
     public static get LIFE_POINT()              :number { return 1;};
 
     private score:number;

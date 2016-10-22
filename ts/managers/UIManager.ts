@@ -37,7 +37,7 @@ class UIManager {
             fontName: UIManager.SCORE_SIZE + "pt Arial"
         });
 
-        BEvent.on(PlayerEvent.HIT, UIManager.looseLife);
+        BEvent.on(PlayerEvent.HIT, UIManager.looseLife, UIManager);
         window.onresize = UIManager.onResize;
     }
 

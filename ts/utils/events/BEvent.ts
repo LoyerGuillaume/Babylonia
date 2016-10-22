@@ -11,7 +11,7 @@ class BEvent {
         this.params = pParams;
     }
 
-    public static on (pId:string, pFunc:any, pThis:any = undefined) {
+    public static on (pId:string, pFunc:any, pThis:any) {
 
         if (!BEvent.callbacks[pId]) {
             BEvent.callbacks[pId] = []
@@ -21,7 +21,7 @@ class BEvent {
         BEvent.callbacks[pId].push(pThis);
     }
 
-    public static off (pId:string, pFunc:any, pThis:any = undefined) {
+    public static off (pId:string, pFunc:any, pThis:any) {
 
         if (BEvent.callbacks[pId]) {
 

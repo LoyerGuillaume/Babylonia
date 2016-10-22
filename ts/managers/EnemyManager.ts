@@ -86,7 +86,7 @@ class EnemyManager {
 
     private _startWave (pWaveName:string|number) {
 
-        var lSituations = this.getSituationsFromWave(this.waves[pWaveName]);
+        var lSituations = this.getSituationsFromWave(this.waves[pWaveName]); 
 
         var lSIndex = this.getRandomIndexFromArray(lSituations);
         var lSituation = lSituations[lSIndex];

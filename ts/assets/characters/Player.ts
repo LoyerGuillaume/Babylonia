@@ -12,7 +12,7 @@ class Player extends Character {
     private static get BOUNCING_FREQUENCE()     :number { return 15;};
     public static get LIFE_POINT()              :number { return 1;};
 
-    private score:number;
+    private score:number; 
     private coins:number;
     private startYPositionMeshe:number;
     private frameCount:number = 0;

@@ -24,7 +24,7 @@ class UIManager {
     public static loadTextures(scene:BABYLON.Scene, pCallback:any) {
         UIManager.heartTexture = new BABYLON.Texture('../assets/heart.png', scene, false, true, 0, function () {
             UIManager.heartScale = UIManager.HEART_SIZE / UIManager.heartTexture.getSize().width;
-            UICapacity.loadTextures(scene, pCallback);
+            UICapacity.loadTextures(scene, pCallback); 
         });
     }
 

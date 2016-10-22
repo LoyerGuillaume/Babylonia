@@ -7,9 +7,9 @@ class GameManager {
 
     private enemyManager: EnemyManager;
 
-    private onPause:boolean = false;
+    private onPause      :boolean = false;
     private oldPausePress:boolean = false;
-    private frameCount:number = 0;
+    private frameCount   :number  = 0;
 
 
     // GAME RULES

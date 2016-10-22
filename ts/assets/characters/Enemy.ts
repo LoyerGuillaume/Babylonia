@@ -51,13 +51,8 @@ class Enemy extends Character {
 
 
     protected checkProjectilesCollision ():void {
-        var vector:BABYLON.Vector3;
         for (var i in FireBall.list) {
-            vector = this.position.clone();
-            vector.x -= FireBall.list[i].position.x;
-            vector.y -= FireBall.list[i].position.y;
-            vector.z -= FireBall.list[i].position.z;
-            if (vector.length() < 0.8) {
+            if (Tools.minusVector3(this.position, FireBall.list[i].position).length() < 0.8) {
                 this.lastPlayerHitMe = FireBall.list[i].getLauncher;
                 FireBall.list[i].destroy();
                 super.onHit();
@@ -68,6 +63,7 @@ class Enemy extends Character {
 
 
     protected doActionNormal (deltaTime:number):void {
+        this.animationMovement(deltaTime);
         if (this.isInvicible) {
             super.invicibilityCooldown(this.invincibilityTime);
         } else {

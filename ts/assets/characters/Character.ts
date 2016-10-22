@@ -1,8 +1,13 @@
 class Character extends AssetGraphic {
 
+    private static get BOUNCING_RATIO()         :number { return 0.1;};
+    private static get BOUNCING_FREQUENCE()     :number { return 15;};
+
     protected lifePoint:number;
     protected invicibleTime:number = 0;
     protected isInvicible:boolean = false;
+    private startYPositionMeshe:number;
+    private frameCount:number = 0;
 
     constructor(pScene:BABYLON.Scene, pAssetName:string, pPosition:BABYLON.Vector3, pLifePoint:number) {
         super(pAssetName, pScene);
@@ -10,6 +15,8 @@ class Character extends AssetGraphic {
         this.lifePoint = pLifePoint;
         this.position = pPosition.clone();
         this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
+
+        this.startYPositionMeshe = this.meshe.position.y;
     }
 
 
@@ -37,6 +44,12 @@ class Character extends AssetGraphic {
             //isVisible isn't working
             this.meshe.setEnabled(!this.meshe.isEnabled());
         }
+    }
+
+
+    protected animationMovement (deltaTime:number):void {
+        this.meshe.position.y = this.startYPositionMeshe + Math.sin(this.frameCount / Character.BOUNCING_FREQUENCE - 0.5) * Character.BOUNCING_RATIO;
+        this.frameCount++;
     }
 
 

@@ -8,14 +8,10 @@ class Player extends Character {
     private static get ROTATION_SPEED()         :number { return 0.5;};
     private static get INVICIBILITY_TIME()      :number { return 120;};
     private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
-    private static get BOUNCING_RATIO()         :number { return 0.1;};
-    private static get BOUNCING_FREQUENCE()     :number { return 15;};
     public static get LIFE_POINT()              :number { return 3;};
 
     private score:number;
     private coins:number;
-    private startYPositionMeshe:number;
-    private frameCount:number = 0;
 
     private attacks:{} = {
         attack: {
@@ -43,7 +39,6 @@ class Player extends Character {
         this.score          = 0;
         this.coins          = 0;
         this.controller     = new ControllerKeyboard();
-        this.startYPositionMeshe = this.meshe.position.y;
 
         this.initAnimation();
         this.initCollision();
@@ -120,7 +115,6 @@ class Player extends Character {
         }
 
         this.checkCoinCollision();
-        this.frameCount++;
     }
 
 
@@ -137,11 +131,6 @@ class Player extends Character {
         } else {
             // this.stopAnimation();
         }
-    }
-
-
-    private animationMovement (deltaTime:number):void {
-        this.meshe.position.y = this.startYPositionMeshe + Math.sin(this.frameCount / Player.BOUNCING_FREQUENCE - 0.5) * Player.BOUNCING_RATIO;
     }
 
 
@@ -191,13 +180,8 @@ class Player extends Character {
 
 
     private checkEnemyCollision () {
-        var vector:BABYLON.Vector3;
         for (var i in Enemy.list) {
-            vector = this.position.clone();
-            vector.x -= Enemy.list[i].position.x;
-            vector.y -= Enemy.list[i].position.y;
-            vector.z -= Enemy.list[i].position.z;
-            if (vector.length() < 0.5) {
+            if (Tools.minusVector3(this.position, Enemy.list[i].position).length() < 0.5) {
                 BEvent.emit(new PlayerEvent(PlayerEvent.HIT));
                 super.onHit();
                 return;
@@ -207,13 +191,8 @@ class Player extends Character {
 
 
     private checkCoinCollision () {
-        var vector:BABYLON.Vector3;
         for (var i in Coin.list) {
-            vector = this.position.clone();
-            vector.x -= Coin.list[i].position.x;
-            vector.y -= Coin.list[i].position.y;
-            vector.z -= Coin.list[i].position.z;
-            if (vector.length() < 0.8) {
+            if (Tools.minusVector3(this.position, Coin.list[i].position).length() < 0.8) {
                 Coin.list[i].destroy();
                 this.onCoinCollision();
             }

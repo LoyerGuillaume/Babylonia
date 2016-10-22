@@ -37,4 +37,9 @@
         return Math.floor(Math.random() * 360);
     }
 
+
+    public static minusVector3 (pVector:BABYLON.Vector3, pVectorMinus:BABYLON.Vector3):BABYLON.Vector3 {
+        return new BABYLON.Vector3(pVector.x - pVectorMinus.x, pVector.y - pVectorMinus.y, pVector.z - pVectorMinus.z)
+    }
+
 }

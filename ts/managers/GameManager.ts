@@ -120,7 +120,7 @@ class GameManager {
             var deltaTime:number = this.engine.getDeltaTime();
 
             for (var q = Timeout.list.length - 1; q >= 0; q--) {
-                Timeout.list[q].doAction(deltaTime);
+                Timeout.list[q].doAction(deltaTime); 
             }
 
             for (var i in Tree.list) {

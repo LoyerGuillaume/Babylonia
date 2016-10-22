@@ -9,7 +9,7 @@ class UIManager {
     private static heartScale:number;
     private static heartsSprites:BABYLON.Sprite2D[] = [];
 
-    private static scoreText:BABYLON.Text2D;
+    private static scoreText:BABYLON.Text2D; 
     private static displayText:BABYLON.Text2D;
     private static displayTextPanel:BABYLON.Rectangle2D;
 

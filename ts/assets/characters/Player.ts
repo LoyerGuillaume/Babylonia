@@ -47,7 +47,7 @@ class Player extends Character {
         this.initAnimation();
         this.initCollision();
 
-        UIManager.initCapacities(this.attacks);
+        UIManager.initCapacities(this.attacks); 
     }
 
 

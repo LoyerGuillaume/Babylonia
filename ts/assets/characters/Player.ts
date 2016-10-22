@@ -213,7 +213,7 @@ class Player extends Character {
             vector.x -= Coin.list[i].position.x;
             vector.y -= Coin.list[i].position.y;
             vector.z -= Coin.list[i].position.z;
-            if (vector.length() < 0.5) {
+            if (vector.length() < 0.8) {
                 Coin.list[i].destroy();
                 this.onCoinCollision();
             }

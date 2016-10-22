@@ -68,6 +68,7 @@ class Enemy extends Character {
 
 
     protected doActionNormal (deltaTime:number):void {
+        this.animationMovement(deltaTime);
         if (this.isInvicible) {
             super.invicibilityCooldown(this.invincibilityTime);
         } else {

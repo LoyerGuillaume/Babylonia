@@ -1,6 +1,6 @@
 class EnemyOne extends Enemy {
 
-    private static get ASSET_NAME()          :string { return 'ChaWitch';};
+    private static get ASSET_NAME()          :string { return 'ChaDragon';};
     private static get LIFE_POINT()          :number { return 2;};
     private static get INVICIBILITY_TIME()   :number { return 30;};
     private static get SCORE_GET()           :number { return 100;};

@@ -8,14 +8,10 @@ class Player extends Character {
     private static get ROTATION_SPEED()         :number { return 0.5;};
     private static get INVICIBILITY_TIME()      :number { return 120;};
     private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
-    private static get BOUNCING_RATIO()         :number { return 0.1;};
-    private static get BOUNCING_FREQUENCE()     :number { return 15;};
     public static get LIFE_POINT()              :number { return 3;};
 
     private score:number;
     private coins:number;
-    private startYPositionMeshe:number;
-    private frameCount:number = 0;
 
     private attacks:{} = {
         attack: {
@@ -43,7 +39,6 @@ class Player extends Character {
         this.score          = 0;
         this.coins          = 0;
         this.controller     = new ControllerKeyboard();
-        this.startYPositionMeshe = this.meshe.position.y;
 
         this.initAnimation();
         this.initCollision();
@@ -120,7 +115,6 @@ class Player extends Character {
         }
 
         this.checkCoinCollision();
-        this.frameCount++;
     }
 
 
@@ -137,11 +131,6 @@ class Player extends Character {
         } else {
             // this.stopAnimation();
         }
-    }
-
-
-    private animationMovement (deltaTime:number):void {
-        this.meshe.position.y = this.startYPositionMeshe + Math.sin(this.frameCount / Player.BOUNCING_FREQUENCE - 0.5) * Player.BOUNCING_RATIO;
     }
 
 

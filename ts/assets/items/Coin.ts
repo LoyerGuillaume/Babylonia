@@ -26,7 +26,7 @@ class Coin extends AssetGraphic {
         // var randomNumber:number = Coin.MIN_MULTIPLY_MOVEMENT + Math.random() * (Coin.MAX_MULTIPLY_MOVEMENT - Coin.MIN_MULTIPLY_MOVEMENT);
         // this.vectorMovement     = pVectorDirection.multiplyByFloats(this.getNumberForVectorMovement(), this.getNumberForVectorMovement(), this.getNumberForVectorMovement());
         this.vectorMovement     = new BABYLON.Vector3(this.getNumberForVectorMovement(), 0, this.getNumberForVectorMovement());
-        console.log('vectorMovement : '+this.vectorMovement);
+        // console.log('vectorMovement : '+this.vectorMovement);
 
 
         Coin.list.push(this);

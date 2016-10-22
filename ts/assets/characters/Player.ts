@@ -193,6 +193,7 @@ class Player extends Character {
     private checkEnemyCollision () {
         for (var i in Enemy.list) {
             if (this.meshe.intersectsMesh(Enemy.list[i], false)) {
+                console.log('toto')
                 BEvent.emit(new PlayerEvent(PlayerEvent.HIT));
                 super.onHit();
                 return;

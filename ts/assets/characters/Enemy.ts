@@ -3,8 +3,8 @@ class Enemy extends Character {
     public static list:Enemy[] = [];
 
     private invincibilityTime:number;
- 
-    private static get MOVE_SPEED():number { return 0.01;};
+
+    private static get MOVE_SPEED():number { return 0.001;};
     private static get ROTATION_SPEED():number { return 0.3;};
 
     private lastPlayerHitMe:Player;
@@ -52,7 +52,8 @@ class Enemy extends Character {
 
     protected checkProjectilesCollision ():void {
         for (var i in FireBall.list) {
-            if (this.meshe.intersectsMesh(FireBall.list[i], false)) {
+            if (this.meshe.intersectsMesh(FireBall.list[i], true)) {
+                console.log('hit');
                 this.lastPlayerHitMe = FireBall.list[i].getLauncher;
                 FireBall.list[i].destroy();
                 super.onHit();

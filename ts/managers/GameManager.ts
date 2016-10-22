@@ -49,6 +49,9 @@ class GameManager {
         this.currentWaveNumber = 1;
         this.enemyManager.startWave(this.currentWaveNumber);
 
+        // var enemy = new EnemyOne(new BABYLON.Vector3(3, 1, 3), this.mainScene);
+        // enemy.start();
+
         this.gameLoop();
     }
 

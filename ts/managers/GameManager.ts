@@ -14,7 +14,7 @@ class GameManager {
 
     // GAME RULES
     private static get RESPAWN_SECONDS() { return 3;};
-    private static get DEFAULT_WAVES_INTERVAL_MS() { return 5000;};
+    private static get WAVES_INTERVAL_MS() { return 5000;};
 
     // GAME VARS
     private currentWaveNumber: number;
@@ -57,7 +57,7 @@ class GameManager {
         console.info('vague vaincu !');
 
         if (this.enemyManager.waveExists(this.currentWaveNumber + 1)) {
-            this.enemyManager.startWave(++this.currentWaveNumber);
+            new Timeout(this.enemyManager.startWave.bind(this.enemyManager, ++this.currentWaveNumber), GameManager.WAVES_INTERVAL_MS);
         } else {
              this.onLastWaveWon();
         }

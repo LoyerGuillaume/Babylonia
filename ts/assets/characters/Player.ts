@@ -203,7 +203,7 @@ class Player extends Character {
 
     private checkCoinCollision () {
         for (var i in Coin.list) {
-            if (Tools.minusVector3(this.position, Coin.list[i].position).length() < 0.5) {
+            if (Tools.minusVector3(this.position, Coin.list[i].position).length() < 0.8) {
                 Coin.list[i].destroy();
                 this.onCoinCollision();
             }

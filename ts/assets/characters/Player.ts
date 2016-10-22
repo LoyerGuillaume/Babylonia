@@ -201,7 +201,9 @@ class Player extends Character {
 
     private onCoinCollision ():void {
         this.coins++;
-        console.log('Coins : ' + this.coins);
+        BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, {
+            coins: this.coins
+        }))
     }
 
 

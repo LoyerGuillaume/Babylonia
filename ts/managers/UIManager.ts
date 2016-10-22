@@ -2,6 +2,8 @@ class UIManager {
 
     private static get HEART_SIZE()     :number { return 64 };
     private static get SCORE_SIZE()     :number { return 40 };
+    private static get COINS_SIZE()     :number { return 40 };
+    private static get COINS_OFFSET()   :number { return 20 };
     private static get MESSAGE_SIZE()   :number { return 20 };
     private static get CAPACITY_OFFSET():number { return 250 };
 
@@ -10,6 +12,7 @@ class UIManager {
     private static heartsSprites:BABYLON.Sprite2D[] = [];
 
     private static scoreText:BABYLON.Text2D;
+    private static babyCoins:BABYLON.Text2D;
     private static displayText:BABYLON.Text2D;
     private static displayTextPanel:BABYLON.Rectangle2D;
 
@@ -32,12 +35,20 @@ class UIManager {
         });
 
         UIManager.scoreText = new BABYLON.Text2D('Score : 0', {
-            id: 'score',
-            parent:UIManager.hudContainer,
+            id      : 'score',
+            parent  : UIManager.hudContainer,
             fontName: UIManager.SCORE_SIZE + "pt Arial"
         });
 
+        UIManager.babyCoins = new BABYLON.Text2D('Babycoins : 0', {
+            id      : 'babycoins',
+            parent  : UIManager.hudContainer,
+            fontName: UIManager.COINS_SIZE + "pt Arial",
+            y       : UIManager.scoreText.height + UIManager.COINS_OFFSET
+        })
+
         BEvent.on(PlayerEvent.HIT, UIManager.looseLife);
+        BEvent.on(PlayerEvent.GOT_COIN, UIManager.updateCoins);
         window.onresize = UIManager.onResize;
     }
 
@@ -50,7 +61,6 @@ class UIManager {
         if (typeof UIManager.displayTextPanel !== 'undefined') {
             UIManager.displayTextPanel.y = window.innerHeight / 2 - UIManager.displayTextPanel.height / 2;
         }
-        UIManager.hudContainer.scene.render();
     }
 
 
@@ -90,6 +100,11 @@ class UIManager {
 
     public static setScore (pScore:number) {
         UIManager.scoreText.text = "Score : " + pScore;
+    }
+
+
+    private static updateCoins (pPlayerEventParams:any) {
+        UIManager.babyCoins.text = 'Babycoins : ' + pPlayerEventParams.coins;
     }
 
 

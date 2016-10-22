@@ -92,10 +92,10 @@ class GameManager {
             if (Player.list[l].controller.pause != this.oldPausePress) {
                 this.oldPausePress = Player.list[l].controller.pause;
                 if (Player.list[l].controller.pause) {
-                    this.onPause       = !this.onPause;
+                    this.onPause = !this.onPause;
                     if (this.onPause) {
-                         this.engine.stopRenderLoop();
-                         this.pauseGameLoop();
+                        this.engine.stopRenderLoop();
+                        this.pauseGameLoop();
                     } else {
                         this.engine.stopRenderLoop();
                         this.gameLoop();

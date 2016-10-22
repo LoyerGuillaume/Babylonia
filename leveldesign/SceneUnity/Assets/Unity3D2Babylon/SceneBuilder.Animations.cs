@@ -21,11 +21,14 @@ namespace Unity3D2Babylon
                 {
                     return;
                 }
+
+                Debug.Log("runtimeAnimatorController");
                 var layer = ac.layers[0];
                 if (layer == null)
                 {
                     return;
                 }
+                Debug.Log("layer");
                 AnimatorStateMachine sm = layer.stateMachine;
                 if (sm.states.Length > 0)
                 {
@@ -189,7 +192,7 @@ namespace Unity3D2Babylon
                     default:
                         continue;
                 }
-
+                
                 var babylonAnimation = new BabylonAnimation
                 {
                     dataType = (int)BabylonAnimation.DataType.Float,

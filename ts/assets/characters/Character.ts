@@ -6,7 +6,7 @@ class Character extends AssetGraphic {
 
     constructor(pScene:BABYLON.Scene, pAssetName:string, pPosition:BABYLON.Vector3, pLifePoint:number) {
         super(pAssetName, pScene);
- 
+
         this.lifePoint = pLifePoint;
         this.position = pPosition.clone();
         this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
@@ -34,7 +34,8 @@ class Character extends AssetGraphic {
 
     protected invicibiliyFeedback () {
         if (this.invicibleTime % 5 === 0) {
-            this.meshe.isVisible = !this.meshe.isVisible;
+            //isVisible isn't working
+            this.meshe.setEnabled(!this.meshe.isEnabled());
         }
     }
 

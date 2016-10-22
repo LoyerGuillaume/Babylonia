@@ -51,9 +51,13 @@ class Enemy extends Character {
 
 
     protected checkProjectilesCollision ():void {
+        var vector:BABYLON.Vector3;
         for (var i in FireBall.list) {
-            if (this.meshe.intersectsMesh(FireBall.list[i], true)) {
-                console.log('hit');
+            vector = this.position.clone();
+            vector.x -= FireBall.list[i].position.x;
+            vector.y -= FireBall.list[i].position.y;
+            vector.z -= FireBall.list[i].position.z;
+            if (vector.length() < 0.8) {
                 this.lastPlayerHitMe = FireBall.list[i].getLauncher;
                 FireBall.list[i].destroy();
                 super.onHit();

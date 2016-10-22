@@ -10,7 +10,7 @@ class Player extends Character {
     private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
     private static get BOUNCING_RATIO()         :number { return 0.1;};
     private static get BOUNCING_FREQUENCE()     :number { return 15;};
-    public static get LIFE_POINT()              :number { return 1;};
+    public static get LIFE_POINT()              :number { return 3;};
 
     private score:number;
     private coins:number;
@@ -191,9 +191,13 @@ class Player extends Character {
 
 
     private checkEnemyCollision () {
+        var vector:BABYLON.Vector3;
         for (var i in Enemy.list) {
-            if (this.meshe.intersectsMesh(Enemy.list[i], false)) {
-                console.log('toto')
+            vector = this.position.clone();
+            vector.x -= Enemy.list[i].position.x;
+            vector.y -= Enemy.list[i].position.y;
+            vector.z -= Enemy.list[i].position.z;
+            if (vector.length() < 0.5) {
                 BEvent.emit(new PlayerEvent(PlayerEvent.HIT));
                 super.onHit();
                 return;
@@ -203,8 +207,13 @@ class Player extends Character {
 
 
     private checkCoinCollision () {
+        var vector:BABYLON.Vector3;
         for (var i in Coin.list) {
-            if (this.meshe.intersectsMesh(Coin.list[i], false)) {
+            vector = this.position.clone();
+            vector.x -= Coin.list[i].position.x;
+            vector.y -= Coin.list[i].position.y;
+            vector.z -= Coin.list[i].position.z;
+            if (vector.length() < 0.5) {
                 Coin.list[i].destroy();
                 this.onCoinCollision();
             }

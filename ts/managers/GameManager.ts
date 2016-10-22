@@ -33,7 +33,7 @@ class GameManager {
 
         this.initPlayer(0);
 
-        this.initEnemyManager();
+        // this.initEnemyManager();
 
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
 
@@ -123,7 +123,7 @@ class GameManager {
             var deltaTime:number = this.engine.getDeltaTime();
 
             for (var q = Timeout.list.length - 1; q >= 0; q--) {
-                Timeout.list[q].doAction(deltaTime); 
+                Timeout.list[q].doAction(deltaTime);
             }
 
             for (var i in Tree.list) {

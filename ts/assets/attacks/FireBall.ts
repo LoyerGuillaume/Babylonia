@@ -5,11 +5,14 @@ class FireBall extends AssetGraphic {
     private static get ASSET_NAME():string { return 'elfe';};
     private static get SPEED():number { return 25;};
     private static get MAX_LIFE_TIME():number { return 60;};
+    private static get RATIO_SCALE_PARTICLE():number { return 10;};
 
     private launcher:Player;
 
     private lifeTime:number;
     private direction:BABYLON.Vector3;
+    private fireParticleSystem:BABYLON.ParticleSystem;
+    private smokeParticleSystem:BABYLON.ParticleSystem;
 
 
     constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion, pPlayer) {
@@ -23,7 +26,7 @@ class FireBall extends AssetGraphic {
 
         this.initParticlesSystem();
 
-        this.scaling = new BABYLON.Vector3(1, 0.5, 1);
+        // this.scaling = new BABYLON.Vector3(1, 0.5, 1);
     }
 
 
@@ -33,42 +36,76 @@ class FireBall extends AssetGraphic {
 
 
     private initParticlesSystem ():void {
-        var scene:BABYLON.Scene = this.getScene();
-        // var fountain = BABYLON.Mesh.CreateBox("fountain", 1.0, scene);
-        var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
-        particleSystem.particleTexture = new BABYLON.Texture("assets/Flare.png", scene);
-        particleSystem.textureMask = new BABYLON.Color4(0.1, 0.8, 0.8, 1.0);
-        particleSystem.emitter = this; // the starting object, the emitter, a box in this case.
-        particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all From
-        particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
-        particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
-        particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
-        particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
-        // Size of each particle (random between...)
-        particleSystem.minSize = 0.1 * 100;
-        particleSystem.maxSize = 0.5 * 100;
-        // Life time of each particle (random between...)
-        particleSystem.minLifeTime = 0.3;
-        particleSystem.maxLifeTime = 1.5;
+        var scene:BABYLON.Scene                 = this.getScene();
 
-        particleSystem.emitRate = 1000;
+        this.fireParticleSystem                 = new BABYLON.ParticleSystem('particleSystem', 2000, scene);
+        this.fireParticleSystem.particleTexture = new BABYLON.Texture("assets/flare.png", scene);
+        this.fireParticleSystem.emitter         = this;
 
-        particleSystem.manualEmitCount = 300;
+        this.fireParticleSystem.minEmitBox = new BABYLON.Vector3(-0.5, 1, -0.5);
+        this.fireParticleSystem.maxEmitBox = new BABYLON.Vector3(0.5, 1, 0.5);
 
-        particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+        this.fireParticleSystem.color1    = new BABYLON.Color4(1, 0.5, 0, 1.0);
+        this.fireParticleSystem.color2    = new BABYLON.Color4(1, 0.5, 0, 1.0);
+        this.fireParticleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
 
-        //Set the gravity of all particles (not necessarily down)
-        particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
+        this.fireParticleSystem.minSize   = 1;
+        this.fireParticleSystem.maxSize   = 5;
 
-        particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
-        particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+        this.fireParticleSystem.minLifeTime = 0.05;
+        this.fireParticleSystem.maxLifeTime = 0.2;
 
-        particleSystem.minAngularSpeed = 0;
-        particleSystem.maxAngularSpeed = Math.PI;
+        this.fireParticleSystem.emitRate = 600;
 
+        this.fireParticleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
-        particleSystem.start();
+        this.fireParticleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
 
+        this.fireParticleSystem.direction1 = new BABYLON.Vector3(0, 4, 0);
+        this.fireParticleSystem.direction2 = new BABYLON.Vector3(0, 4, 0);
+
+        this.fireParticleSystem.minAngularSpeed = 0;
+        this.fireParticleSystem.maxAngularSpeed = Math.PI;
+
+        this.fireParticleSystem.minEmitPower = 1;
+        this.fireParticleSystem.maxEmitPower = 3;
+        this.fireParticleSystem.updateSpeed  = 0.007;
+
+        this.fireParticleSystem.start();
+
+        this.smokeParticleSystem                 = new BABYLON.ParticleSystem("particles", 1000, scene);
+        this.smokeParticleSystem.particleTexture = new BABYLON.Texture("assets/flare.png", scene);
+        this.smokeParticleSystem.emitter         = this;
+        this.smokeParticleSystem.minEmitBox      = new BABYLON.Vector3(-0.5, 1, -0.5);
+        this.smokeParticleSystem.maxEmitBox      = new BABYLON.Vector3(0.5, 1, 0.5);
+
+        this.smokeParticleSystem.color1    = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
+        this.smokeParticleSystem.color2    = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
+        this.smokeParticleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+        this.smokeParticleSystem.minSize = 2;
+        this.smokeParticleSystem.maxSize = 5;
+
+        this.smokeParticleSystem.minLifeTime = 0.15;
+        this.smokeParticleSystem.maxLifeTime = 0.3;
+
+        this.smokeParticleSystem.emitRate = 350;
+
+        this.smokeParticleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+        this.smokeParticleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+
+        this.smokeParticleSystem.direction1 = new BABYLON.Vector3(-1.5, 8, -1.5);
+        this.smokeParticleSystem.direction2 = new BABYLON.Vector3(1.5, 8, 1.5);
+
+        this.smokeParticleSystem.minAngularSpeed = 0;
+        this.smokeParticleSystem.maxAngularSpeed = Math.PI;
+
+        this.smokeParticleSystem.minEmitPower = 0.5;
+        this.smokeParticleSystem.maxEmitPower = 1.5;
+        this.smokeParticleSystem.updateSpeed  = 0.005;
+
+        this.smokeParticleSystem.start();
     }
 
 
@@ -76,7 +113,7 @@ class FireBall extends AssetGraphic {
         this.move();
         this.checkLifeTime();
 
-        this.meshe.rotation = this.meshe.rotation.add(BABYLON.Vector3.Up());
+        // this.meshe.rotation = this.meshe.rotation.add(BABYLON.Vector3.Up());
     }
 
 

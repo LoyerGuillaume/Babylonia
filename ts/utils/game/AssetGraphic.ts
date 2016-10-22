@@ -93,6 +93,7 @@ class AssetGraphic extends GameObject {
     }
 
     private runAnimation(startFrame:number, endFrame:number, loop:boolean = true) {
+        console.log('runAnimation');
         this.getScene().beginAnimation(this.meshe, startFrame, endFrame, loop);
     }
 

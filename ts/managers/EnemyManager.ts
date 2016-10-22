@@ -12,7 +12,7 @@ class EnemyManager {
 
     private currentWaveNumber: number;
 
-    private enemyConstructors: {};
+    private enemyConstructors: {}; 
 
     /**
      * @params pScene

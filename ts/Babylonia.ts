@@ -30,31 +30,12 @@ class Babylonia {
         this.engine = pEngine;
         this.levelManager = new LevelManager(pScene);
         this.gameManager = new GameManager(pScene, pEngine, this.levelManager);
- 
+
         CameraManager.init(this.mainScene, this.engine);
         UIManager.initHud(this.mainScene);
 
         // loading
-        var loadedCount = 4;
-        var loadedCounter = 0;
-
-        this.loadAssets(Babylonia.ASSETS_NAME, true, onAssetLoaded);
-        this.loadAssets(Babylonia.LEVELS_NAME, false, onAssetLoaded);
-        UIManager.loadTextures(this.mainScene, onAssetLoaded);
-        this.loadJson(Babylonia.WAVES_DESCRIPTION_NAME, onAssetLoaded);
-
-        var self:Babylonia = this;
-        function onAssetLoaded (p) {
-            if (++loadedCounter >= loadedCount) self.gameManager.start();
-        }
-    }
-
-    public static getLoadedContent (pName:string): any {
-        return Babylonia.loadedContent[pName];
-    }
-
-    private static addLoadedContent (pName:string, pContent:any) {
-        Babylonia.loadedContent[pName] = pContent;
+        this.loadAssets();
     }
 
     public destroy () {
@@ -63,28 +44,49 @@ class Babylonia {
         AssetGraphic.clear();
     }
 
-    private initLevel(pMeshes:BABYLON.Mesh[]) {
-          this.levelManager.build(pMeshes);
+    public static getLoadedContent (pName:string): any {
+        return Babylonia.loadedContent[pName];
     }
 
-    private loadJson (pSource: string, pCallback) {
+    private loadAssets () {
+        var loadedCount = 2;
+        var loadedCounter = 0;
 
         var loader = new BABYLON.AssetsManager(this.mainScene);
 
-        var lTask = loader.addTextFileTask(pSource, Config.JSON_PATH + pSource + '.json');
-        lTask.onSuccess = onSucces;
-        loader.onFinish = pCallback;
+        UIManager.loadTextures(this.mainScene, onAssetLoaded);
+        this.loadUnityAssets(loader, Babylonia.ASSETS_NAME, true);
+        this.loadUnityAssets(loader, Babylonia.LEVELS_NAME, false);
+        this.loadJson(loader, Babylonia.WAVES_DESCRIPTION_NAME);
+
+        loader.onFinish = onAssetLoaded;
+        loader.useDefaultLoadingScreen = true; // FIXME : Path loading screen
         loader.load();
+
+        var self:Babylonia = this;
+        function onAssetLoaded (p) {
+            if (++loadedCounter >= loadedCount) self.onAssetsLoaded();
+        }
+    }
+
+    private onAssetsLoaded () {
+        this.gameManager.start();
+    }
+
+    private loadJson (pLoader:BABYLON.AssetsManager, pSource: string) {
+
+        var lTask = pLoader.addTextFileTask(pSource, Config.JSON_PATH + pSource + '.json');
+        lTask.onSuccess = onSucces;
 
         function onSucces (pTask:BABYLON.TextFileAssetTask) {
             Babylonia.addLoadedContent(pTask.name, pTask.text);
         }
     }
 
-    private loadAssets(pSources:string[], pInstantiable:boolean, pCallback) {
+    private loadUnityAssets(pLoader:BABYLON.AssetsManager, pSources:string[], pInstantiable:boolean) {
 
         var self:Babylonia = this;
-        var loader = new BABYLON.AssetsManager(this.mainScene);
+        var loader = pLoader;
 
         var assetIndex;
         for (assetIndex in pSources) {
@@ -105,12 +107,14 @@ class Babylonia {
         function onLevelMeshSuccess(pTask:BABYLON.MeshAssetTask): void {
             self.initLevel(pTask.loadedMeshes as BABYLON.Mesh[]);
         }
-
-        loader.onFinish = pCallback;
-
-        loader.useDefaultLoadingScreen = false; // FIXME : Path loading screen
-        loader.load();
     }
 
+    private static addLoadedContent (pName:string, pContent:any) {
+        Babylonia.loadedContent[pName] = pContent;
+    }
+
+    private initLevel(pMeshes:BABYLON.Mesh[]) {
+          this.levelManager.build(pMeshes);
+    }
 
 }

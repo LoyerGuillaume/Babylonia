@@ -91,9 +91,20 @@ class EnemyManager {
         var lSIndex = this.getRandomIndexFromArray(lSituations);
         var lSituation = lSituations[lSIndex];
 
-        this.enemyStack = this.enemyStack.concat( this.getStackFromSituation(lSituation) );
+        this.fillStackRecursively( lSituation );
 
-        this.playCurrentStack();
+        if (!this.isStackPlaying) {
+            this.playCurrentStack();
+        }
+    }
+
+    private fillStackRecursively (pSituation: any) {
+        this.enemyStack = this.enemyStack.concat( this.getStackFromSituation( pSituation ) );
+
+        if (pSituation.nextSituation) {
+            console.info('fill recu');
+            this.fillStackRecursively( pSituation.nextSituation );
+        }
     }
 
     private getRandomIndexFromArray (pArray:any[]) {
@@ -132,8 +143,6 @@ class EnemyManager {
     }
 
     private playCurrentStack () {
-
-        if (this.isStackPlaying) return;
 
         if (this.enemyStack[0]) {
             this.isStackPlaying = true;

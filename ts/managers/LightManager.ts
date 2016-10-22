@@ -5,6 +5,7 @@ class LightManager {
 
     constructor (pScene:BABYLON.Scene) {
         this.initDirectionalLight(pScene);
+        this.initSkyBox(pScene);
         // this.initPointLight(pScene);
     }
 
@@ -24,13 +25,27 @@ class LightManager {
         dir1.intensity                    = 0.76;
         dir1.range                        = 3.40282347E+38;
     }
- 
+
     private initPointLight (pScene:BABYLON.Scene):void {
         this.pointLight           = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(0, 100, 0), pScene);
         this.pointLight.range     = 3000;
         this.pointLight.intensity = 10;
         this.pointLight.diffuse   = new BABYLON.Color3(24 / 255, 240 / 255, 1);
         this.pointLight.specular  = new BABYLON.Color3(1, 1, 1);
+    }
+
+
+    private initSkyBox (pScene:BABYLON.Scene) :void {
+        var skybox:BABYLON.Mesh = BABYLON.Mesh.CreateBox("skyBox", 500.0, pScene);
+        var skyboxMaterial:BABYLON.StandardMaterial = new BABYLON.StandardMaterial("skyBox", pScene);
+        skyboxMaterial.backFaceCulling = false;
+        skyboxMaterial.disableLighting = true;
+        skybox.material = skyboxMaterial;
+        skybox.infiniteDistance = true;
+        skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+        skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+        skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/skybox/sky", pScene);
+        skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     }
 
 }

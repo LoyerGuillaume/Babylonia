@@ -1,11 +1,11 @@
 class Player extends Character {
 
     public static list:Player[] = [];
- 
+
     public controller:Controller;
     private static get ASSET_NAME()             :string { return 'ChaWitch';};
-    private static get MOVE_SPEED()             :number { return 0.005;};
-    private static get ROTATION_SPEED()         :number { return 0.3;};
+    private static get MOVE_SPEED()             :number { return 0.007;};
+    private static get ROTATION_SPEED()         :number { return 0.5;};
     private static get INVICIBILITY_TIME()      :number { return 120;};
     private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
     private static get BOUNCING_RATIO()         :number { return 0.1;};

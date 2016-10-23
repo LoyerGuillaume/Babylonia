@@ -33,6 +33,10 @@ class ControllerKeyboard extends Controller {
             return this.keys[Keyboard.E];
         }
 
+		get special_3(): boolean {
+            return this.keys[Keyboard.R];
+        }
+
         get pause(): boolean {
             return this.keys[Keyboard.P] || false;
         }

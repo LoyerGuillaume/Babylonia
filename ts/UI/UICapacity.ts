@@ -6,7 +6,7 @@ class UICapacity extends BABYLON.Group2D {
 
     private static get WIDTH()     :number { return 150; };
 
-    private static get TEXTURES()  :string[] { return [ 'babyboule', 'babyspread', 'babygel' ]; }; // DEPRICATED
+    private static get TEXTURES()  :string[] { return [ 'babyboule', 'babyspread', 'babygel', 'babyaoe' ]; };
 
     private static get PICTO_SIZE():number { return 100; };
 

@@ -36,6 +36,13 @@ class Player extends Character {
             cooldown        : 500,
             attackFunction  : this.launchIceWalking,
             countFrameAttack: 500
+        },
+        special_3: {
+            name            : 'BabyAOE',
+            key             : 'R',
+            cooldown        : 3000,
+            attackFunction  : this.launchAOE,
+            countFrameAttack: 3000
         }
     };
 
@@ -210,6 +217,13 @@ class Player extends Character {
         position.y = 0;
         var iceSpikes:AssetGraphic = new IceSpikes(this.getScene(), position, this);
         iceSpikes.start();
+    }
+
+
+    private launchAOE () {
+        var position:BABYLON.Vector3 = this.position.clone();
+        var aoe:AOE = new AOE(this.getScene(), position, this);
+        aoe.start();
     }
 
 

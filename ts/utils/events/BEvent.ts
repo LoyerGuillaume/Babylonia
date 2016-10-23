@@ -66,7 +66,7 @@ class BEvent {
             var len:number = BEvent.onces[pEvent.id].length;
             for (var i = 0; i < len; i+=2) {
                 BEvent.onces[pEvent.id][0].call(BEvent.onces[pEvent.id][1], pEvent.params);
-                BEvent.callbacks[pEvent.id].splice(0, 2);
+                BEvent.onces[pEvent.id].splice(0, 2);
             }
         }
     }

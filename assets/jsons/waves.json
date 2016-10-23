@@ -2,18 +2,6 @@
     "1" : {
         "situations" : [
             {
-                "enemies" : [
-                    { "spawner": "EnemyPopper01",     "delay": 0,     "enemy": "EnemyOne"},
-                    { "spawner": "EnemyPopper02",     "delay": 1500,   "enemy": "EnemyOne"},
-                    { "spawner": "EnemyPopper03",     "delay": 3000,   "enemy": "EnemyOne"},
-                    { "spawner": "EnemyPopper04",     "delay": 4500,   "enemy": "EnemyOne"},
-                    { "spawner": "EnemyPopper05",     "delay": 6000,   "enemy": "EnemyOne"},
-                    { "spawner": "EnemyPopper06",     "delay": 7500,   "enemy": "EnemyOne"},
-                    { "spawner": "EnemyPopper07",     "delay": 9000,   "enemy": "EnemyOne"},
-                    { "spawner": "EnemyPopper08",     "delay": 10500,  "enemy": "EnemyOne"}
-                ]
-            },
-            {
                 "foreachDelay" : 500,
                 "enemies" : [
                     { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"},
@@ -26,6 +14,133 @@
                         { "spawner": "EnemyPopper02",     "enemy": "EnemyOne"},
                         { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"},
                         { "spawner": "EnemyPopper03",     "enemy": "EnemyOne"}
+                    ]
+                }
+            },
+            {
+                "foreachDelay" : 1000,
+                "enemies" : [
+                    { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper02",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper03",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper04",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper05",     "enemy": "EnemyOne"}
+                ]
+            },
+            {
+                "enemies" : [
+                    { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"}
+                ],
+                "nextSituation" : {
+                    "enemies" : [
+                        { "spawner": "EnemyPopper02",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper03",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper04",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper05",     "enemy": "EnemyOne"}
+                    ]
+                }
+            }
+        ]
+    },
+    "2" : {
+        "situations" : [
+            {
+                "foreachDelay" : 1000,
+                "enemies" : [
+                    { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper03",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper05",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper07",     "enemy": "EnemyOne"}
+                ],
+                "nextSituation" : {
+                    "enemies" : [
+                        { "spawner": "EnemyPopper02",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper04",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper06",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper08",     "enemy": "EnemyOne"}
+                    ]
+                }
+            },
+            {
+                "foreachDelay" : 1000,
+                "enemies" : [
+                    { "spawner": "EnemyPopper08",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper07",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper06",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper05",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper04",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper03",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper02",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"}
+                ]
+            },
+            {
+                "enemies" : [
+                    { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"}
+                ],
+                "nextSituation" : {
+                    "enemies" : [
+                        { "spawner": "EnemyPopper05",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper06",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper07",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper08",     "enemy": "EnemyOne"}
+                    ]
+                }
+            }
+        ]
+    },
+    "3" : {
+        "situations" : [
+            {
+                "foreachDelay" : 2000,
+                "enemies" : [
+                    { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper03",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper05",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper07",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper03",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper05",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper07",     "enemy": "EnemyOne"}
+                ],
+                "nextSituation" : {
+                    "enemies" : [
+                        { "spawner": "EnemyPopper02",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper04",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper06",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper08",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper02",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper04",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper06",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper08",     "enemy": "EnemyOne"}
+                    ]
+                }
+            },
+            {
+                "enemies" : [
+                    { "spawner": "EnemyPopper08",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper07",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper06",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper05",     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper04",   "delay": 2000,     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper03",   "delay": 2000,     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper02",   "delay": 2000,     "enemy": "EnemyOne"},
+                    { "spawner": "EnemyPopper01",   "delay": 2000,     "enemy": "EnemyOne"}
+                ]
+            },
+            {
+                "enemies" : [
+                    { "spawner": "EnemyPopper01",     "enemy": "EnemyOne"}
+                ],
+                "nextSituation" : {
+                    "enemies" : [
+                        { "spawner": "EnemyPopper08",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper07",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper06",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper05",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper04",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper03",     "enemy": "EnemyOne"},
+                        { "spawner": "EnemyPopper02",     "enemy": "EnemyOne"}
                     ]
                 }
             }

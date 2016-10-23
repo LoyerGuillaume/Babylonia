@@ -209,8 +209,6 @@ class Player extends Character {
         var position:BABYLON.Vector3 = this.position.clone();
         position.y = 0;
         var iceSpikes:AssetGraphic = new IceSpikes(this.getScene(), position, this);
-        iceSpikes.position = this.position.clone();
-        iceSpikes.position.y = 0;
         iceSpikes.start();
     }
 

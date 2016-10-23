@@ -26,6 +26,12 @@ class Babylonia {
         'waves'
     ];};
 
+    private static get TEXTURES_NAMES () { return [
+        'heart.png',
+        'babyboule.png',
+        'babyspread.png'
+    ];};
+
     constructor (pScene, pEngine) {
 
         this.mainScene = pScene;
@@ -57,6 +63,7 @@ class Babylonia {
         var loader = new BABYLON.AssetsManager(this.mainScene);
 
         UIManager.loadTextures(this.mainScene, onAssetLoaded);
+        this.loadUITexture(loader, Babylonia.TEXTURES_NAMES);
         this.loadUnityAssets(loader, Babylonia.ASSETS_NAME, true);
         this.loadUnityAssets(loader, Babylonia.LEVELS_NAME, false);
         this.loadJsons(loader, Babylonia.JSON_NAMES);
@@ -75,13 +82,17 @@ class Babylonia {
         this.gameManager.start();
     }
 
-    private loadUITexture (pLoader:BABYLON.AssetsManager, pSource: string) {
+    private loadUITexture (pLoader:BABYLON.AssetsManager, pSources: string[]) {
 
-        var lTask = pLoader.addTextFileTask(pSource, Config.JSON_PATH + pSource + '.json');
-        lTask.onSuccess = onSucces;
+        for (var i in pSources) {
+            var assetName: string = pSources[i];
+            var lTask = pLoader.addTextureTask(pSources[i], Config.ASSET_PATH + pSources[i]);
+            lTask.onSuccess = onSucces;
+        }
 
-        function onSucces (pTask:BABYLON.TextFileAssetTask) {
-            Babylonia.addLoadedContent(pTask.name, pTask.text);
+        function onSucces (pTask:BABYLON.TextureAssetTask) {
+            console.log('texture', pTask);
+            Babylonia.addLoadedContent(pTask.name, pTask.texture);
         }
     }
 

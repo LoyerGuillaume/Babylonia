@@ -13,20 +13,22 @@ class LightManager {
     }
 
     private initDirectionalLight (pScene:BABYLON.Scene):void {
+        var ratio:number = 1.5;
+
         this.directionalLight1 = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, 0, 0), pScene);
         this.directionalLight1.direction                    = new BABYLON.Vector3(0.07110905, -0.273219258, -0.959320068);
         this.directionalLight1.diffuse                      = new BABYLON.Color3(1, 0.956862748, 0.8392157);
         this.directionalLight1.specular                     = new BABYLON.Color3(1, 1, 1);
-        this.directionalLight1.intensity                    = 0.6;
-        this.directionalLight1.range                        = 3.40282347E+38;
+        this.directionalLight1.intensity                    = 0.6 * ratio;
+        this.directionalLight1.range                        = 1;
 
 
         this.directionalLight2 = new BABYLON.DirectionalLight("Dir1", new BABYLON.Vector3(0, 1, 0), pScene);
         this.directionalLight2.direction                    = new BABYLON.Vector3(0.4041313, -0.8933559, 0.1964519);
         this.directionalLight2.diffuse                      = new BABYLON.Color3(1, 0.9432049, 0.4852941);
         this.directionalLight2.specular                     = new BABYLON.Color3(1, 1, 1);
-        this.directionalLight2.intensity                    = 0.76;
-        this.directionalLight2.range                        = 3.40282347E+38;
+        this.directionalLight2.intensity                    = 0.76 * ratio;
+        this.directionalLight2.range                        = 1;
     }
 
     private initPointLight (pScene:BABYLON.Scene):void {

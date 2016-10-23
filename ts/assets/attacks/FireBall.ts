@@ -1,40 +1,26 @@
-class FireBall extends AssetGraphic {
+class FireBall extends PlayerAttack {
 
-    public static list: FireBall[] = [];
-
-    private static get ASSET_NAME()          :string { return 'elfe';};
     private static get SPEED()               :number { return 0.25;};
     private static get MAX_LIFE_TIME()       :number { return 120;};
     private static get RATIO_SCALE_PARTICLE():number { return 0.15;};
 
-    private launcher:Player;
-
-    private lifeTime:number;
     private direction:BABYLON.Vector3;
     private fireParticleSystem:BABYLON.ParticleSystem;
     private smokeParticleSystem:BABYLON.ParticleSystem;
 
+    protected collisionRange:number = 1;
+    protected damageDeal:number = 1;
+
 
     constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion, pPlayer) {
-        super(FireBall.ASSET_NAME, pScene);
-        FireBall.list.push(this);
+        super('', pScene, pPosition, pPlayer);
 
-
-        this.launcher           = pPlayer;
-        this.position           = pPosition;
         this.rotationQuaternion = pRotation;
         this.addOffset();
-        this.lifeTime           = 0;
+        this.maxLifeTime = FireBall.MAX_LIFE_TIME;
 
         this.meshe.isVisible = false;
         this.initParticlesSystem();
-
-        // this.scaling = new BABYLON.Vector3(1, 0.5, 1);
-    }
-
-
-    public get getLauncher():Player {
-        return this.launcher;
     }
 
 
@@ -130,10 +116,8 @@ class FireBall extends AssetGraphic {
 
 
     protected doActionNormal () {
+        super.doActionNormal();
         this.move();
-        this.checkLifeTime();
-
-        // this.meshe.rotation = this.meshe.rotation.add(BABYLON.Vector3.Up());
     }
 
 
@@ -146,16 +130,4 @@ class FireBall extends AssetGraphic {
         this.position = new BABYLON.Vector3(this.position.x + movement.x, this.position.y + movement.y, this.position.z + movement.z);
     }
 
-
-    private checkLifeTime () {
-        if (++this.lifeTime >= FireBall.MAX_LIFE_TIME) {
-            this.destroy();
-        }
-    }
-
-
-    public destroy () {
-        super.destroy();
-        FireBall.list.splice(FireBall.list.indexOf(this), 1);
-    }
 }

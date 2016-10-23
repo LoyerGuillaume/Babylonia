@@ -2,18 +2,21 @@ class Enemy extends Character {
 
     public static list:Enemy[] = [];
 
-    private invincibilityTime:number;
+    protected hitFeedbackTime:number;
 
-    private static get MOVE_SPEED():number { return 0.001;};
+    private static get MOVE_SPEED():number { return 0.002;};
     private static get ROTATION_SPEED():number { return 0.3;};
 
     private lastPlayerHitMe:Player;
     private lastPlayerPosition:BABYLON.Vector3;
+    private speedMalus:number = 1;
 
     constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene, pLifePoint:number, pInvincibilityTime:number) {
         super(pScene, pAssetName, pPosition, pLifePoint);
-        this.invincibilityTime = pInvincibilityTime;
+        this.hitFeedbackTime    = pInvincibilityTime;
         this.lastPlayerPosition = new BABYLON.Vector3(0, 0, 0);
+
+        this.initCollision();
 
         Enemy.list.push(this);
     }
@@ -26,6 +29,13 @@ class Enemy extends Character {
 
     public get getDropedCoinsNumber () {
         return 0;
+    }
+
+
+    private initCollision () :void {
+        this.checkCollisions = true;
+        this.ellipsoid = new BABYLON.Vector3(0.5, 0.5, 0.5);
+        // Tools.displayEllipsoid(this.getScene(), this);
     }
 
 
@@ -44,19 +54,26 @@ class Enemy extends Character {
 
         vectorMovement.normalize();
 
-        this.moveWithCollisions(vectorMovement.scaleInPlace(Enemy.MOVE_SPEED * deltaTime));
+        this.moveWithCollisions(vectorMovement.scaleInPlace(Enemy.MOVE_SPEED * deltaTime * this.speedMalus));
 
-        super._rotate(vectorMovement, Enemy.ROTATION_SPEED);
+        this._rotate(vectorMovement, Enemy.ROTATION_SPEED);
 
     }
 
 
-    protected checkProjectilesCollision ():void {
-        for (var i in FireBall.list) {
-            if (Tools.minusVector3(this.position, FireBall.list[i].position).length() < 0.8) {
-                this.lastPlayerHitMe = FireBall.list[i].getLauncher;
-                FireBall.list[i].destroy();
-                super.onHit();
+    public setMalusSpeed (pRatio:number):void {
+        this.speedMalus = pRatio;
+    }
+
+
+    protected checkPlayerAttacksCollision ():void {
+        for (var i in PlayerAttack.list) {
+            var attack:PlayerAttack = PlayerAttack.list[i];
+            if (Tools.minusVector3(this.position, attack.position).length() < attack.collisionSize) {
+                this.lastPlayerHitMe = PlayerAttack.list[i].getLauncher;
+                attack.onHit();
+                this.onHit(attack.damage);
+                attack.debuff(this);
                 return;
             }
         }
@@ -65,11 +82,10 @@ class Enemy extends Character {
 
     protected doActionNormal (deltaTime:number):void {
         this.animationMovement(deltaTime);
-        if (this.isInvicible) {
-            super.invicibilityCooldown(this.invincibilityTime);
-        } else {
-            this.checkProjectilesCollision();
+        if (this.isHit) {
+            this.hitFeedbackCooldown(this.hitFeedbackTime);
         }
+        this.checkPlayerAttacksCollision();
         this.move(deltaTime);
     }
 

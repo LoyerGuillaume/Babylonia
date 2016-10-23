@@ -29,6 +29,10 @@ class ControllerKeyboard extends Controller {
             return this.keys[Keyboard.Z];
         }
 
+		get special_2(): boolean {
+            return this.keys[Keyboard.E];
+        }
+
         get pause(): boolean {
             return this.keys[Keyboard.P] || false;
         }

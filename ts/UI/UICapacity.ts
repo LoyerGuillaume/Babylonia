@@ -5,7 +5,9 @@ interface Dictionnary {
 class UICapacity extends BABYLON.Group2D {
 
     private static get WIDTH()     :number { return 150; };
-    private static get TEXTURES()  :string[] { return [ 'babyboule', 'babyspread' ]; }; // DEPRICATED
+
+    private static get TEXTURES()  :string[] { return [ 'babyboule', 'babyspread', 'babygel' ]; }; // DEPRICATED
+
     private static get PICTO_SIZE():number { return 100; };
 
     private static textures:Dictionnary = {};
@@ -27,6 +29,7 @@ class UICapacity extends BABYLON.Group2D {
     public static initTextures () {
         UICapacity.textures['babyboule'] = Babylonia.getLoadedContent('babyboule.png', true);
         UICapacity.textures['babyspread'] = Babylonia.getLoadedContent('babyspread.png', true);
+        UICapacity.textures['babygel'] = Babylonia.getLoadedContent('babygel.png', true);
     }
 
     private initEvents () {

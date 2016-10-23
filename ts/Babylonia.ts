@@ -29,7 +29,8 @@ class Babylonia {
     private static get TEXTURES_NAMES () { return [
         'heart.png',
         'babyboule.png',
-        'babyspread.png'
+        'babyspread.png',
+        'babygel.png'
     ];};
 
     constructor (pScene, pEngine) {

@@ -1,11 +1,11 @@
 class Character extends AssetGraphic {
 
-    private static get BOUNCING_RATIO()         :number { return 0.1;};
-    private static get BOUNCING_FREQUENCE()     :number { return 15;};
+    private static get BOUNCING_RATIO()     :number { return 0.1;};
+    private static get BOUNCING_FREQUENCE() :number { return 15;};
 
     protected lifePoint:number;
-    protected invicibleTime:number = 0;
-    protected isInvicible:boolean = false;
+    private hitFeedbackCount:number = 0;
+    protected isHit:boolean = false;
     private startYPositionMeshe:number;
     private frameCount:number = 0;
 
@@ -29,18 +29,18 @@ class Character extends AssetGraphic {
     }
 
 
-    protected invicibilityCooldown (pInvicibility:number) {
-        this.invicibiliyFeedback();
-        if (++this.invicibleTime >= pInvicibility) {
-            this.isInvicible = false;
+    protected hitFeedbackCooldown (pFeedbackTime:number) {
+        this.hitFeedback();
+        if (++this.hitFeedbackCount >= pFeedbackTime) {
+            this.isHit = false;
             this.meshe.isVisible = true;
-            this.invicibleTime = 0;
+            this.hitFeedbackCount = 0;
         }
     }
 
 
-    protected invicibiliyFeedback () {
-        if (this.invicibleTime % 5 === 0) {
+    protected hitFeedback () {
+        if (this.hitFeedbackCount % 5 === 0) {
             //isVisible isn't working
             this.meshe.setEnabled(!this.meshe.isEnabled());
         }
@@ -53,9 +53,10 @@ class Character extends AssetGraphic {
     }
 
 
-    protected onHit () {
-        if (--this.lifePoint > 0) {
-            this.isInvicible = true;
+    protected onHit (pDamage:number = 1) {
+        this.lifePoint -= pDamage;
+        if (this.lifePoint > 0) {
+            this.isHit = true;
         } else {
             this.die();
         }

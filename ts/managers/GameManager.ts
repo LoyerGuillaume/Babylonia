@@ -157,8 +157,8 @@ class GameManager {
                 Tree.list[i].doAction(deltaTime);
             }
 
-            for (var j in FireBall.list) {
-                FireBall.list[j].doAction(deltaTime);
+            for (var j in PlayerAttack.list) {
+                PlayerAttack.list[j].doAction(deltaTime);
             }
 
             for (var k in Enemy.list) {

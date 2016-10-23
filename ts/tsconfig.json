@@ -4,7 +4,7 @@
         "outDir": "../dist/js"
     },
     "files": [
-        "typings/babylon24.ts",
+        "typings/babylon.ts",
         "Timer.ts",
         "Game.ts",
         "Babylonia.ts",

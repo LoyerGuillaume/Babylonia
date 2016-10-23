@@ -22,7 +22,9 @@ class Babylonia {
         'Base'
     ];};
 
-    private static get WAVES_DESCRIPTION_NAME () { return 'waves'; };
+    private static get JSON_NAMES () { return [
+        'waves'
+    ];};
 
     constructor (pScene, pEngine) {
 
@@ -44,7 +46,7 @@ class Babylonia {
         AssetGraphic.clear();
     }
 
-    public static getLoadedContent (pName:string): any {
+    public static getLoadedContent (pName:string, pRemoveReferense:boolean = false): any {
         return Babylonia.loadedContent[pName];
     }
 
@@ -57,10 +59,10 @@ class Babylonia {
         UIManager.loadTextures(this.mainScene, onAssetLoaded);
         this.loadUnityAssets(loader, Babylonia.ASSETS_NAME, true);
         this.loadUnityAssets(loader, Babylonia.LEVELS_NAME, false);
-        this.loadJson(loader, Babylonia.WAVES_DESCRIPTION_NAME);
+        this.loadJsons(loader, Babylonia.JSON_NAMES);
 
         loader.onFinish = onAssetLoaded;
-        loader.useDefaultLoadingScreen = true; // FIXME : Path loading screen
+        loader.useDefaultLoadingScreen = true;
         loader.load();
 
         var self:Babylonia = this;
@@ -73,10 +75,23 @@ class Babylonia {
         this.gameManager.start();
     }
 
-    private loadJson (pLoader:BABYLON.AssetsManager, pSource: string) {
+    private loadUITexture (pLoader:BABYLON.AssetsManager, pSource: string) {
 
         var lTask = pLoader.addTextFileTask(pSource, Config.JSON_PATH + pSource + '.json');
         lTask.onSuccess = onSucces;
+
+        function onSucces (pTask:BABYLON.TextFileAssetTask) {
+            Babylonia.addLoadedContent(pTask.name, pTask.text);
+        }
+    }
+
+    private loadJsons (pLoader:BABYLON.AssetsManager, pSources: string[]) {
+
+        for (var i in pSources) {
+            var assetName: string = pSources[i];
+            var lTask = pLoader.addTextFileTask(pSources[i], Config.JSON_PATH + pSources[i] + '.json');
+            lTask.onSuccess = onSucces;
+        }
 
         function onSucces (pTask:BABYLON.TextFileAssetTask) {
             Babylonia.addLoadedContent(pTask.name, pTask.text);

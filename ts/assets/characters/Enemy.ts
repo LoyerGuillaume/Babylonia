@@ -53,10 +53,11 @@ class Enemy extends Character {
 
     protected checkPlayerAttacksCollision ():void {
         for (var i in PlayerAttack.list) {
-            if (Tools.minusVector3(this.position, PlayerAttack.list[i].position).length() < 0.8) {
+            var attack:PlayerAttack = PlayerAttack.list[i];
+            if (Tools.minusVector3(this.position, attack.position).length() < attack.collisionSize) {
                 this.lastPlayerHitMe = PlayerAttack.list[i].getLauncher;
-                FireBall.list[i].destroy();
-                this.onHit();
+                attack.onHit();
+                this.onHit(attack.damage);
                 return;
             }
         }

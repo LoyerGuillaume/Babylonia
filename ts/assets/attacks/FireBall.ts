@@ -4,23 +4,23 @@ class FireBall extends PlayerAttack {
     private static get MAX_LIFE_TIME()       :number { return 120;};
     private static get RATIO_SCALE_PARTICLE():number { return 0.15;};
 
-    private lifeTime:number;
     private direction:BABYLON.Vector3;
     private fireParticleSystem:BABYLON.ParticleSystem;
     private smokeParticleSystem:BABYLON.ParticleSystem;
 
+    protected collisionRange:number = 1;
+    protected damageDeal:number = 1;
+
 
     constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion, pPlayer) {
-        super(FireBall.ASSET_NAME, pScene, pPosition, pPlayer);
+        super('', pScene, pPosition, pPlayer);
 
         this.rotationQuaternion = pRotation;
         this.addOffset();
-        this.lifeTime           = 0;
+        this.maxLifeTime = FireBall.MAX_LIFE_TIME;
 
         this.meshe.isVisible = false;
         this.initParticlesSystem();
-
-        // this.scaling = new BABYLON.Vector3(1, 0.5, 1);
     }
 
 
@@ -116,10 +116,8 @@ class FireBall extends PlayerAttack {
 
 
     protected doActionNormal () {
+        super.doActionNormal();
         this.move();
-        this.checkLifeTime();
-
-        // this.meshe.rotation = this.meshe.rotation.add(BABYLON.Vector3.Up());
     }
 
 
@@ -130,13 +128,6 @@ class FireBall extends PlayerAttack {
         var movement  = BABYLON.Vector3.TransformCoordinates(v, m);
         movement.subtractInPlace(this.position).normalize().scaleInPlace(FireBall.SPEED);
         this.position = new BABYLON.Vector3(this.position.x + movement.x, this.position.y + movement.y, this.position.z + movement.z);
-    }
-
-
-    private checkLifeTime () {
-        if (++this.lifeTime >= FireBall.MAX_LIFE_TIME) {
-            this.destroy();
-        }
     }
 
 }

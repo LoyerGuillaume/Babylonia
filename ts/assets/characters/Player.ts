@@ -8,10 +8,12 @@ class Player extends Character {
     private static get ROTATION_SPEED()         :number { return 0.5;};
     private static get INVICIBILITY_TIME()      :number { return 120;};
     private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
-    public static get LIFE_POINT()              :number { return 3;};
+    private static get ICE_WALKING_DURATION()   :number { return 120;};
+    public static  get LIFE_POINT()             :number { return 3;};
 
     private score:number;
     private coins:number;
+    private iceWalkingCount:number = 0;
 
     private attacks:{} = {
         attack: {
@@ -19,21 +21,21 @@ class Player extends Character {
             key             : 'A',
             cooldown        : 30,
             attackFunction  : this.shotOneFireBall,
-            countFrameAttack: 0
+            countFrameAttack: 30
         },
         special_1: {
             name            : 'BabySpread',
             key             : 'Z',
             cooldown        : 120,
             attackFunction  : this.shotThreeFireBalls,
-            countFrameAttack: 0
+            countFrameAttack: 120
         },
         special_2: {
             name            : 'BabyGel',
             key             : 'E',
-            cooldown        : 30,
-            attackFunction  : this.iceWalking,
-            countFrameAttack: 0
+            cooldown        : 500,
+            attackFunction  : this.launchIceWalking,
+            countFrameAttack: 500
         }
     };
 
@@ -186,13 +188,27 @@ class Player extends Character {
     }
 
 
-    private iceWalking () {
-        this.createIce();
+    private launchIceWalking () {
+        this.iceWalkingCount = 0;
+        this.doAction = this.doActionIceWalking;
+    }
+
+
+    private doActionIceWalking (deltaTime:number) {
+        this.doActionNormal(deltaTime);
+        if (this.iceWalkingCount % 6 === 0) {
+            this.createIce();
+        }
+        if (++this.iceWalkingCount >= Player.ICE_WALKING_DURATION) {
+            this.doAction = this.doActionNormal;
+        }
     }
 
 
     private createIce () {
-        var iceSpikes:AssetGraphic = new AssetGraphic('IceSpikes', this.getScene());
+        var position:BABYLON.Vector3 = this.position.clone();
+        position.y = 0;
+        var iceSpikes:AssetGraphic = new IceSpikes(this.getScene(), position, this);
         iceSpikes.position = this.position.clone();
         iceSpikes.position.y = 0;
         iceSpikes.start();

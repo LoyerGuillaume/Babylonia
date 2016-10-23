@@ -35,6 +35,13 @@ class IceSpikes extends PlayerAttack {
         }
     }
 
+    protected malus (pEnemy:Enemy) {
+        pEnemy.setMalusSpeed(0.5);
+        setTimeout(function () {
+            pEnemy.setMalusSpeed(1);
+        }, 1500);
+    }
+
     public onHit () {};
 
     public destroy () {

@@ -4,11 +4,12 @@ class Enemy extends Character {
 
     protected hitFeedbackTime:number;
 
-    private static get MOVE_SPEED():number { return 0.001;};
+    private static get MOVE_SPEED():number { return 0.002;};
     private static get ROTATION_SPEED():number { return 0.3;};
 
     private lastPlayerHitMe:Player;
     private lastPlayerPosition:BABYLON.Vector3;
+    private speedMalus:number = 1;
 
     constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene, pLifePoint:number, pInvincibilityTime:number) {
         super(pScene, pAssetName, pPosition, pLifePoint);
@@ -44,10 +45,15 @@ class Enemy extends Character {
 
         vectorMovement.normalize();
 
-        this.moveWithCollisions(vectorMovement.scaleInPlace(Enemy.MOVE_SPEED * deltaTime));
+        this.moveWithCollisions(vectorMovement.scaleInPlace(Enemy.MOVE_SPEED * deltaTime * this.speedMalus));
 
         this._rotate(vectorMovement, Enemy.ROTATION_SPEED);
 
+    }
+
+
+    public setMalusSpeed (pRatio:number):void {
+        this.speedMalus = pRatio;
     }
 
 
@@ -58,6 +64,7 @@ class Enemy extends Character {
                 this.lastPlayerHitMe = PlayerAttack.list[i].getLauncher;
                 attack.onHit();
                 this.onHit(attack.damage);
+                attack.debuff(this);
                 return;
             }
         }

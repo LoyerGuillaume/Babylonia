@@ -26,6 +26,12 @@ class PlayerAttack extends AssetGraphic {
         return this.damageDeal;
     };
 
+    get debuff() {
+        return this.malus;
+    }
+
+    protected malus (pEnemy:Enemy) {}
+
 
     protected doActionNormal () {
         this.checkLifeTime();

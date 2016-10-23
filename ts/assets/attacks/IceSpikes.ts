@@ -20,6 +20,7 @@ class IceSpikes extends PlayerAttack {
         this.targetPosition = this.position.clone();
         this.position.y -= 0.7;
         this.doAction = this.doActionMove
+        this.rotation.y = Math.random() * 2 * Math.PI;
     }
 
     private doActionMove () {

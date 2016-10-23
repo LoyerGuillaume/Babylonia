@@ -5,7 +5,7 @@ interface Dictionnary {
 class UICapacity extends BABYLON.Group2D {
 
     private static get WIDTH()     :number { return 150; };
-    private static get TEXTURES()  :string[] { return [ 'babyboule', 'babyspread' ]; };
+    private static get TEXTURES()  :string[] { return [ 'babyboule', 'babyspread', 'babygel' ]; };
     private static get PICTO_SIZE():number { return 100; };
 
     private static textures:Dictionnary = {};
@@ -14,7 +14,7 @@ class UICapacity extends BABYLON.Group2D {
 
     private picto:BABYLON.Sprite2D;
 
- 
+
     constructor (property:any, capacity:any) {
         property.width = UICapacity.WIDTH;
         super(property);

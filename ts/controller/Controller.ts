@@ -26,6 +26,10 @@ class Controller {
         return false;
     }
 
+    get special_2(): boolean {
+        return false;
+    }
+
     get pause (): boolean {
         return false;
     }

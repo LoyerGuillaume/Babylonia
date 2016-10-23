@@ -27,6 +27,13 @@ class Player extends Character {
             cooldown        : 120,
             attackFunction  : this.shotThreeFireBalls,
             countFrameAttack: 0
+        },
+        special_2: {
+            name            : 'BabyGel',
+            key             : 'E',
+            cooldown        : 30,
+            attackFunction  : this.iceWalking,
+            countFrameAttack: 0
         }
     };
 
@@ -108,8 +115,8 @@ class Player extends Character {
         this.move(deltaTime);
         this.checkAttack();
 
-        if (this.isInvicible) {
-            super.invicibilityCooldown(Player.INVICIBILITY_TIME);
+        if (this.isHit) {
+            super.hitFeedbackCooldown(Player.INVICIBILITY_TIME);
         } else {
             this.checkEnemyCollision();
         }
@@ -176,6 +183,19 @@ class Player extends Character {
         this.createFireBall(rotationQuaternion);
         this.createFireBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( Player.ANGLE_SPECIAL_ATTACK_1))));
         this.createFireBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(-Player.ANGLE_SPECIAL_ATTACK_1))));
+    }
+
+
+    private iceWalking () {
+        this.createIce();
+    }
+
+
+    private createIce () {
+        var iceSpikes:AssetGraphic = new AssetGraphic('IceSpikes', this.getScene());
+        iceSpikes.position = this.position.clone();
+        iceSpikes.position.y = 0;
+        iceSpikes.start();
     }
 
 

@@ -2,7 +2,7 @@ class Enemy extends Character {
 
     public static list:Enemy[] = [];
 
-    private invincibilityTime:number;
+    protected hitFeedbackTime:number;
 
     private static get MOVE_SPEED():number { return 0.001;};
     private static get ROTATION_SPEED():number { return 0.3;};
@@ -12,7 +12,7 @@ class Enemy extends Character {
 
     constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene, pLifePoint:number, pInvincibilityTime:number) {
         super(pScene, pAssetName, pPosition, pLifePoint);
-        this.invincibilityTime = pInvincibilityTime;
+        this.hitFeedbackTime = pInvincibilityTime;
         this.lastPlayerPosition = new BABYLON.Vector3(0, 0, 0);
 
         Enemy.list.push(this);
@@ -46,17 +46,17 @@ class Enemy extends Character {
 
         this.moveWithCollisions(vectorMovement.scaleInPlace(Enemy.MOVE_SPEED * deltaTime));
 
-        super._rotate(vectorMovement, Enemy.ROTATION_SPEED);
+        this._rotate(vectorMovement, Enemy.ROTATION_SPEED);
 
     }
 
 
-    protected checkProjectilesCollision ():void {
-        for (var i in FireBall.list) {
-            if (Tools.minusVector3(this.position, FireBall.list[i].position).length() < 0.8) {
-                this.lastPlayerHitMe = FireBall.list[i].getLauncher;
+    protected checkPlayerAttacksCollision ():void {
+        for (var i in PlayerAttack.list) {
+            if (Tools.minusVector3(this.position, PlayerAttack.list[i].position).length() < 0.8) {
+                this.lastPlayerHitMe = PlayerAttack.list[i].getLauncher;
                 FireBall.list[i].destroy();
-                super.onHit();
+                this.onHit();
                 return;
             }
         }
@@ -65,11 +65,10 @@ class Enemy extends Character {
 
     protected doActionNormal (deltaTime:number):void {
         this.animationMovement(deltaTime);
-        if (this.isInvicible) {
-            super.invicibilityCooldown(this.invincibilityTime);
-        } else {
-            this.checkProjectilesCollision();
+        if (this.isHit) {
+            this.hitFeedbackCooldown(this.hitFeedbackTime);
         }
+        this.checkPlayerAttacksCollision();
         this.move(deltaTime);
     }
 

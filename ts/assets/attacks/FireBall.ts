@@ -1,13 +1,8 @@
-class FireBall extends AssetGraphic {
+class FireBall extends PlayerAttack {
 
-    public static list: FireBall[] = [];
-
-    private static get ASSET_NAME()          :string { return 'elfe';};
     private static get SPEED()               :number { return 0.25;};
     private static get MAX_LIFE_TIME()       :number { return 120;};
     private static get RATIO_SCALE_PARTICLE():number { return 0.15;};
-
-    private launcher:Player;
 
     private lifeTime:number;
     private direction:BABYLON.Vector3;
@@ -16,12 +11,8 @@ class FireBall extends AssetGraphic {
 
 
     constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion, pPlayer) {
-        super(FireBall.ASSET_NAME, pScene);
-        FireBall.list.push(this);
+        super(FireBall.ASSET_NAME, pScene, pPosition, pPlayer);
 
-
-        this.launcher           = pPlayer;
-        this.position           = pPosition;
         this.rotationQuaternion = pRotation;
         this.addOffset();
         this.lifeTime           = 0;
@@ -30,11 +21,6 @@ class FireBall extends AssetGraphic {
         this.initParticlesSystem();
 
         // this.scaling = new BABYLON.Vector3(1, 0.5, 1);
-    }
-
-
-    public get getLauncher():Player {
-        return this.launcher;
     }
 
 
@@ -153,9 +139,4 @@ class FireBall extends AssetGraphic {
         }
     }
 
-
-    public destroy () {
-        super.destroy();
-        FireBall.list.splice(FireBall.list.indexOf(this), 1);
-    }
 }

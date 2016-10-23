@@ -52,7 +52,7 @@ class Babylonia {
     public static getLoadedContent (pName:string, pRemoveReferense:boolean = false): any {
         var lContent = Babylonia.loadedContent[pName];
         if (pRemoveReferense) delete Babylonia.loadedContent[pName];
-        return lContent;
+        return lContent || console.error('The loaded content named "'+pName+'" does not exists.');
     }
 
     private loadAssets () {
@@ -64,7 +64,7 @@ class Babylonia {
         this.loadUnityAssets(loader, Babylonia.LEVELS_NAME, false);
         this.loadJsons(loader, Babylonia.JSON_NAMES);
 
-        loader.onFinish = this.onAssetsLoaded;
+        loader.onFinish = this.onAssetsLoaded.bind(this);
         loader.useDefaultLoadingScreen = true;
         loader.load();
     }

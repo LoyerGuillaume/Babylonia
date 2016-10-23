@@ -19,14 +19,12 @@ class UICapacity extends BABYLON.Group2D {
         property.width = UICapacity.WIDTH;
         super(property);
 
-        this.initTextures();
-
         this.capacity = capacity;
         this.initContent();
         this.initEvents();
     }
 
-    private initTextures () {
+    public static initTextures () {
         UICapacity.textures['babyboule'] = Babylonia.getLoadedContent('babyboule.png', true);
         UICapacity.textures['babyspread'] = Babylonia.getLoadedContent('babyspread.png', true);
     }

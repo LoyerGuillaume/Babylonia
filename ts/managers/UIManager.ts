@@ -21,10 +21,13 @@ class UIManager {
     private static capacityGroup:BABYLON.Group2D;
 
     public static init (pScene) {
+
         UIManager.initHud(pScene);
 
         UIManager.heartTexture = Babylonia.getLoadedContent('heart.png', true);
         UIManager.heartScale = UIManager.HEART_SIZE / UIManager.heartTexture.getSize().width;
+
+        UICapacity.initTextures();
     }
 
     /**
@@ -163,6 +166,7 @@ class UIManager {
 
 
     public static initCapacities (pCapacities:{}) {
+
         if (typeof UIManager.capacityGroup !== 'undefined') {
             UIManager.capacityGroup.dispose();
         }

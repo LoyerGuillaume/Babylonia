@@ -41,7 +41,7 @@ class EnemyManager {
 
     public startWave (pWaveName:string|number) {
         if (this.waveExists(pWaveName)) {
-            BEvent.on( EnemyEvent.ALL_DEAD, this.onEnemiesDead, this );
+            BEvent.once( EnemyEvent.ALL_DEAD, this.onEnemiesDead, this );
             this._startWave(pWaveName);
         } else {
             console.warn('The wave named "'+pWaveName+'" does not exists.');
@@ -154,9 +154,9 @@ class EnemyManager {
 
     private playStackStep (pStep:any) {
         this.currentStackStep = pStep;
-        var self = this;
+
         if (this.currentStackStep === EnemyManager.NEXT_SITUATION_KEY) {
-            BEvent.once(EnemyEvent.ALL_DEAD, self.playCurrentStack, self);
+            BEvent.once(EnemyEvent.ALL_DEAD, this.playCurrentStack, this);
         } else {
             this.currentTimeout = new Timeout(this.execCurrentStep.bind(this), this.currentStackStep.delay);
         }
@@ -180,6 +180,8 @@ class EnemyManager {
         if (!this.enemyStack[0]) {
             this.reset();
             BEvent.emit(new BEvent(EnemyManager.ON_WAVE_END));
+        } else {
+            BEvent.once( EnemyEvent.ALL_DEAD, this.onEnemiesDead, this );
         }
     }
 
@@ -192,7 +194,6 @@ class EnemyManager {
             this.currentTimeout.destroy();
             this.forgetTimeout();
         }
-        BEvent.off( EnemyEvent.ALL_DEAD, this.onEnemiesDead, this );
     }
 
     private getRandomPositionFromLevel (pGameplayItemName:string) {

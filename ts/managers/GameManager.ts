@@ -72,7 +72,7 @@ class GameManager {
 
     private initEnemyManager () {
         this.enemyManager = new EnemyManager(this.mainScene, this.levelManager);
-        var lWavesDesc = Babylonia.getLoadedContent('waves');
+        var lWavesDesc = Babylonia.getLoadedContent('waves', true);
         this.enemyManager.setWavesDescription( JSON.parse(lWavesDesc) );
     }
 

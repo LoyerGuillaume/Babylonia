@@ -20,7 +20,16 @@ class UIManager {
 
     private static capacityGroup:BABYLON.Group2D;
 
+    public static init (pScene) {
+        UIManager.initHud(pScene);
 
+        UIManager.heartTexture = Babylonia.getLoadedContent('heart.png', true);
+        UIManager.heartScale = UIManager.HEART_SIZE / UIManager.heartTexture.getSize().width;
+    }
+
+    /**
+     * DEPRECATED
+     */
     public static loadTextures(scene:BABYLON.Scene, pCallback:any) {
         UIManager.heartTexture = new BABYLON.Texture('../assets/heart.png', scene, false, true, 0, function () {
             UIManager.heartScale = UIManager.HEART_SIZE / UIManager.heartTexture.getSize().width;

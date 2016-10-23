@@ -36,13 +36,10 @@ class Babylonia {
 
         this.mainScene = pScene;
         this.engine = pEngine;
-        this.levelManager = new LevelManager(pScene);
-        this.gameManager = new GameManager(pScene, pEngine, this.levelManager);
 
+        this.levelManager = new LevelManager(this.mainScene);
         CameraManager.init(this.mainScene, this.engine);
-        UIManager.initHud(this.mainScene);
 
-        // loading
         this.loadAssets();
     }
 
@@ -53,32 +50,31 @@ class Babylonia {
     }
 
     public static getLoadedContent (pName:string, pRemoveReferense:boolean = false): any {
-        return Babylonia.loadedContent[pName];
+        var lContent = Babylonia.loadedContent[pName];
+        if (pRemoveReferense) delete Babylonia.loadedContent[pName];
+        return lContent;
     }
 
     private loadAssets () {
-        var loadedCount = 2;
-        var loadedCounter = 0;
 
         var loader = new BABYLON.AssetsManager(this.mainScene);
 
-        UIManager.loadTextures(this.mainScene, onAssetLoaded);
         this.loadUITexture(loader, Babylonia.TEXTURES_NAMES);
         this.loadUnityAssets(loader, Babylonia.ASSETS_NAME, true);
         this.loadUnityAssets(loader, Babylonia.LEVELS_NAME, false);
         this.loadJsons(loader, Babylonia.JSON_NAMES);
 
-        loader.onFinish = onAssetLoaded;
+        loader.onFinish = this.onAssetsLoaded;
         loader.useDefaultLoadingScreen = true;
         loader.load();
-
-        var self:Babylonia = this;
-        function onAssetLoaded (p) {
-            if (++loadedCounter >= loadedCount) self.onAssetsLoaded();
-        }
     }
 
     private onAssetsLoaded () {
+
+        this.gameManager = new GameManager(this.mainScene, this.engine, this.levelManager);
+
+        UIManager.init(this.mainScene);
+
         this.gameManager.start();
     }
 
@@ -91,9 +87,15 @@ class Babylonia {
         }
 
         function onSucces (pTask:BABYLON.TextureAssetTask) {
-            console.log('texture', pTask);
-            Babylonia.addLoadedContent(pTask.name, pTask.texture);
+            Babylonia.addLoadedContent(pTask.name, Babylonia.initTexture(pTask.texture));
         }
+    }
+
+    private static initTexture (pTexture:BABYLON.Texture):BABYLON.Texture {
+        pTexture.noMipmap = false;
+        pTexture._invertY = true;
+        pTexture._samplingMode = 0;
+        return pTexture;
     }
 
     private loadJsons (pLoader:BABYLON.AssetsManager, pSources: string[]) {

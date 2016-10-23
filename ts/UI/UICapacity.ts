@@ -5,7 +5,7 @@ interface Dictionnary {
 class UICapacity extends BABYLON.Group2D {
 
     private static get WIDTH()     :number { return 150; };
-    private static get TEXTURES()  :string[] { return [ 'babyboule', 'babyspread' ]; };
+    private static get TEXTURES()  :string[] { return [ 'babyboule', 'babyspread' ]; }; // DEPRICATED
     private static get PICTO_SIZE():number { return 100; };
 
     private static textures:Dictionnary = {};
@@ -14,15 +14,22 @@ class UICapacity extends BABYLON.Group2D {
 
     private picto:BABYLON.Sprite2D;
 
- 
+
     constructor (property:any, capacity:any) {
         property.width = UICapacity.WIDTH;
         super(property);
+
+        this.initTextures();
+
         this.capacity = capacity;
         this.initContent();
         this.initEvents();
     }
 
+    private initTextures () {
+        UICapacity.textures['babyboule'] = Babylonia.getLoadedContent('babyboule.png', true);
+        UICapacity.textures['babyspread'] = Babylonia.getLoadedContent('babyspread.png', true);
+    }
 
     private initEvents () {
         var that = this;
@@ -63,7 +70,9 @@ class UICapacity extends BABYLON.Group2D {
         key.x = UICapacity.WIDTH / 2 - key.width / 2;
     }
 
-
+    /**
+     * DEPRECATED
+     */
     public static loadTextures (scene:BABYLON.Scene, pCallback:any) {
         var count:number = 0;
         for (var i in UICapacity.TEXTURES) {

@@ -15,7 +15,7 @@ class CameraManager {
         CameraManager.camera = new BABYLON.FreeCamera('FreeCamera', new BABYLON.Vector3( CameraManager.X_OFFSET, CameraManager.HEIGHT, CameraManager.RADIUS), pScene);
 
         pScene.activeCamera = CameraManager.camera;
-    } 
+    }
 
 
     public static setTarget(pTarget: GameObject):void {

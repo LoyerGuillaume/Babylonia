@@ -13,8 +13,10 @@ class Enemy extends Character {
 
     constructor(pAssetName:string, pPosition:BABYLON.Vector3, pScene:BABYLON.Scene, pLifePoint:number, pInvincibilityTime:number) {
         super(pScene, pAssetName, pPosition, pLifePoint);
-        this.hitFeedbackTime = pInvincibilityTime;
+        this.hitFeedbackTime    = pInvincibilityTime;
         this.lastPlayerPosition = new BABYLON.Vector3(0, 0, 0);
+
+        this.initCollision();
 
         Enemy.list.push(this);
     }
@@ -27,6 +29,13 @@ class Enemy extends Character {
 
     public get getDropedCoinsNumber () {
         return 0;
+    }
+
+
+    private initCollision () :void {
+        this.checkCollisions = true;
+        this.ellipsoid = new BABYLON.Vector3(0.5, 0.5, 0.5);
+        // Tools.displayEllipsoid(this.getScene(), this);
     }
 
 

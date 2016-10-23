@@ -33,7 +33,7 @@ class Character extends AssetGraphic {
         this.hitFeedback();
         if (++this.hitFeedbackCount >= pFeedbackTime) {
             this.isHit = false;
-            this.meshe.isVisible = true;
+            this.meshe.setEnabled(true);
             this.hitFeedbackCount = 0;
         }
     }

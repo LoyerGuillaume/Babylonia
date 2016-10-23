@@ -6,7 +6,7 @@ class UICapacity extends BABYLON.Group2D {
 
     private static get WIDTH()     :number { return 150; };
 
-    private static get TEXTURES()  :string[] { return [ 'babyboule', 'babyspread', 'babygel', 'babyaoe' ]; };
+    private static get TEXTURES()  :string[] { return [ 'babyboule', 'babyspread', 'babygel', 'babyaoe' ]; }; // DEPRICATED
 
     private static get PICTO_SIZE():number { return 100; };
 
@@ -30,6 +30,7 @@ class UICapacity extends BABYLON.Group2D {
         UICapacity.textures['babyboule'] = Babylonia.getLoadedContent('babyboule.png', true);
         UICapacity.textures['babyspread'] = Babylonia.getLoadedContent('babyspread.png', true);
         UICapacity.textures['babygel'] = Babylonia.getLoadedContent('babygel.png', true);
+        UICapacity.textures['babyaoe'] = Babylonia.getLoadedContent('babyaoe.png', true);
     }
 
     private initEvents () {

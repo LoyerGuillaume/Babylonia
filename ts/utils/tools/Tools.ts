@@ -42,4 +42,13 @@
         return new BABYLON.Vector3(pVector.x - pVectorMinus.x, pVector.y - pVectorMinus.y, pVector.z - pVectorMinus.z)
     }
 
+
+    public static intersectOnZXPlan (pVector:BABYLON.Vector3, pVectorMinus:BABYLON.Vector3, collisionOffset:number = 1):boolean {
+        var vect1:BABYLON.Vector3 = pVector.clone();
+        var vect2:BABYLON.Vector3 = pVectorMinus.clone();
+        vect1.y = 0;
+        vect2.y = 0;
+        return Tools.minusVector3(vect1, vect2).length() < collisionOffset;
+    }
+
 }

@@ -10,10 +10,15 @@ class Player extends Character {
     private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
     private static get ICE_WALKING_DURATION()   :number { return 120;};
     public static  get LIFE_POINT()             :number { return 3;};
+    public static  get XP_BY_COIN()             :number { return 0.5;};
+    public static  get XP_BY_SCORE()            :number { return 10;};
+    public static  get LEVEL_XP_SIZE()          :number { return 1000;};
 
     private _score:number;
     private _bestScore:number;
     private _coins:number;
+    private _xp:number;
+    private _level:number;
     private iceWalkingCount:number = 0;
 
     private attacks:{} = {
@@ -47,15 +52,15 @@ class Player extends Character {
         }
     };
 
-
-
-    constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pCoins = 0, pScore = 0, pBestScore = 0) {
+    constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pCoins, pScore, pBestScore, pXp, pLevel) {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
 
         this.score          = pScore;
         this.bestScore      = pBestScore;
         this.coins          = pCoins;
+        this.xp             = pXp;
+        this.level          = pLevel;
         this.controller     = new ControllerKeyboard();
 
         this.initAnimation();
@@ -77,6 +82,10 @@ class Player extends Character {
 
     public set score (pValue) {
         UIManager.setScore(pValue);
+        BEvent.emit(new PlayerEvent(PlayerEvent.GOT_SCORE, {
+            score: pValue
+        }));
+        this.xp += ((pValue - this._score) * Player.XP_BY_SCORE) / this.level;
         this._score = pValue;
     }
 
@@ -86,6 +95,9 @@ class Player extends Character {
 
     public set bestScore (pValue) {
         UIManager.setBestScore(pValue);
+        BEvent.emit(new PlayerEvent(PlayerEvent.GOT_BEST_SCORE, {
+            bestScore: pValue
+        }));
         this._bestScore = pValue;
     }
 
@@ -97,7 +109,36 @@ class Player extends Character {
         BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, {
             coins: pValue
         }));
+        this.xp += ((pValue - this._coins) * Player.XP_BY_COIN) / this.level;
         this._coins = pValue;
+    }
+
+    public get xp ():number {
+        return this._xp;
+    }
+
+    public set xp (pValue) {
+
+        if (pValue >= Player.LEVEL_XP_SIZE) {
+            pValue = 0;
+            this.level++;
+        }
+
+        BEvent.emit(new PlayerEvent(PlayerEvent.GOT_XP, {
+            xp: pValue
+        }));
+        this._xp = pValue;
+    }
+
+    public get level ():number {
+        return this._level;
+    }
+
+    public set level (pValue) {
+        BEvent.emit(new PlayerEvent(PlayerEvent.GOT_LEVEL, {
+            level: pValue
+        }));
+        this._level = pValue;
     }
 
 
@@ -138,10 +179,6 @@ class Player extends Character {
 
     private hasHit (pPlayerEventParams:any) {
         if (this === pPlayerEventParams.player) {
-            console.log('- a', a);
-            var a = (this.score += pPlayerEventParams.score) - 5;
-            console.log('-- a', a);
-
             this.updateBestScore();
         }
     }

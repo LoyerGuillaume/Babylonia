@@ -6,6 +6,7 @@ class UIManager {
     private static get BEST_SCORE_OFFSET() :number { return 18 };
     private static get COINS_SIZE()        :number { return 40 };
     private static get COINS_OFFSET()      :number { return 20 };
+    private static get COINS_OFFSET_X() :number { return 400 };
     private static get MESSAGE_SIZE()      :number { return 20 };
     private static get CAPACITY_OFFSET()   :number { return 250 };
 
@@ -13,9 +14,11 @@ class UIManager {
     private static heartScale:number;
     private static heartsContainer:BABYLON.Group2D;
 
-    private static scoreText:BABYLON.Text2D;
+    private static score:BABYLON.Text2D;
     private static bestScoreText:BABYLON.Text2D;
-    private static babyCoins:BABYLON.Text2D;
+    private static babyCoins:BABYLON.Group2D;
+    private static textCoins:BABYLON.Text2D;
+
     private static displayText:BABYLON.Text2D;
     private static displayTextPanel:BABYLON.Rectangle2D;
 
@@ -49,25 +52,46 @@ class UIManager {
             id: 'hudContainer'
         });
 
-        UIManager.scoreText = new BABYLON.Text2D('Score : 0', {
-            id      : 'score',
+        var textScore:BABYLON.Text2D = new BABYLON.Text2D('Score : ', {
+            id      : 'textScore',
             parent  : UIManager.hudContainer,
             fontName: UIManager.SCORE_SIZE + "pt Arial"
+        });
+
+        UIManager.score = new BABYLON.Text2D('0', {
+            id      : 'score',
+            parent  : UIManager.hudContainer,
+            fontName: UIManager.SCORE_SIZE + "pt Arial",
+            x: textScore.width
         });
 
         UIManager.bestScoreText = new BABYLON.Text2D('Best score : 0', {
             id      : 'best_score',
             parent  : UIManager.hudContainer,
             fontName: UIManager.BEST_SCORE_SIZE + "pt Arial",
-            y       : UIManager.scoreText.height - UIManager.BEST_SCORE_OFFSET
+            y       : UIManager.score.height - UIManager.BEST_SCORE_OFFSET
         });
 
-        UIManager.babyCoins = new BABYLON.Text2D('Babycoins : 0', {
+        UIManager.babyCoins = new BABYLON.Group2D({
             id      : 'babycoins',
             parent  : UIManager.hudContainer,
-            fontName: UIManager.COINS_SIZE + "pt Arial",
-            y       : UIManager.scoreText.height + UIManager.COINS_OFFSET
+            y       : window.innerHeight - UIManager.COINS_OFFSET - UIManager.COINS_SIZE,
+            x       : window.innerWidth  - UIManager.COINS_OFFSET_X
         })
+
+        var text = new BABYLON.Text2D('Babycoins : ', {
+            id      : 'babycoinsText',
+            parent  : UIManager.babyCoins,
+            fontName: UIManager.COINS_SIZE + "pt Arial"
+        })
+
+        UIManager.textCoins = new BABYLON.Text2D('0', {
+            id      : 'textCoins',
+            parent  : UIManager.babyCoins,
+            fontName: UIManager.COINS_SIZE + "pt Arial",
+            x       : text.width
+        })
+
 
         UIManager.heartsContainer = new BABYLON.Group2D({
             parent: UIManager.hudContainer,
@@ -83,6 +107,8 @@ class UIManager {
 
     private static onResize () {
         UIManager.heartsContainer.y = window.innerHeight - UIManager.HEART_SIZE;
+        UIManager.babyCoins.y = window.innerHeight - UIManager.COINS_OFFSET - UIManager.COINS_SIZE;
+        UIManager.babyCoins.x = window.innerWidth  - UIManager.COINS_OFFSET_X;
         UIManager.placeCapacityContainer();
         if (typeof UIManager.displayTextPanel !== 'undefined') {
             UIManager.displayTextPanel.y = window.innerHeight / 2 - UIManager.displayTextPanel.height / 2;
@@ -124,7 +150,7 @@ class UIManager {
 
 
     public static setScore (pScore:number) {
-        UIManager.scoreText.text = "Score : " + pScore;
+        UIManager.score.text = pScore.toString(10);
     }
 
     public static setBestScore (pBestScore:number) {
@@ -133,7 +159,7 @@ class UIManager {
 
 
     private static updateCoins (pPlayerEventParams:any) {
-        UIManager.babyCoins.text = 'Babycoins : ' + pPlayerEventParams.coins;
+        UIManager.textCoins.text = pPlayerEventParams.coins.toString(10);
     }
 
 

@@ -3,7 +3,7 @@ class IceSpikes extends PlayerAttack {
     private static get ASSET_NAME()   :string { return 'IceSpikes'; };
     private static get MAX_LIFE_TIME():number { return 300;};
 
-    protected collisionRange:number = 1.2;
+    protected collisionRange:number = 0.8;
     protected damageDeal:number = 0.02;
 
     private targetPosition:BABYLON.Vector3;

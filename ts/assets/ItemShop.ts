@@ -8,9 +8,10 @@ class ItemShop extends AssetGraphic {
         super(pAssetName, pScene);
 
         this.position           = pPosition.clone();
-        this.startYPosition = this.position.y;
+        this.startYPosition     = this.position.y;
         this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
 
+        console.log(this.position);
         ItemShop.list.push(this);
     }
 }

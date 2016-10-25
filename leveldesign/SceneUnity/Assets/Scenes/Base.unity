@@ -2447,7 +2447,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}
       propertyPath: m_Name
-      value: POS_pedestral01
+      value: OBJ_pedestral01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}
@@ -3584,7 +3584,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}
       propertyPath: m_Name
-      value: POS_pedestral02
+      value: OBJ_pedestral02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}
@@ -5615,7 +5615,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}
       propertyPath: m_Name
-      value: POS_pedestral03
+      value: OBJ_pedestral03
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}

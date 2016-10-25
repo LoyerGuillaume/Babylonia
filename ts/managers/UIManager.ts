@@ -19,6 +19,8 @@ class UIManager {
     private static babyCoins:BABYLON.Group2D;
     private static textCoins:BABYLON.Text2D;
 
+    private static popinShop :BABYLON.ScreenSpaceCanvas2D;
+
     private static displayText:BABYLON.Text2D;
     private static displayTextPanel:BABYLON.Rectangle2D;
 
@@ -108,12 +110,9 @@ class UIManager {
         window.onresize = UIManager.onResize;
     }
 
-    private static popinShop :BABYLON.ScreenSpaceCanvas2D;
-
     public static closeShopPopin () {
         if (UIManager.popinShop) {
-            UIManager.popinShop.isVisible = false;
-            UIManager.popinShop.isDisposed = true;
+            UIManager.popinShop.levelVisible = false;
         }
     }
 
@@ -137,7 +136,15 @@ class UIManager {
                     id: "SHOP_Text",
                     marginAlignment: "h: center, v:center",
                     fontName: "12pt Arial",
-                    x : 0
+                    x : 0,
+                    y : 10,
+                }),
+                new BABYLON.Text2D('Press E for buy', {
+                    id: "SHOP_Info",
+                    marginAlignment: "h: center",
+                    fontName: "12pt Arial",
+                    defaultFontColor: new BABYLON.Color4(183, 183, 183, 183),
+                    y : 50
                 }),
 
                 new BABYLON.Text2D('Price : ', {
@@ -149,6 +156,7 @@ class UIManager {
                 new BABYLON.Text2D(pPrice.toString(), {
                     id: "SHOP_PriceValue",
                     fontName: "14pt Arial",
+                    defaultFontColor: new BABYLON.Color4(192, 159, 79, 1),
                     x : 100,
                     y : 20
                 }),
@@ -156,13 +164,13 @@ class UIManager {
                 new BABYLON.Text2D('Level : ', {
                     id: "SHOP_Level",
                     fontName: "14pt Arial",
-                    x : 200,
+                    x : 220,
                     y : 20
                 }),
                 new BABYLON.Text2D(pLevelRequired.toString(), {
                     id: "SHOP_LevelValue",
                     fontName: "14pt Arial",
-                    x : 260,
+                    x : 280,
                     y : 20
                 })
             ]

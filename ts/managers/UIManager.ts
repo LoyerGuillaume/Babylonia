@@ -1,17 +1,20 @@
 class UIManager {
 
-    private static get HEART_SIZE()     :number { return 64 };
-    private static get SCORE_SIZE()     :number { return 40 };
-    private static get COINS_SIZE()     :number { return 40 };
-    private static get COINS_OFFSET()   :number { return 20 };
-    private static get MESSAGE_SIZE()   :number { return 20 };
-    private static get CAPACITY_OFFSET():number { return 250 };
+    private static get HEART_SIZE()        :number { return 64 };
+    private static get SCORE_SIZE()        :number { return 40 };
+    private static get BEST_SCORE_SIZE()   :number { return 36 };
+    private static get BEST_SCORE_OFFSET() :number { return 18 };
+    private static get COINS_SIZE()        :number { return 40 };
+    private static get COINS_OFFSET()      :number { return 20 };
+    private static get MESSAGE_SIZE()      :number { return 20 };
+    private static get CAPACITY_OFFSET()   :number { return 250 };
 
     private static heartTexture:BABYLON.Texture;
     private static heartScale:number;
     private static heartsContainer:BABYLON.Group2D;
 
     private static scoreText:BABYLON.Text2D;
+    private static bestScoreText:BABYLON.Text2D;
     private static babyCoins:BABYLON.Text2D;
     private static displayText:BABYLON.Text2D;
     private static displayTextPanel:BABYLON.Rectangle2D;
@@ -50,6 +53,13 @@ class UIManager {
             id      : 'score',
             parent  : UIManager.hudContainer,
             fontName: UIManager.SCORE_SIZE + "pt Arial"
+        });
+
+        UIManager.bestScoreText = new BABYLON.Text2D('Best score : 0', {
+            id      : 'best_score',
+            parent  : UIManager.hudContainer,
+            fontName: UIManager.BEST_SCORE_SIZE + "pt Arial",
+            y       : UIManager.scoreText.height - UIManager.BEST_SCORE_OFFSET
         });
 
         UIManager.babyCoins = new BABYLON.Text2D('Babycoins : 0', {
@@ -115,6 +125,10 @@ class UIManager {
 
     public static setScore (pScore:number) {
         UIManager.scoreText.text = "Score : " + pScore;
+    }
+
+    public static setBestScore (pBestScore:number) {
+        UIManager.bestScoreText.text = "Best score : " + pBestScore;
     }
 
 

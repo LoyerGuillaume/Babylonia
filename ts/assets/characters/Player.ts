@@ -11,8 +11,9 @@ class Player extends Character {
     private static get ICE_WALKING_DURATION()   :number { return 120;};
     public static  get LIFE_POINT()             :number { return 3;};
 
-    private score:number;
-    private coins:number;
+    private _score:number;
+    private _bestScore:number;
+    private _coins:number;
     private iceWalkingCount:number = 0;
 
     private attacks:{} = {
@@ -48,12 +49,13 @@ class Player extends Character {
 
 
 
-    constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3) {
+    constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pCoins = 0, pScore = 0, pBestScore = 0) {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
 
-        this.score          = 0;
-        this.coins          = 0;
+        this.score          = pScore;
+        this.bestScore      = pBestScore;
+        this.coins          = pCoins;
         this.controller     = new ControllerKeyboard();
 
         this.initAnimation();
@@ -69,8 +71,33 @@ class Player extends Character {
     }
 
 
-    public get getScore ():number {
-        return this.score;
+    public get score ():number {
+        return this._score;
+    }
+
+    public set score (pValue) {
+        UIManager.setScore(pValue);
+        this._score = pValue;
+    }
+
+    public get bestScore ():number {
+        return this._bestScore;
+    }
+
+    public set bestScore (pValue) {
+        UIManager.setBestScore(pValue);
+        this._bestScore = pValue;
+    }
+
+    public get coins ():number {
+        return this._coins;
+    }
+
+    public set coins (pValue) {
+        BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, {
+            coins: pValue
+        }));
+        this._coins = pValue;
     }
 
 
@@ -111,8 +138,17 @@ class Player extends Character {
 
     private hasHit (pPlayerEventParams:any) {
         if (this === pPlayerEventParams.player) {
-            this.score += pPlayerEventParams.score;
-            UIManager.setScore(this.score);
+            console.log('- a', a);
+            var a = (this.score += pPlayerEventParams.score) - 5;
+            console.log('-- a', a);
+
+            this.updateBestScore();
+        }
+    }
+
+    private updateBestScore () {
+        if (this.score > this.bestScore) {
+            this.bestScore = this.score;
         }
     }
 
@@ -250,9 +286,6 @@ class Player extends Character {
 
     private onCoinCollision ():void {
         this.coins++;
-        BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, {
-            coins: this.coins
-        }))
     }
 
 

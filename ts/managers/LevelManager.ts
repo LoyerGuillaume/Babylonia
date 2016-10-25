@@ -63,7 +63,7 @@ class LevelManager {
      * return the position of the unique object tagged with `GP_OBJECTS_PREFFIX` with name `pName`
      */
     public getGameplayPositionUnique (pName:string) {
-        var lPoss = this.getGameplayPositions(pName);
+        var lPoss = this.getGameplayPositions(LevelManager.GP_POSITION_PREFFIX + pName);
         if (lPoss[1]) console.error('The gameplay position "'+pName+'" should not be duplicate.');
         return lPoss[0];
     }

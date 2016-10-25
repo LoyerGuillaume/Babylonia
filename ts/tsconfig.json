@@ -10,6 +10,7 @@
         "Babylonia.ts",
         "managers/GameManager.ts",
         "managers/CameraManager.ts",
+        "managers/ShopManager.ts",
         "managers/LevelManager.ts",
         "managers/EnemyManager.ts",
         "managers/UIManager.ts",

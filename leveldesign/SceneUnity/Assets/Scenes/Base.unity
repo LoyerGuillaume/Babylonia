@@ -2445,6 +2445,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 2.555
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}
+      propertyPath: m_Name
+      value: POS_pedestral01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}
   m_IsPrefabParent: 0
@@ -3580,7 +3584,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}
       propertyPath: m_Name
-      value: Pedestal (1)
+      value: POS_pedestral02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}
@@ -5611,7 +5615,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}
       propertyPath: m_Name
-      value: Pedestal (2)
+      value: POS_pedestral03
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f59f0fd709b3ea54897cbff8e43a0eca, type: 3}

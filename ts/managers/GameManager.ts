@@ -3,6 +3,7 @@ class GameManager {
     private mainScene:BABYLON.Scene;
     private engine:BABYLON.Engine;
     private levelManager: LevelManager;
+    private shopManager: ShopManager;
     private lightManager:LightManager;
 
     private enemyManager: EnemyManager;
@@ -36,6 +37,8 @@ class GameManager {
         var that = this;
 
         this.lightManager = new LightManager(this.mainScene);
+
+        this.shopManager = new ShopManager(this.levelManager);
 
         this.initPlayer(0);
 

@@ -3,6 +3,7 @@ class GameManager {
     private mainScene:BABYLON.Scene;
     private engine:BABYLON.Engine;
     private levelManager: LevelManager;
+    private shopManager: ShopManager;
     private lightManager:LightManager;
 
     private enemyManager: EnemyManager;
@@ -36,6 +37,8 @@ class GameManager {
         var that = this;
 
         this.lightManager = new LightManager(this.mainScene);
+
+        this.shopManager = new ShopManager(this.levelManager);
 
         this.initPlayer(0);
 
@@ -111,10 +114,10 @@ class GameManager {
     }
 
 
-    private initPlayer(indexPlayer, pCoins = 0, pScore = 0, pBestScore = 0, pXp = 0) {
+    private initPlayer(indexPlayer, pCoins = 0, pScore = 0, pBestScore = 0, pXp = 0, pLevel = 1) {
         var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();
         lPos.y += 0.6;
-        Player.list[indexPlayer] = new Player(this.mainScene, lPos, pCoins, pScore, pBestScore, pXp);
+        Player.list[indexPlayer] = new Player(this.mainScene, lPos, pCoins, pScore, pBestScore, pXp, pLevel);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
         UIManager.gainLife(Player.LIFE_POINT);

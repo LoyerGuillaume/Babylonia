@@ -93,7 +93,7 @@ class UICapacity extends BABYLON.Group2D {
         var initialHeight:number = rect.height;
         var callback = this.cooldownTimeout.bind(this, rect)
 
-        setTimeout(function () {
+        new Timeout(function () {
             callback();
         }, 16);
     }
@@ -104,7 +104,7 @@ class UICapacity extends BABYLON.Group2D {
         if (this.capacity.countFrameAttack >= this.capacity.cooldown) {
             this.unshadePicto();
         } else {
-            setTimeout(this.cooldownTimeout.bind(this, rect), 16);
+            new Timeout(this.cooldownTimeout.bind(this, rect), 16);
         }
     }
 

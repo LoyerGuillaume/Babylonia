@@ -10,7 +10,7 @@ declare module BABYLON {
         attributeSize: number;
         /**
          * type of the attribute, gl.BYTE, gl.UNSIGNED_BYTE, gl.SHORT, gl.UNSIGNED_SHORT, gl.FIXED, gl.FLOAT.
-         * default is FLOAT
+         * default is FLOAT 
          */
         attribyteType: number;
         /**

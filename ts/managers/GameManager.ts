@@ -79,6 +79,9 @@ class GameManager {
     private onPlayerDeath (pPlayerEvent:any) {
         var playerIndex = pPlayerEvent.player.getPlayerIndex();
 
+        var lCoins     = pPlayerEvent.player.coins;
+        var lBestScore = pPlayerEvent.player.bestScore;
+
         pPlayerEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
 
@@ -93,13 +96,12 @@ class GameManager {
             if (secondsRemaining === 0) {
                 UIManager.removeMessage();
                 clearTimeout(interval);
-                that.initPlayer(playerIndex);
+                that.initPlayer(playerIndex, lCoins, 0, lBestScore);
                 if (playerRemaining === 0) {
                     that.onGameOver();
                 }
             }
         }, 1000);
-
 
     }
 
@@ -108,10 +110,10 @@ class GameManager {
     }
 
 
-    private initPlayer(indexPlayer) {
+    private initPlayer(indexPlayer, pCoins = 0, pScore = 0, pBestScore = 0) {
         var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();
         lPos.y += 0.6;
-        Player.list[indexPlayer] = new Player(this.mainScene, lPos);
+        Player.list[indexPlayer] = new Player(this.mainScene, lPos, pCoins, pScore, pBestScore);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
         UIManager.gainLife(Player.LIFE_POINT);

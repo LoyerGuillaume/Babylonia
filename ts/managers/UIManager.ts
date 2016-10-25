@@ -5,8 +5,8 @@ class UIManager {
     private static get BEST_SCORE_SIZE()   :number { return 36 };
     private static get BEST_SCORE_OFFSET() :number { return 18 };
     private static get COINS_SIZE()        :number { return 40 };
-    private static get COINS_OFFSET()      :number { return 20 };
-    private static get COINS_OFFSET_X() :number { return 400 };
+    private static get COINS_OFFSET()      :number { return 30 };
+    private static get COINS_OFFSET_X()    :number { return 400 };
     private static get MESSAGE_SIZE()      :number { return 20 };
     private static get CAPACITY_OFFSET()   :number { return 250 };
 
@@ -85,11 +85,18 @@ class UIManager {
             fontName: UIManager.COINS_SIZE + "pt Arial"
         })
 
+        var group:BABYLON.Group2D = new BABYLON.Group2D({
+            id    : 'textCoinsContainer',
+            parent: UIManager.hudContainer,
+            origin  : new BABYLON.Vector2(0.5, 0.7),
+            y       : window.innerHeight - UIManager.COINS_OFFSET - UIManager.COINS_SIZE,
+            x       : window.innerWidth  - UIManager.COINS_OFFSET_X + text.width
+        })
+
         UIManager.textCoins = new BABYLON.Text2D('0', {
             id      : 'textCoins',
-            parent  : UIManager.babyCoins,
-            fontName: UIManager.COINS_SIZE + "pt Arial",
-            x       : text.width
+            parent  : group,
+            fontName: UIManager.COINS_SIZE + "pt Arial"
         })
 
 
@@ -160,6 +167,11 @@ class UIManager {
 
     private static updateCoins (pPlayerEventParams:any) {
         UIManager.textCoins.text = pPlayerEventParams.coins.toString(10);
+        UIManager.textCoins.parent.scale = 1;
+        Tools.bump({
+            prim2D : UIManager.textCoins.parent,
+            scale  : 2.5
+        });
     }
 
 

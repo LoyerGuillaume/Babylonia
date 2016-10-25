@@ -113,10 +113,11 @@ class UIManager {
     public static closeShopPopin () {
         if (UIManager.popinShop) {
             UIManager.popinShop.levelVisible = false;
+            UIManager.popinShop = undefined;
         }
     }
 
-    public static openShopPopin (pTitle:string, pText:string, pPrice:number, pLevelRequired:number) {
+    public static openShopPopin (pTitle:string, pText:string, pPrice:number, pLevelRequired:number, pBuyKey = 'E') {
         UIManager.closeShopPopin();
         UIManager.popinShop = new BABYLON.ScreenSpaceCanvas2D(UIManager.scene, {
             id: "PopinShopCanvas",
@@ -132,14 +133,14 @@ class UIManager {
                     x : 30,
                     y : 175
                 }),
-                new BABYLON.Text2D(pText, {
+                new BABYLON.Text2D(pText, { 
                     id: "SHOP_Text",
                     marginAlignment: "h: center, v:center",
                     fontName: "12pt Arial",
                     x : 0,
                     y : 10,
                 }),
-                new BABYLON.Text2D('Press E for buy', {
+                new BABYLON.Text2D('Press '+pBuyKey+' for buy', {
                     id: "SHOP_Info",
                     marginAlignment: "h: center",
                     fontName: "12pt Arial",
@@ -175,6 +176,7 @@ class UIManager {
                 })
             ]
         });
+
     }
 
     private static onResize () {

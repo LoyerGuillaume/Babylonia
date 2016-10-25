@@ -26,7 +26,11 @@ class UIManager {
 
     private static capacityGroup:BABYLON.Group2D;
 
-    public static init (pScene) {
+    private static scene :BABYLON.Scene;
+
+    public static init (pScene :BABYLON.Scene) {
+
+        UIManager.scene = pScene;
 
         UIManager.initHud(pScene);
 
@@ -104,6 +108,66 @@ class UIManager {
         window.onresize = UIManager.onResize;
     }
 
+    private static popinShop :BABYLON.ScreenSpaceCanvas2D;
+
+    public static closeShopPopin () {
+        if (UIManager.popinShop) {
+            UIManager.popinShop.isVisible = false;
+            UIManager.popinShop.isDisposed = true;
+        }
+    }
+
+    public static openShopPopin (pTitle:string, pText:string, pPrice:number, pLevelRequired:number) {
+        UIManager.closeShopPopin();
+        UIManager.popinShop = new BABYLON.ScreenSpaceCanvas2D(UIManager.scene, {
+            id: "PopinShopCanvas",
+            size: new BABYLON.Size(400, 230),
+            backgroundFill: "#4040408F",
+            backgroundRoundRadius: 10,
+            x : 400,
+            y : 300,
+            children: [
+                new BABYLON.Text2D(pTitle, {
+                    id: "SHOP_Title",
+                    fontName: "20pt Arial",
+                    x : 30,
+                    y : 175
+                }),
+                new BABYLON.Text2D(pText, {
+                    id: "SHOP_Text",
+                    marginAlignment: "h: center, v:center",
+                    fontName: "12pt Arial",
+                    x : 0
+                }),
+
+                new BABYLON.Text2D('Price : ', {
+                    id: "SHOP_Price",
+                    fontName: "14pt Arial",
+                    x : 40,
+                    y : 20
+                }),
+                new BABYLON.Text2D(pPrice.toString(), {
+                    id: "SHOP_PriceValue",
+                    fontName: "14pt Arial",
+                    x : 100,
+                    y : 20
+                }),
+
+                new BABYLON.Text2D('Level : ', {
+                    id: "SHOP_Level",
+                    fontName: "14pt Arial",
+                    x : 200,
+                    y : 20
+                }),
+                new BABYLON.Text2D(pLevelRequired.toString(), {
+                    id: "SHOP_LevelValue",
+                    fontName: "14pt Arial",
+                    x : 260,
+                    y : 20
+                })
+            ]
+        });
+    }
 
     private static onResize () {
         UIManager.heartsContainer.y = window.innerHeight - UIManager.HEART_SIZE;

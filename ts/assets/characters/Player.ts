@@ -195,7 +195,6 @@ class Player extends Character {
         this.animationMovement(deltaTime);
 
         this.move(deltaTime);
-        console.log(this.position);
         this.checkAttack();
 
         if (this.isHit) {

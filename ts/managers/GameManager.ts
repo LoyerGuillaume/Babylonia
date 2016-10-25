@@ -38,7 +38,7 @@ class GameManager {
 
         this.lightManager = new LightManager(this.mainScene);
 
-        this.shopManager = new ShopManager(this.levelManager);
+        this.shopManager = new ShopManager(this.mainScene, this.levelManager);
 
         this.initPlayer(0);
 

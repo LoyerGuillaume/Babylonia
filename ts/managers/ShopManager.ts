@@ -10,7 +10,9 @@ class ShopManager {
 
     constructor (pScene:BABYLON.Scene, pLevelManager:LevelManager) {
         this.mainScene = pScene;
+
         this.initPositionItemShop(pLevelManager);
+        this.initItemShopList();
 
         this.popItem();
     }

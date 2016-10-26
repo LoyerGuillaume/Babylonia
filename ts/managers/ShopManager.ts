@@ -24,21 +24,29 @@ class ShopManager {
     private initItemShopList ():void {
         ShopManager.itemShopList = [];
 
-        ShopManager.itemShopList[0] = new ItemShop(this.mainScene, 'Bottle_Health', 10, this.addHealth);
-        ShopManager.itemShopList[1] = new ItemShop(this.mainScene, 'Bottle_Health', 10, this.addHealth);
-        ShopManager.itemShopList[2] = new ItemShop(this.mainScene, 'Bottle_Health', 10, this.addHealth);
-        ShopManager.itemShopList[3] = new ItemShop(this.mainScene, 'Bottle_Mana', 10, this.addHealth);
+        ShopManager.itemShopList[0] = new ItemShop(this.mainScene, 'Bottle_Health', 10, ShopManager.addHealth);
+        ShopManager.itemShopList[1] = new ItemShop(this.mainScene, 'Bottle_Health', 10, ShopManager.addHealth);
+        ShopManager.itemShopList[2] = new ItemShop(this.mainScene, 'Bottle_Health', 10, ShopManager.addHealth);
+        ShopManager.itemShopList[3] = new ItemShop(this.mainScene, 'Bottle_Mana', 10, ShopManager.addHealth);
 
     }
 
-    private addHealth (pPlayer:Player, pItemShop:ItemShop):void {
-        console.log('addHealth');
+    public static bonusCallback(pItemShop:ItemShop) :any {
+
         ShopManager.removeToItemList(pItemShop);
 
         setTimeout(function () {
             ShopManager.popAllItem();
 
         }, 1000);
+
+    }
+
+    public static addHealth (pPlayer:Player, pItemShop:ItemShop):void {
+        ShopManager.bonusCallback(pItemShop);
+        pPlayer.upgradeLife = 1;
+        console.log('addHealth');
+
     }
 
     public static removeToItemList (pItemShop:ItemShop) :void {

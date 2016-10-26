@@ -43,8 +43,6 @@ class Babylonia {
         CameraManager.init(this.mainScene, this.engine);
 
         this.loadAssets();
-
-        window.b = this;
     }
 
     public destroy () {

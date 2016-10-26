@@ -85,6 +85,7 @@ class GameManager {
         var lCoins     = pPlayerEvent.player.coins;
         var lBestScore = pPlayerEvent.player.bestScore;
         var lXp        = pPlayerEvent.player.xp;
+        var lLevel     = pPlayerEvent.player.level;
 
         pPlayerEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
@@ -100,7 +101,7 @@ class GameManager {
             if (secondsRemaining === 0) {
                 UIManager.removeMessage();
                 clearTimeout(interval);
-                that.initPlayer(playerIndex, lCoins, 0, lBestScore, lXp);
+                that.initPlayer(playerIndex, lCoins, 0, lBestScore, lXp, lLevel);
                 if (playerRemaining === 0) {
                     that.onGameOver();
                 }

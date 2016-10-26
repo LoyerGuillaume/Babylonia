@@ -66,7 +66,7 @@ class Player extends Character {
         this.initAnimation();
         this.initCollision();
         this.initEvents();
- 
+
         UIManager.initCapacities(this.attacks);
     }
 
@@ -179,6 +179,7 @@ class Player extends Character {
 
     private hasHit (pPlayerEventParams:any) {
         if (this === pPlayerEventParams.player) {
+            this.score += pPlayerEventParams.score;
             this.updateBestScore();
         }
     }

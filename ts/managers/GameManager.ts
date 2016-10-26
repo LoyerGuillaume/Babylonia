@@ -39,8 +39,9 @@ class GameManager {
         this.lightManager = new LightManager(this.mainScene);
 
         this.shopManager = new ShopManager(this.mainScene, this.levelManager);
-
+console.info('p b');
         this.initPlayer(0);
+console.info('p a');
 
         this.initEnemyManager();
 
@@ -82,10 +83,7 @@ class GameManager {
     private onPlayerDeath (pPlayerEvent:any) {
         var playerIndex = pPlayerEvent.player.getPlayerIndex();
 
-        var lCoins     = pPlayerEvent.player.coins;
-        var lBestScore = pPlayerEvent.player.bestScore;
-        var lXp        = pPlayerEvent.player.xp;
-        var lLevel     = pPlayerEvent.player.level;
+        var lProfile   = pPlayerEvent.player.profile;
 
         pPlayerEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
@@ -101,7 +99,7 @@ class GameManager {
             if (secondsRemaining === 0) {
                 UIManager.removeMessage();
                 clearTimeout(interval);
-                that.initPlayer(playerIndex, lCoins, 0, lBestScore, lXp, lLevel);
+                that.initPlayer(playerIndex, lProfile);
                 if (playerRemaining === 0) {
                     that.onGameOver();
                 }
@@ -115,10 +113,10 @@ class GameManager {
     }
 
 
-    private initPlayer(indexPlayer, pCoins = 0, pScore = 0, pBestScore = 0, pXp = 0, pLevel = 1) {
+    private initPlayer(indexPlayer, pProfile:IPlayerProfile = undefined) {
         var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();
         lPos.y += 0.6;
-        Player.list[indexPlayer] = new Player(this.mainScene, lPos, pCoins, pScore, pBestScore, pXp, pLevel);
+        Player.list[indexPlayer] = new Player(this.mainScene, lPos, pProfile);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
         UIManager.gainLife(Player.LIFE_POINT);

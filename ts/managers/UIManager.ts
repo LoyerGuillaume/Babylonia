@@ -140,7 +140,7 @@ class UIManager {
                     x : 30,
                     y : 175
                 }),
-                new BABYLON.Text2D(pText, { 
+                new BABYLON.Text2D(pText, {
                     id: "SHOP_Text",
                     marginAlignment: "h: center, v:center",
                     fontName: "12pt Arial",

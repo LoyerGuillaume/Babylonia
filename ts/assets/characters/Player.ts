@@ -9,6 +9,11 @@ interface IPlayerProfile {
      * percentage ex : 10 for 10%
      */
     bonusCoins  ?:number;
+
+    /**
+     * in ms
+     */
+    bonusCoinsTime  ?:number;
 }
 
 class Player extends Character {
@@ -30,6 +35,8 @@ class Player extends Character {
     private _profile:IPlayerProfile;
 
     private iceWalkingCount:number = 0;
+
+    private bonusCoinsTimeout:Timeout;
 
     private attacks:{} = {
         attack: {
@@ -83,15 +90,17 @@ class Player extends Character {
     public set profile (pValue:IPlayerProfile) {
 
         pValue              = pValue || {};
-        this._profile       = {};
+        this._profile       = pValue;
 
         this.score          = 0;
         this.bestScore      = pValue.bestScore  || 0;
-        this.coins          = pValue.coins      || 0;
-        this.xp             = pValue.xp         || 0;
         this.level          = pValue.level      || 0;
+        this.xp             = pValue.xp         || 0;
 
-        this.bonusCoins     = pValue.bonusCoins || 0;
+        this.bonusCoins     = pValue.bonusCoins     || 0;
+        this.bonusCoinsTime = pValue.bonusCoinsTime || 0;
+
+        this.coins          = pValue.coins      || 0;
     }
 
     /**
@@ -177,6 +186,29 @@ class Player extends Character {
 
     public set bonusCoins (pValue) {
         this._profile.bonusCoins = 1 + pValue / 100;
+    }
+    // BONUS
+
+    public get bonusCoinsTime ():number {
+        return this._profile.bonusCoinsTime;
+    }
+
+    public set bonusCoinsTime (pValue) {
+
+        if (this.bonusCoinsTimeout) {
+            this.bonusCoinsTimeout.destroy();
+            this.bonusCoinsTimeout = undefined;
+        }
+
+        this._profile.bonusCoinsTime = pValue;
+
+        if (pValue > 0) {
+            this.bonusCoinsTimeout = new Timeout(this.resetBonusCoins.bind(this), this._profile.bonusCoinsTime);
+        }
+    }
+
+    private resetBonusCoins () {
+        this.bonusCoins = 0;
     }
 
     protected initEvents () {

@@ -63,10 +63,7 @@ class Player extends Character {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
 
-        console.info('pro b');
-
         this.profile    = pProfile;
-                console.info('pro a');
         this.controller = new ControllerKeyboard();
 
         this.initAnimation();

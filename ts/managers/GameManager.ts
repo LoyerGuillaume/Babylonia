@@ -178,6 +178,10 @@ console.info('p a');
                 Coin.list[m].doAction(deltaTime);
             }
 
+            for (var n in ItemShop.list) {
+                ItemShop.list[n].doAction(deltaTime);
+            }
+
             CameraManager.updatePosition();
 
             if (this.frameCount % 2) {

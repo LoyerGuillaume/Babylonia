@@ -16,6 +16,8 @@ class ItemShop extends AssetGraphic {
         ItemShop.list.push(this);
     }
 
+
+
     public setPosition (pPosition:BABYLON.Vector3):void {
         this.position = pPosition.clone();
         this.startYPosition     = this.position.y;
@@ -23,13 +25,25 @@ class ItemShop extends AssetGraphic {
 
 
 
+    protected doActionNormal (deltaTime:number) {
+        this.checkPlayerCollision();
+    }
+
+
     private checkPlayerCollision () :void {
         for (var i in Player.list) {
             if (Tools.minusVector3(this.position, Player.list[i].position).length() < 0.8) {
-                console.log('COLLISION');
                 this.bonusCallback(Player.list[i]);
+
+                this.destroy();
                 return;
             }
         }
+    }
+
+
+    public destroy () {
+        ItemShop.list.splice(ItemShop.list.indexOf(this), 1);
+        super.destroy();
     }
 }

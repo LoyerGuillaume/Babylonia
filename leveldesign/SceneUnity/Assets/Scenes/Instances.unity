@@ -1651,7 +1651,13 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 0.292
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 198000014249637824, guid: 7cafb89b5a0f61f479d0a748962abbbc,
+        type: 2}
+      propertyPath: randomSeed
+      value: 1111302400
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 95000013129880336, guid: 7cafb89b5a0f61f479d0a748962abbbc, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 7cafb89b5a0f61f479d0a748962abbbc, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &627000886

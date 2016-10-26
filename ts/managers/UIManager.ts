@@ -114,6 +114,7 @@ class UIManager {
 
         BEvent.on(PlayerEvent.GOT_COIN, UIManager.updateCoins, UIManager);
         BEvent.on(PlayerEvent.HIT, UIManager.looseLife, UIManager);
+        BEvent.on(PlayerEvent.GAIN_LIFE, UIManager.gainLife, UIManager);
         window.onresize = UIManager.onResize;
     }
 
@@ -140,7 +141,7 @@ class UIManager {
                     x : 30,
                     y : 175
                 }),
-                new BABYLON.Text2D(pText, { 
+                new BABYLON.Text2D(pText, {
                     id: "SHOP_Text",
                     marginAlignment: "h: center, v:center",
                     fontName: "12pt Arial",

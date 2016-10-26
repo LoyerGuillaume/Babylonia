@@ -4,6 +4,7 @@ class PlayerEvent extends BEvent {
     public static HAS_HIT  :string = 'PLAYER_HAS_HIT';
     public static HIT      :string = 'PLAYER_HIT';
     public static ATTACK   :string = 'ATTACK';
+    public static GAIN_LIFE   :string = 'GAIN_LIFE';
 
     public static GOT_BEST_SCORE :string = 'GOT_BEST_SCORE';
     public static GOT_SCORE      :string = 'GOT_SCORE';

@@ -184,6 +184,7 @@ class Player extends Character {
         }
     }
 
+
     private updateBestScore () {
         if (this.score > this.bestScore) {
             this.bestScore = this.score;

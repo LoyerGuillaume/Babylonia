@@ -5,6 +5,10 @@ interface IPlayerProfile {
     xp          ?:number;
     level       ?:number;
 
+    /**
+     * percentage ex : 10 for 10%
+     */
+    bonusCoins  ?:number;
 }
 
 class Player extends Character {
@@ -58,7 +62,6 @@ class Player extends Character {
         }
     };
 
-    //constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pCoins, pScore, pBestScore, pXp, pLevel) {
     constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pProfile:IPlayerProfile = undefined) {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
@@ -75,6 +78,27 @@ class Player extends Character {
 
     public getPlayerIndex ():number {
         return Player.list.indexOf(this);
+    }
+
+    public set profile (pValue:IPlayerProfile) {
+
+        pValue              = pValue || {};
+        this._profile       = {};
+
+        this.score          = 0;
+        this.bestScore      = pValue.bestScore  || 0;
+        this.coins          = pValue.coins      || 0;
+        this.xp             = pValue.xp         || 0;
+        this.level          = pValue.level      || 0;
+
+        this.bonusCoins     = pValue.bonusCoins || 0;
+    }
+
+    /**
+     * WARNING : do not modify the profile please.
+     */
+    public get profile () {
+        return this._profile;
     }
 
     public get score ():number {
@@ -107,6 +131,9 @@ class Player extends Character {
     }
 
     public set coins (pValue) {
+
+        pValue *= this.bonusCoins;
+
         BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, {
             coins: pValue
         }));
@@ -142,25 +169,14 @@ class Player extends Character {
         this._profile.level = pValue;
     }
 
+    // BONUS
 
-
-    public set profile (pValue:IPlayerProfile) {
-
-        pValue              = pValue || {};
-        this._profile       = {};
-
-        this.score          = 0;
-        this.bestScore      = pValue.bestScore || 0;
-        this.coins          = pValue.coins     || 0;
-        this.xp             = pValue.xp        || 0;
-        this.level          = pValue.level     || 0;
+    public get bonusCoins ():number {
+        return this._profile.bonusCoins;
     }
 
-    /**
-     * WARNING : do not modify the profile please.
-     */
-    public get profile () {
-        return this._profile;
+    public set bonusCoins (pValue) {
+        this._profile.bonusCoins = 1 + pValue / 100;
     }
 
     protected initEvents () {

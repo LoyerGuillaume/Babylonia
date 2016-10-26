@@ -1,7 +1,7 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SceneUnity.CSharp", "SceneUnity.CSharp.csproj", "{9F21E933-62A4-2C55-2B54-2B85B93E82C8}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{E0A558CA-A161-6A00-2FEB-6BEB96095930}") = "SceneUnity", "Assembly-CSharp.csproj", "{3780C95B-0435-A03A-E774-6CF9429CD1AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9F21E933-62A4-2C55-2B54-2B85B93E82C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F21E933-62A4-2C55-2B54-2B85B93E82C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F21E933-62A4-2C55-2B54-2B85B93E82C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F21E933-62A4-2C55-2B54-2B85B93E82C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3780C95B-0435-A03A-E774-6CF9429CD1AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3780C95B-0435-A03A-E774-6CF9429CD1AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3780C95B-0435-A03A-E774-6CF9429CD1AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3780C95B-0435-A03A-E774-6CF9429CD1AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal

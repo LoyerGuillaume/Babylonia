@@ -1,3 +1,16 @@
+interface IPlayerProfile {
+    coins       ?:number;
+    score       ?:number;
+    bestScore   ?:number;
+    xp          ?:number;
+    level       ?:number;
+
+    /**
+     * percentage ex : 10 for 10%
+     */
+    bonusCoins  ?:number;
+}
+
 class Player extends Character {
 
     public static list:Player[] = [];
@@ -14,11 +27,8 @@ class Player extends Character {
     public static  get XP_BY_SCORE()            :number { return 10;};
     public static  get LEVEL_XP_SIZE()          :number { return 1000;};
 
-    private _score:number;
-    private _bestScore:number;
-    private _coins:number;
-    private _xp:number;
-    private _level:number;
+    private _profile:IPlayerProfile;
+
     private iceWalkingCount:number = 0;
 
     private attacks:{} = {
@@ -52,16 +62,12 @@ class Player extends Character {
         }
     };
 
-    constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pCoins, pScore, pBestScore, pXp, pLevel) {
+    constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pProfile:IPlayerProfile = undefined) {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
 
-        this.score          = pScore;
-        this.bestScore      = pBestScore;
-        this.coins          = pCoins;
-        this.xp             = pXp;
-        this.level          = pLevel;
-        this.controller     = new ControllerKeyboard();
+        this.profile    = pProfile;
+        this.controller = new ControllerKeyboard();
 
         this.initAnimation();
         this.initCollision();
@@ -70,14 +76,33 @@ class Player extends Character {
         UIManager.initCapacities(this.attacks);
     }
 
-
     public getPlayerIndex ():number {
         return Player.list.indexOf(this);
     }
 
+    public set profile (pValue:IPlayerProfile) {
+
+        pValue              = pValue || {};
+        this._profile       = {};
+
+        this.score          = 0;
+        this.bestScore      = pValue.bestScore  || 0;
+        this.coins          = pValue.coins      || 0;
+        this.xp             = pValue.xp         || 0;
+        this.level          = pValue.level      || 0;
+
+        this.bonusCoins     = pValue.bonusCoins || 0;
+    }
+
+    /**
+     * WARNING : do not modify the profile please.
+     */
+    public get profile () {
+        return this._profile;
+    }
 
     public get score ():number {
-        return this._score;
+        return this._profile.score;
     }
 
     public set score (pValue) {
@@ -85,12 +110,12 @@ class Player extends Character {
         BEvent.emit(new PlayerEvent(PlayerEvent.GOT_SCORE, {
             score: pValue
         }));
-        this.xp += ((pValue - this._score) * Player.XP_BY_SCORE) / this.level;
-        this._score = pValue;
+        this.xp += ((pValue - this._profile.score) * Player.XP_BY_SCORE) / this.level;
+        this._profile.score = pValue;
     }
 
     public get bestScore ():number {
-        return this._bestScore;
+        return this._profile.bestScore;
     }
 
     public set bestScore (pValue) {
@@ -98,23 +123,26 @@ class Player extends Character {
         BEvent.emit(new PlayerEvent(PlayerEvent.GOT_BEST_SCORE, {
             bestScore: pValue
         }));
-        this._bestScore = pValue;
+        this._profile.bestScore = pValue;
     }
 
     public get coins ():number {
-        return this._coins;
+        return this._profile.coins;
     }
 
     public set coins (pValue) {
+
+        pValue *= this.bonusCoins;
+
         BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, {
             coins: pValue
         }));
-        this.xp += ((pValue - this._coins) * Player.XP_BY_COIN) / this.level;
-        this._coins = pValue;
+        this.xp += ((pValue - this._profile.coins) * Player.XP_BY_COIN) / this.level;
+        this._profile.coins = pValue;
     }
 
     public get xp ():number {
-        return this._xp;
+        return this._profile.xp;
     }
 
     public set xp (pValue) {
@@ -127,20 +155,29 @@ class Player extends Character {
         BEvent.emit(new PlayerEvent(PlayerEvent.GOT_XP, {
             xp: pValue
         }));
-        this._xp = pValue;
+        this._profile.xp = pValue;
     }
 
     public get level ():number {
-        return this._level;
+        return this._profile.level;
     }
 
     public set level (pValue) {
         BEvent.emit(new PlayerEvent(PlayerEvent.GOT_LEVEL, {
             level: pValue
         }));
-        this._level = pValue;
+        this._profile.level = pValue;
     }
 
+    // BONUS
+
+    public get bonusCoins ():number {
+        return this._profile.bonusCoins;
+    }
+
+    public set bonusCoins (pValue) {
+        this._profile.bonusCoins = 1 + pValue / 100;
+    }
 
     protected initEvents () {
         BEvent.on(PlayerEvent.HAS_HIT, this.hasHit, this);
@@ -183,6 +220,7 @@ class Player extends Character {
             this.updateBestScore();
         }
     }
+
 
     private updateBestScore () {
         if (this.score > this.bestScore) {

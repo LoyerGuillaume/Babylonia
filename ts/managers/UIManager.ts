@@ -1,14 +1,15 @@
 class UIManager {
 
-    private static get HEART_SIZE()        :number { return 64 };
-    private static get SCORE_SIZE()        :number { return 40 };
-    private static get BEST_SCORE_SIZE()   :number { return 36 };
-    private static get BEST_SCORE_OFFSET() :number { return 18 };
-    private static get COINS_SIZE()        :number { return 40 };
-    private static get COINS_OFFSET()      :number { return 30 };
-    private static get COINS_OFFSET_X()    :number { return 400 };
-    private static get MESSAGE_SIZE()      :number { return 20 };
-    private static get CAPACITY_OFFSET()   :number { return 250 };
+    private static get FONT()              :string { return "Montserrat"; };
+    private static get HEART_SIZE()        :number { return 64; };
+    private static get SCORE_SIZE()        :number { return 40; };
+    private static get BEST_SCORE_SIZE()   :number { return 36; };
+    private static get BEST_SCORE_OFFSET() :number { return 18; };
+    private static get COINS_SIZE()        :number { return 40; };
+    private static get COINS_OFFSET()      :number { return 30; };
+    private static get COINS_OFFSET_X()    :number { return 400; };
+    private static get MESSAGE_SIZE()      :number { return 20; };
+    private static get CAPACITY_OFFSET()   :number { return 250; };
 
     private static heartTexture:BABYLON.Texture;
     private static heartScale:number;
@@ -61,20 +62,20 @@ class UIManager {
         var textScore:BABYLON.Text2D = new BABYLON.Text2D('Score : ', {
             id      : 'textScore',
             parent  : UIManager.hudContainer,
-            fontName: UIManager.SCORE_SIZE + "pt Arial"
+            fontName: UIManager.SCORE_SIZE + "pt " + UIManager.FONT
         });
 
         UIManager.score = new BABYLON.Text2D('0', {
             id      : 'score',
             parent  : UIManager.hudContainer,
-            fontName: UIManager.SCORE_SIZE + "pt Arial",
+            fontName: UIManager.SCORE_SIZE + "pt " + UIManager.FONT,
             x: textScore.width
         });
 
         UIManager.bestScoreText = new BABYLON.Text2D('Best score : 0', {
             id      : 'best_score',
             parent  : UIManager.hudContainer,
-            fontName: UIManager.BEST_SCORE_SIZE + "pt Arial",
+            fontName: UIManager.BEST_SCORE_SIZE + "pt " + UIManager.FONT,
             y       : UIManager.score.height - UIManager.BEST_SCORE_OFFSET
         });
 
@@ -88,7 +89,7 @@ class UIManager {
         var text = new BABYLON.Text2D('Babycoins : ', {
             id      : 'babycoinsText',
             parent  : UIManager.babyCoins,
-            fontName: UIManager.COINS_SIZE + "pt Arial"
+            fontName: UIManager.COINS_SIZE + "pt " + UIManager.FONT
         })
 
         var group:BABYLON.Group2D = new BABYLON.Group2D({
@@ -101,8 +102,8 @@ class UIManager {
 
         UIManager.textCoins = new BABYLON.Text2D('0', {
             id      : 'textCoins',
-            parent  : group,
-            fontName: UIManager.COINS_SIZE + "pt Arial"
+            parent  : group,    //need to put text in group2D because Text2D can't scale and I can't use group babyCoins because a group can't be scaled if it's in another group
+            fontName: UIManager.COINS_SIZE + "pt " + UIManager.FONT
         })
 
 
@@ -136,34 +137,34 @@ class UIManager {
             children: [
                 new BABYLON.Text2D(pTitle, {
                     id: "SHOP_Title",
-                    fontName: "20pt Arial",
+                    fontName: "20pt " + UIManager.FONT,
                     x : 30,
                     y : 175
                 }),
-                new BABYLON.Text2D(pText, { 
+                new BABYLON.Text2D(pText, {
                     id: "SHOP_Text",
                     marginAlignment: "h: center, v:center",
-                    fontName: "12pt Arial",
+                    fontName: "12pt " + UIManager.FONT,
                     x : 0,
                     y : 10,
                 }),
                 new BABYLON.Text2D('Press '+pBuyKey+' for buy', {
                     id: "SHOP_Info",
                     marginAlignment: "h: center",
-                    fontName: "12pt Arial",
+                    fontName: "12pt " + UIManager.FONT,
                     defaultFontColor: new BABYLON.Color4(183, 183, 183, 183),
                     y : 50
                 }),
 
                 new BABYLON.Text2D('Price : ', {
                     id: "SHOP_Price",
-                    fontName: "14pt Arial",
+                    fontName: "14pt " + UIManager.FONT,
                     x : 40,
                     y : 20
                 }),
                 new BABYLON.Text2D(pPrice.toString(), {
                     id: "SHOP_PriceValue",
-                    fontName: "14pt Arial",
+                    fontName: "14pt " + UIManager.FONT,
                     defaultFontColor: new BABYLON.Color4(192, 159, 79, 1),
                     x : 100,
                     y : 20
@@ -171,13 +172,13 @@ class UIManager {
 
                 new BABYLON.Text2D('Level : ', {
                     id: "SHOP_Level",
-                    fontName: "14pt Arial",
+                    fontName: "14pt " + UIManager.FONT,
                     x : 220,
                     y : 20
                 }),
                 new BABYLON.Text2D(pLevelRequired.toString(), {
                     id: "SHOP_LevelValue",
-                    fontName: "14pt Arial",
+                    fontName: "14pt " + UIManager.FONT,
                     x : 280,
                     y : 20
                 })
@@ -190,6 +191,8 @@ class UIManager {
         UIManager.heartsContainer.y = window.innerHeight - UIManager.HEART_SIZE;
         UIManager.babyCoins.y = window.innerHeight - UIManager.COINS_OFFSET - UIManager.COINS_SIZE;
         UIManager.babyCoins.x = window.innerWidth  - UIManager.COINS_OFFSET_X;
+        UIManager.textCoins.parent.y = window.innerHeight - UIManager.COINS_OFFSET - UIManager.COINS_SIZE;
+        UIManager.textCoins.parent.x = window.innerWidth  - UIManager.COINS_OFFSET_X + UIManager.babyCoins.children[0].width    //Group2D.width equals 0 so I need to use child's width
         UIManager.placeCapacityContainer();
         if (typeof UIManager.displayTextPanel !== 'undefined') {
             UIManager.displayTextPanel.y = window.innerHeight / 2 - UIManager.displayTextPanel.height / 2;
@@ -214,7 +217,7 @@ class UIManager {
         }
         for (var i = 0; i < pAmount; i++) {
             var sprite = UIManager.heartsContainer.children.pop();
-            //UGLY but .dispose is full buggy
+            //UGLY but .dispose() is full buggy
             sprite.y = 1500;
         }
     }
@@ -265,7 +268,7 @@ class UIManager {
             UIManager.displayText = new BABYLON.Text2D(pMessage, {
                 id: 'displayedMessage',
                 parent: UIManager.displayTextPanel,
-                fontName: UIManager.MESSAGE_SIZE + "pt Arial"
+                fontName: UIManager.MESSAGE_SIZE + "pt Arial"   //can't use custom font, it brokes UICapacity texts
             });
 
             UIManager.displayText.x = UIManager.displayTextPanel.width / 2 - UIManager.displayText.width / 2;

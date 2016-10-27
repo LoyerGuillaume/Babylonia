@@ -5,12 +5,15 @@ class IceSpikes extends PlayerAttack {
 
     protected collisionRange:number = 0.8;
     protected damageDeal:number = 0.02;
+    protected malusSpeed:number = 1;
 
     private targetPosition:BABYLON.Vector3;
     private isDestroy:boolean = false;
 
     constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pPlayer) {
-        super(IceSpikes.ASSET_NAME, pScene, pPosition, pPlayer)
+        super(IceSpikes.ASSET_NAME, pScene, pPosition, pPlayer, IceSpikes._upgrade)
+
+        this.malusSpeed += IceSpikes._upgrade.malusSpeedUp;
 
         this.maxLifeTime = IceSpikes.MAX_LIFE_TIME;
     }
@@ -35,10 +38,15 @@ class IceSpikes extends PlayerAttack {
         }
     }
 
+    public static upgrade (params:IAttackUpgrade) {
+        super.upgrade(params, IceSpikes._upgrade);
+    }
+
     protected malus (pEnemy:Enemy) {
         pEnemy.setMalusSpeed(0.5);
+        var malus = this.malusSpeed;
         new Timeout(function () {
-            pEnemy.setMalusSpeed(1);
+            pEnemy.setMalusSpeed(malus);
         }, 1500);
     }
 

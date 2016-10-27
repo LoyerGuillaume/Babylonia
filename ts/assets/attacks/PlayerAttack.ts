@@ -1,7 +1,16 @@
+interface IAttackUpgrade {
+    lifeTimeUp?   : number,
+    damageUp?     : number,
+    malusSpeedUp? : number
+}
+
 class PlayerAttack extends AssetGraphic {
 
     public static list:PlayerAttack[] = [];
     private launcher:Player;
+
+    protected static life:number;
+    protected static damage:number;
 
     protected maxLifeTime:number;
     private lifeTime:number = 0;
@@ -9,12 +18,29 @@ class PlayerAttack extends AssetGraphic {
     protected collisionRange:number = 1;
     protected damageDeal:number = 1;
 
-    constructor (pAssetName:string, pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pPlayer) {
-        super(pAssetName, pScene)
+    protected static _upgrade:IAttackUpgrade = {
+        lifeTimeUp  : 0,
+        damageUp    : 0,
+        malusSpeedUp: 0
+    };
+
+    constructor (pAssetName:string, pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pPlayer, upgrade:IAttackUpgrade) {
+        super(pAssetName, pScene);
         PlayerAttack.list.push(this);
+
+        this.maxLifeTime += upgrade.lifeTimeUp;
+        this.damageDeal  += upgrade.damageUp;
 
         this.launcher = pPlayer;
         this.position = pPosition.clone();
+    }
+
+
+    public static upgrade (params:IAttackUpgrade, classUpgrade:IAttackUpgrade) {
+        for (var index in params) {
+            params[index] = params[index] || 0;
+            classUpgrade[index] += params[index];
+        }
     }
 
 

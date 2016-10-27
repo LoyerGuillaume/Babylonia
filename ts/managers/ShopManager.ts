@@ -15,12 +15,20 @@ class ShopManager {
 
     private static get ITEM_POOL():ItemsDictionnary { return {
         'eternalHeart' : {
-            quantity     : 3,
+            quantity     : 2,
             assetName    : ShopManager.ASSET_NAME.HEALTH,
-            cost         : 1,
+            cost         : 5,
             bonusCallback: ShopManager.addHealth,
             title        : 'Coeur éternel',
             description  : 'Gagnes un coeur permanent'
+        },
+        'boostBabyBoule' : {
+            quantity     : 1,
+            assetName    : ShopManager.ASSET_NAME.BONUS3,
+            cost         : 20,
+            bonusCallback: ShopManager.addHealth,
+            title        : 'Upgrade Babyboule',
+            description  : 'Augmente la puissance de tes\nBabyBoules !!!'
         }
     }; };
 

@@ -212,7 +212,6 @@ class Player extends Character {
             amount: pValue
         }))
         this._profile.upgradeLife += pValue;
-        console.log(this._profile.upgradeLife);
     }
 
     // BONUS

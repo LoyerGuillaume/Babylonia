@@ -31,9 +31,11 @@ class ShopManager {
 
     }
 
-    public static bonusCallback(pItemShop:ItemShop) :any {
-
+    public static bonusCallback(pPlayer:Player, pItemShop:ItemShop) :void {
         ShopManager.removeToItemList(pItemShop);
+
+        pPlayer.lostCoin(pItemShop.costCoin);
+        pItemShop.destroy();
 
         setTimeout(function () {
             ShopManager.popAllItem();
@@ -42,8 +44,16 @@ class ShopManager {
 
     }
 
+    public static enoughtMoney(pPlayer:Player, pItemShop:ItemShop):boolean {
+        return pItemShop.costCoin <= pPlayer.coins;
+    }
+
     public static addHealth (pPlayer:Player, pItemShop:ItemShop):void {
-        ShopManager.bonusCallback(pItemShop);
+        if (!ShopManager.enoughtMoney(pPlayer, pItemShop)) {
+            return;
+        }
+
+        ShopManager.bonusCallback(pPlayer, pItemShop);
         pPlayer.upgradeLife = 1;
         console.log('addHealth');
 

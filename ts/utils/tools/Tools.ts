@@ -26,7 +26,7 @@ class Tools {
 
         var s = BABYLON.Mesh.CreateSphere("__ellipsoid__", 8, 1, scene);
         s.scaling = elem.ellipsoid.clone();
-        s.scaling.y *= 4;
+        s.scaling.y *= 4; 
         s.scaling.x *= 2;
         s.scaling.z *= 2;
         s.material = material;

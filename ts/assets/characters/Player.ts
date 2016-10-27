@@ -4,11 +4,23 @@ interface IPlayerProfile {
     bestScore   ?:number;
     xp          ?:number;
     level       ?:number;
+    upgradeLife ?:number;
 
     /**
      * percentage ex : 10 for 10%
      */
     bonusCoins  ?:number;
+
+    /**
+     * in ms
+     */
+    bonusCoinsTime  ?:number;
+
+    /**
+     * reset when the player die
+     */
+    bonusLife       ?:number;
+
 }
 
 class Player extends Character {
@@ -30,6 +42,8 @@ class Player extends Character {
     private _profile:IPlayerProfile;
 
     private iceWalkingCount:number = 0;
+
+    private bonusCoinsTimeout:Timeout;
 
     private attacks:{} = {
         attack: {
@@ -83,15 +97,19 @@ class Player extends Character {
     public set profile (pValue:IPlayerProfile) {
 
         pValue              = pValue || {};
-        this._profile       = {};
+        this._profile       = pValue;
 
         this.score          = 0;
         this.bestScore      = pValue.bestScore  || 0;
-        this.coins          = pValue.coins      || 0;
-        this.xp             = pValue.xp         || 0;
         this.level          = pValue.level      || 0;
+        this.xp             = pValue.xp         || 0;
+        this.upgradeLife    = pValue.bonusLife  || 0;
 
-        this.bonusCoins     = pValue.bonusCoins || 0;
+        this.bonusCoins     = pValue.bonusCoins     || 0;
+        this.bonusCoinsTime = pValue.bonusCoinsTime || 0;
+        this.bonusLife      = 0;
+
+        this.coins          = pValue.coins      || 0;
     }
 
     /**
@@ -127,12 +145,13 @@ class Player extends Character {
     }
 
     public get coins ():number {
-        return this._profile.coins;
+        return Math.floor(this._profile.coins);
     }
 
     public set coins (pValue) {
 
         pValue *= this.bonusCoins;
+        pValue = Math.floor(pValue);
 
         BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, {
             coins: pValue
@@ -169,6 +188,15 @@ class Player extends Character {
         this._profile.level = pValue;
     }
 
+    public get upgradeLife ():number {
+        return this._profile.upgradeLife;
+    }
+
+    public set upgradeLife (pValue) {
+        this.lifePoint += pValue;
+        this._profile.upgradeLife = pValue;
+    }
+
     // BONUS
 
     public get bonusCoins ():number {
@@ -177,6 +205,39 @@ class Player extends Character {
 
     public set bonusCoins (pValue) {
         this._profile.bonusCoins = 1 + pValue / 100;
+    }
+
+    public get bonusCoinsTime ():number {
+        return this._profile.bonusCoinsTime;
+    }
+
+    public set bonusCoinsTime (pValue) {
+
+        if (this.bonusCoinsTimeout) {
+            this.bonusCoinsTimeout.destroy();
+            this.bonusCoinsTimeout = undefined;
+        }
+
+        this._profile.bonusCoinsTime = pValue;
+
+        if (pValue > 0) {
+            this.bonusCoinsTimeout = new Timeout(this.resetBonusCoins.bind(this), this._profile.bonusCoinsTime);
+        }
+    }
+
+    public get bonusLife ():number {
+        return this._profile.bonusLife;
+    }
+
+    public set bonusLife (pValue) {
+        this.lifePoint += pValue;
+        this._profile.bonusLife = pValue;
+    }
+
+    // PRIVATE IMPLEMENTATION
+
+    private resetBonusCoins () {
+        this.bonusCoins = 0;
     }
 
     protected initEvents () {
@@ -343,12 +404,11 @@ class Player extends Character {
         for (var i in Enemy.list) {
             if (Tools.minusVector3(this.position, Enemy.list[i].position).length() < 0.5) {
                 BEvent.emit(new PlayerEvent(PlayerEvent.HIT));
-                super.onHit();
+                this.onHit();
                 return;
             }
         }
     }
-
 
     private checkCoinCollision () {
         for (var i in Coin.list) {

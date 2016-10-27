@@ -245,7 +245,7 @@ class UIManager {
     private static updateCoins (pPlayerEventParams:any) {
         UIManager.textCoins.text = pPlayerEventParams.coins.toString(10);
         UIManager.textCoins.parent.scale = 1;
-        Tools.bump({
+        Tools.bump({ 
             prim2D : UIManager.textCoins.parent,
             scale  : 2.5
         });

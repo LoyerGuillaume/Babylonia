@@ -3,33 +3,55 @@ class ShopManager {
 
     private static PEDESTRAL_NAME: string = 'pedestral';
 
-    private itemShopList:ItemShop[];
+    public static itemShopList:ItemShop[];
+
+    public static manager:ShopManager;
 
     private pedestralPos:BABYLON.Vector3[];
     private mainScene:BABYLON.Scene;
 
     constructor (pScene:BABYLON.Scene, pLevelManager:LevelManager) {
+        ShopManager.manager = this;
         this.mainScene = pScene;
 
         this.initPositionItemShop(pLevelManager);
         this.initItemShopList();
 
-        this.popItem();
+        ShopManager.popAllItem();
+
     }
 
     private initItemShopList ():void {
-        this.itemShopList = [];
+        ShopManager.itemShopList = [];
 
-        this.itemShopList[0] = new ItemShop(this.mainScene, 'Bottle_Health', 10, this.addHealth);
-        this.itemShopList[1] = new ItemShop(this.mainScene, 'Bottle_Health', 10, this.addHealth);
-        this.itemShopList[2] = new ItemShop(this.mainScene, 'Bottle_Health', 10, this.addHealth);
+        ShopManager.itemShopList[0] = new ItemShop(this.mainScene, 'Bottle_Health', 10, ShopManager.addHealth);
+        ShopManager.itemShopList[1] = new ItemShop(this.mainScene, 'Bottle_Health', 10, ShopManager.addHealth);
+        ShopManager.itemShopList[2] = new ItemShop(this.mainScene, 'Bottle_Health', 10, ShopManager.addHealth);
+        ShopManager.itemShopList[3] = new ItemShop(this.mainScene, 'Bottle_Mana', 10, ShopManager.addHealth);
 
     }
 
-    private addHealth (pPlayer:Player):void {
+    public static bonusCallback(pItemShop:ItemShop) :any {
+
+        ShopManager.removeToItemList(pItemShop);
+
+        setTimeout(function () {
+            ShopManager.popAllItem();
+
+        }, 1000);
+
+    }
+
+    public static addHealth (pPlayer:Player, pItemShop:ItemShop):void {
+        ShopManager.bonusCallback(pItemShop);
+        pPlayer.upgradeLife = 1;
         console.log('addHealth');
+
     }
 
+    public static removeToItemList (pItemShop:ItemShop) :void {
+        ShopManager.itemShopList.splice(ShopManager.itemShopList.indexOf(pItemShop), 1);
+    }
 
 
     private initPositionItemShop (pLevelManager:LevelManager) {
@@ -42,14 +64,34 @@ class ShopManager {
         console.log(this.pedestralPos);
     }
 
-    private popItem () {
+    public static popAllItem () {
+        ShopManager.depopAllItem();
+        ShopManager.popItem(0);
+        ShopManager.popItem(1);
+        ShopManager.popItem(2);
+    }
+
+    public static popItem (pIndex:number) :void {
         var addPosition:BABYLON.Vector3 = new BABYLON.Vector3(0, 1, 0);
-        this.itemShopList[0].setPosition(this.pedestralPos[0].clone().add(addPosition));
-        this.itemShopList[0].start();
-        this.itemShopList[1].setPosition(this.pedestralPos[1].clone().add(addPosition));
-        this.itemShopList[1].start();
-        this.itemShopList[2].setPosition(this.pedestralPos[2].clone().add(addPosition));
-        this.itemShopList[2].start();
+        if (ShopManager.itemShopList[pIndex]) {
+            ShopManager.itemShopList[pIndex].setPosition(ShopManager.manager.pedestralPos[pIndex].clone().add(addPosition));
+            ShopManager.itemShopList[pIndex].start();
+        }
+
+    }
+
+
+    public static depopAllItem () :void {
+        ShopManager.depopItem(0);
+        ShopManager.depopItem(1);
+        ShopManager.depopItem(2);
+    }
+
+
+    public static depopItem (pIndex:number) :void {
+        if (ShopManager.itemShopList[pIndex]) {
+            ShopManager.itemShopList[pIndex].enable(false);
+        }
     }
 
 }

@@ -55,6 +55,7 @@ class EnemyManager {
         this.canceled = true;
         this.reset();
         this.enemyStack = [];
+        this.isStackPlaying = false;
     }
 
     public waveExists (pWaveName:string|number): boolean {

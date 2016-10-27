@@ -1,7 +1,30 @@
+interface ItemsDictionnary {
+    [name: string]: ItemProperties;
+}
+
+interface ItemProperties {
+    assetName:string,
+    cost:number,
+    title:string,
+    description:string,
+    bonusCallback:any,
+    quantity:number
+}
+
 class ShopManager {
 
+    private static get ITEM_POOL():ItemsDictionnary { return {
+        'eternalHeart' : {
+            quantity     : 3,
+            assetName    : ShopManager.ASSET_NAME.HEALTH,
+            cost         : 1,
+            bonusCallback: ShopManager.addHealth,
+            title        : 'Coeur éternel',
+            description  : 'Gagnes un coeur permanent'
+        }
+    }; };
 
-    private static PEDESTRAL_NAME: string = 'pedestral';
+    private static get PEDESTRAL_NAME():string { return 'pedestral'; };
 
     private static ASSET_NAME: any = {
         HEALTH: 'Bottle_Health',
@@ -30,18 +53,17 @@ class ShopManager {
 
     private initItemShopList ():void {
         ShopManager.itemShopList = [];
-        var index = 0;
 
-        this.addItemShopList(ShopManager.ASSET_NAME.HEALTH, 1, ShopManager.addHealth);
-        this.addItemShopList(ShopManager.ASSET_NAME.HEALTH, 1, ShopManager.addHealth);
-        this.addItemShopList(ShopManager.ASSET_NAME.HEALTH, 1, ShopManager.addHealth);
-        this.addItemShopList(ShopManager.ASSET_NAME.BONUS1, 1, ShopManager.addHealth);
-        this.addItemShopList(ShopManager.ASSET_NAME.BONUS2, 1, ShopManager.addHealth);
-        this.addItemShopList(ShopManager.ASSET_NAME.BONUS3, 1, ShopManager.addHealth);
+        for (var index in ShopManager.ITEM_POOL) {
+            var item:ItemProperties = ShopManager.ITEM_POOL[index];
+            for (var i = 0; i < item.quantity; i++) {
+                this.addItemShopList(item.assetName, item.cost, item.title, item.description, item.bonusCallback);
+            }
+        }
     }
 
-    private addItemShopList (pAssetName:string, pCostCoin:number, pCallback:any):void {
-        ShopManager.itemShopList[ShopManager.itemShopList.length] = new ItemShop(this.mainScene, pAssetName, pCostCoin, pCallback);
+    private addItemShopList (pAssetName:string, pCostCoin:number, pTitle:string, pDescription:string, pCallback:any):void {
+        ShopManager.itemShopList[ShopManager.itemShopList.length] = new ItemShop(this.mainScene, pAssetName, pCostCoin, pTitle, pDescription, pCallback);
     }
 
     public static bonusCallback(pPlayer:Player, pItemShop:ItemShop) :void {
@@ -68,7 +90,7 @@ class ShopManager {
 
         ShopManager.bonusCallback(pPlayer, pItemShop);
         pPlayer.upgradeLife = 1;
-        
+
         return true;
     }
 

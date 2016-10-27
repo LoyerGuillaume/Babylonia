@@ -6,6 +6,9 @@ class ItemShop extends AssetGraphic {
     private cost:number;
     private bonusCallback;
 
+    private title:string = '';
+    private description:string = '';
+
     private collisionSize:number = 1.5;
 
     private bindedFunction:any;
@@ -15,11 +18,14 @@ class ItemShop extends AssetGraphic {
         return this.cost;
     }
 
-    constructor(pScene:BABYLON.Scene, pAssetName:string, pCost:number, pCallback) {
+    constructor(pScene:BABYLON.Scene, pAssetName:string, pCost:number, pTitle:string, pDescription:string, pCallback) {
         super(pAssetName, pScene);
 
-        this.cost = pCost;
+        this.cost          = pCost;
         this.bonusCallback = pCallback;
+        this.title         = pTitle;
+        this.description   = pDescription;
+
         this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
 
         ItemShop.list.push(this);
@@ -39,9 +45,8 @@ class ItemShop extends AssetGraphic {
     protected doActionNormal (deltaTime:number) {
         if (this.checkPlayerCollision()) {
             this.doAction = this.doActionOnPlayerCollision;
-            UIManager.openShopPopin('TEST_ITEM', 'test de texte sur une description \nzigozjeifjze', this.cost);
+            UIManager.openShopPopin(this.title, this.description, this.cost);
             window.addEventListener(Keyboard.KEY_UP, this.bindedFunction);
-            // this.bonusCallback(Player.list[i], this);
         }
     }
 

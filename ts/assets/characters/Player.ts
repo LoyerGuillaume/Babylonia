@@ -45,7 +45,10 @@ class Player extends Character {
 
     private bonusCoinsTimeout:Timeout;
 
-    private arenaEntryPos:BABYLON.Vector3;
+    private arenaLimitPos:BABYLON.Vector3;
+    private arenaStartPos:BABYLON.Vector3;
+
+    private lastDoAction: (deltaTime:number) => void;
 
     private attacks:{} = {
         attack: {
@@ -78,18 +81,23 @@ class Player extends Character {
         }
     };
 
-    constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pArenaEntry:BABYLON.Vector3, pProfile:IPlayerProfile = undefined) {
+    constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pArenaLimite:BABYLON.Vector3, pArenaStart:BABYLON.Vector3, pProfile:IPlayerProfile = undefined) {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
 
         this.profile    = pProfile;
-        this.arenaEntryPos = pArenaEntry;
+        this.arenaStartPos = pArenaStart;
+        this.arenaLimitPos = pArenaLimite;
         this.controller = new ControllerKeyboard();
 
         this.initCollision();
         this.initEvents();
 
         UIManager.initCapacities(this.attacks);
+    }
+
+    public setModeNormal() {
+        this.doAction = this.doActionShop;
     }
 
     public getPlayerIndex ():number {
@@ -287,13 +295,14 @@ class Player extends Character {
         }
     }
 
+    protected doActionShop (deltaTime:number) {
+        this._doActionBase(deltaTime);
+        this.checkArenaEnter();
+    }
 
     protected doActionNormal (deltaTime:number) {
-        this.addFrameAttack();
-        this.animationMovement(deltaTime);
 
-        this.move(deltaTime);
-        this.checkAttack();
+        this._doActionBase(deltaTime);
 
         if (this.isHit) {
             super.hitFeedbackCooldown(Player.INVICIBILITY_TIME);
@@ -301,9 +310,9 @@ class Player extends Character {
             this.checkEnemyCollision();
         }
 
-        this.checkCoinCollision();
-
-        this.checkArenaEnter();
+        if (this.position.x < this.arenaLimitPos.x) {
+            this.position.x = this.arenaLimitPos.x;
+        }
     }
 
 
@@ -395,12 +404,21 @@ class Player extends Character {
         this.createKnifeHurtle(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( -(Player.ANGLE_SPECIAL_ATTACK_1 * 2) ))));
     }
 
+    private _doActionBase (deltaTime:number) {
+        this.addFrameAttack();
+        this.animationMovement(deltaTime);
+
+        this.move(deltaTime);
+        this.checkAttack();
+
+        this.checkCoinCollision();
+    }
 
     private launchIceWalking () {
         this.iceWalkingCount = 0;
+        this.lastDoAction = this.doAction;
         this.doAction = this.doActionIceWalking;
     }
-
 
     private doActionIceWalking (deltaTime:number) {
         this.doActionNormal(deltaTime);
@@ -408,10 +426,9 @@ class Player extends Character {
             this.createIce();
         }
         if (++this.iceWalkingCount >= Player.ICE_WALKING_DURATION) {
-            this.doAction = this.doActionNormal;
+            this.doAction = this.lastDoAction;
         }
     }
-
 
     private createIce () {
         var position:BABYLON.Vector3 = this.position.clone();
@@ -440,10 +457,8 @@ class Player extends Character {
 
 
     private checkArenaEnter () {
-        if (Tools.minusVector3(this.position, this.arenaEntryPos).length() < 5) {
-            console.warn('ARENA');
-            BEvent.emit(new PlayerEvent(PlayerEvent.IN_ARENA));
-            return;
+        if (Tools.minusVector3(this.position, this.arenaStartPos).length() < 5) {
+            this.onArenaEntred();
         }
     }
 
@@ -461,6 +476,12 @@ class Player extends Character {
         this.gainCoin(1);
     }
 
+    private onArenaEntred () {
+        if (this.doAction === this.doActionShop) {
+            BEvent.emit(new PlayerEvent(PlayerEvent.READY_TO_FIGHT));
+            this.doAction = this.doActionNormal;
+        }
+    }
 
     protected die () {
         BEvent.emit(new PlayerEvent(PlayerEvent.DEATH, {

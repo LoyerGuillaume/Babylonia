@@ -46,7 +46,7 @@ class GameManager {
 
         // events
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
-        BEvent.on(PlayerEvent.IN_ARENA, this.onPlayerInArena, this);
+        BEvent.on(PlayerEvent.READY_TO_FIGHT, this.onPlayerInArena, this);
         BEvent.on(EnemyManager.ON_WAVE_END, this.onEnemyWaveEnd, this);
 
         // var enemy = new EnemyOne(new BABYLON.Vector3(3, 1, 3), this.mainScene);
@@ -112,7 +112,11 @@ class GameManager {
     private initPlayer(indexPlayer, pProfile:IPlayerProfile = undefined) {
         var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();
         lPos.y += 0.6;
-        Player.list[indexPlayer] = new Player(this.mainScene, lPos, this.levelManager.getGameplayPositionUnique('GameDeclencher'), pProfile);
+
+        var lGameDeclencher = this.levelManager.getGameplayPositionUnique('GameDeclencher');
+        var lArenaLimit = this.levelManager.getGameplayPositionUnique('LimiteArena');
+
+        Player.list[indexPlayer] = new Player(this.mainScene, lPos, lArenaLimit, lGameDeclencher, pProfile);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
         BEvent.emit(new PlayerEvent(PlayerEvent.GAIN_LIFE, {

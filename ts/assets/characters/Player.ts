@@ -34,7 +34,7 @@ class Player extends Character {
     private static get INVICIBILITY_TIME()      :number { return 120;};
     private static get ANGLE_SPECIAL_ATTACK_1() :number { return 10;};
     private static get ICE_WALKING_DURATION()   :number { return 120;};
-    public static  get LIFE_POINT()             :number { return 3;};
+    public static  get LIFE_POINT()             :number { return 1;};
     public static  get XP_BY_COIN()             :number { return 0.5;};
     public static  get XP_BY_SCORE()            :number { return 10;};
     public static  get LEVEL_XP_SIZE()          :number { return 1000;};
@@ -100,10 +100,10 @@ class Player extends Character {
         this._profile       = pValue;
 
         this.score          = 0;
-        this.bestScore      = pValue.bestScore  || 0;
-        this.level          = pValue.level      || 0;
-        this.xp             = pValue.xp         || 0;
-        this.upgradeLife    = pValue.bonusLife  || 0;
+        this.bestScore      = pValue.bestScore   || 0;
+        this.level          = pValue.level       || 0;
+        this.xp             = pValue.xp          || 0;
+        this.upgradeLife    = pValue.upgradeLife || 0;
 
         this.bonusCoins     = pValue.bonusCoins     || 0;
         this.bonusCoinsTime = pValue.bonusCoinsTime || 0;
@@ -193,8 +193,13 @@ class Player extends Character {
     }
 
     public set upgradeLife (pValue) {
+        this._profile.upgradeLife = this._profile.upgradeLife || 0;
         this.lifePoint += pValue;
-        this._profile.upgradeLife = pValue;
+        BEvent.emit(new PlayerEvent(PlayerEvent.GAIN_LIFE, {
+            amount: pValue
+        }))
+        this._profile.upgradeLife += pValue;
+        console.log(this._profile.upgradeLife);
     }
 
     // BONUS
@@ -230,8 +235,9 @@ class Player extends Character {
     }
 
     public set bonusLife (pValue) {
+        this._profile.bonusLife = this._profile.bonusLife || 0;
         this.lifePoint += pValue;
-        this._profile.bonusLife = pValue;
+        this._profile.bonusLife += pValue;
     }
 
     // PRIVATE IMPLEMENTATION

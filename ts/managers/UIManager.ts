@@ -201,17 +201,6 @@ class UIManager {
     }
 
 
-    private static addHeart () {
-        new BABYLON.Sprite2D(UIManager.heartTexture, {
-            id: 'heart' + UIManager.heartsContainer.children.length,
-            parent: UIManager.heartsContainer,
-            x: UIManager.HEART_SIZE * UIManager.heartsContainer.children.length,
-            scale: UIManager.heartScale,
-            origin: new BABYLON.Vector2(0, 0)
-        });
-    }
-
-
     public static looseLife (pAmount:number) {
         if (typeof pAmount !== 'number') {
             pAmount = 1;
@@ -223,13 +212,24 @@ class UIManager {
     }
 
 
-    public static gainLife (pAmount:number) {
-        if (typeof pAmount !== 'number') {
-            pAmount = 1;
+    private static gainLife (pPlayerEventParams:any) {
+        if (typeof pPlayerEventParams.amount !== 'number') {
+            pPlayerEventParams.amount = 1;
         }
-        for (var i = 0; i < pAmount; i++) {
+        for (var i = 0; i < pPlayerEventParams.amount; i++) {
             UIManager.addHeart();
         }
+    }
+
+
+    private static addHeart () {
+        new BABYLON.Sprite2D(UIManager.heartTexture, {
+            id: 'heart' + UIManager.heartsContainer.children.length,
+            parent: UIManager.heartsContainer,
+            x: UIManager.HEART_SIZE * UIManager.heartsContainer.children.length,
+            scale: UIManager.heartScale,
+            origin: new BABYLON.Vector2(0, 0)
+        });
     }
 
 
@@ -245,7 +245,7 @@ class UIManager {
     private static updateCoins (pPlayerEventParams:any) {
         UIManager.textCoins.text = pPlayerEventParams.coins.toString(10);
         UIManager.textCoins.parent.scale = 1;
-        Tools.bump({ 
+        Tools.bump({
             prim2D : UIManager.textCoins.parent,
             scale  : 2.5
         });

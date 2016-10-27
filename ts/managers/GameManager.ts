@@ -116,7 +116,7 @@ class GameManager {
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
         BEvent.emit(new PlayerEvent(PlayerEvent.GAIN_LIFE, {
-            amount: Player.LIFE_POINT
+            amount: Player.LIFE_POINT 
         }))
     }
 

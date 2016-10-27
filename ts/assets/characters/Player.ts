@@ -442,14 +442,14 @@ class Player extends Character {
     private checkArenaEnter () {
         if (Tools.minusVector3(this.position, this.arenaEntryPos).length() < 5) {
             console.warn('ARENA');
-            BEvent.emit(new PlayerEvent(PlayerEvent.IN_ARENA));
+            BEvent.emit(new PlayerEvent(PlayerEvent.IN_ARENA)); 
             return;
         }
     }
 
     private checkCoinCollision () {
         for (var i in Coin.list) {
-            if (Tools.minusVector3(this.position, Coin.list[i].position).length() < 0.8) {
+            if (Tools.minusVector3(this.position, Coin.list[i].position).length() < 0.95) {
                 Coin.list[i].destroy();
                 this.onCoinCollision();
             }

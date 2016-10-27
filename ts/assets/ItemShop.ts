@@ -70,9 +70,10 @@ class ItemShop extends AssetGraphic {
 
     private onKeyUp (e:KeyboardEvent) {
         if ((e.keyCode || e.which) === Keyboard.SPACE && this.playerRef) {
-            UIManager.closeShopPopin();
-            window.removeEventListener(Keyboard.KEY_UP, this.bindedFunction);
-            this.bonusCallback(this.playerRef, this);
+            if (this.bonusCallback(this.playerRef, this)) {
+                UIManager.closeShopPopin();
+                window.removeEventListener(Keyboard.KEY_UP, this.bindedFunction);
+            }
         }
     }
 

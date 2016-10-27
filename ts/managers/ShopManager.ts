@@ -61,13 +61,15 @@ class ShopManager {
         return pItemShop.costCoin <= pPlayer.coins;
     }
 
-    public static addHealth (pPlayer:Player, pItemShop:ItemShop):void {
+    public static addHealth (pPlayer:Player, pItemShop:ItemShop):boolean {
         if (!ShopManager.enoughtMoney(pPlayer, pItemShop)) {
-            return;
+            return false;
         }
 
         ShopManager.bonusCallback(pPlayer, pItemShop);
         pPlayer.upgradeLife = 1;
+        
+        return true;
     }
 
     public static removeToItemList (pItemShop:ItemShop) :void {

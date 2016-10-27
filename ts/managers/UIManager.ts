@@ -132,8 +132,8 @@ class UIManager {
             size: new BABYLON.Size(400, 230),
             backgroundFill: "#4040408F",
             backgroundRoundRadius: 10,
-            x : 400,
-            y : 300,
+            x : window.innerWidth  / 8,
+            y : window.innerHeight / 2,
             children: [
                 new BABYLON.Text2D(pTitle, {
                     id: "SHOP_Title",
@@ -185,6 +185,8 @@ class UIManager {
             ]
         });
 
+        UIManager.popinShop.y -= UIManager.popinShop.height / 2;
+
     }
 
     private static onResize () {
@@ -196,6 +198,10 @@ class UIManager {
         UIManager.placeCapacityContainer();
         if (typeof UIManager.displayTextPanel !== 'undefined') {
             UIManager.displayTextPanel.y = window.innerHeight / 2 - UIManager.displayTextPanel.height / 2;
+        }
+        if (typeof UIManager.popinShop !== 'undefined') {
+            UIManager.popinShop.x = window.innerWidth  / 8;
+            UIManager.popinShop.y = window.innerHeight / 2 - UIManager.popinShop.height / 2;
         }
     }
 

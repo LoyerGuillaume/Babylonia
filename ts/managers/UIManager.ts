@@ -112,7 +112,7 @@ class UIManager {
             y     : window.innerHeight - UIManager.HEART_SIZE
         })
 
-        BEvent.on(PlayerEvent.GOT_COIN, UIManager.updateCoins, UIManager);
+        BEvent.on(PlayerEvent.UPDATE_COIN, UIManager.updateCoins, UIManager);
         BEvent.on(PlayerEvent.HIT, UIManager.looseLife, UIManager);
         BEvent.on(PlayerEvent.GAIN_LIFE, UIManager.gainLife, UIManager);
         window.onresize = UIManager.onResize;

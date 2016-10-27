@@ -83,7 +83,6 @@ class Player extends Character {
         this.profile    = pProfile;
         this.controller = new ControllerKeyboard();
 
-        this.initAnimation();
         this.initCollision();
         this.initEvents();
 
@@ -109,7 +108,7 @@ class Player extends Character {
         this.bonusCoinsTime = pValue.bonusCoinsTime || 0;
         this.bonusLife      = 0;
 
-        this.coins          = pValue.coins      || 0;
+        this._profile.coins = pValue.coins      || 0;
     }
 
     /**
@@ -148,16 +147,30 @@ class Player extends Character {
         return Math.floor(this._profile.coins);
     }
 
-    public set coins (pValue) {
+    public gainCoin (pValue) {
 
         pValue *= this.bonusCoins;
         pValue = Math.floor(pValue);
 
-        BEvent.emit(new PlayerEvent(PlayerEvent.GOT_COIN, {
-            coins: pValue
-        }));
         this.xp += ((pValue - this._profile.coins) * Player.XP_BY_COIN) / this.level;
-        this._profile.coins = pValue;
+        this._profile.coins += pValue;
+
+        BEvent.emit(new PlayerEvent(PlayerEvent.UPDATE_COIN, {
+            coins: this._profile.coins
+        }));
+
+    }
+
+    public lostCoin (pValue) {
+
+        pValue = Math.floor(pValue);
+
+        this._profile.coins -= pValue;
+
+        BEvent.emit(new PlayerEvent(PlayerEvent.UPDATE_COIN, {
+            coins: this._profile.coins
+        }));
+
     }
 
     public get xp ():number {
@@ -254,29 +267,6 @@ class Player extends Character {
         this.checkCollisions = true;
         this.ellipsoid = new BABYLON.Vector3(0.5, 0.5, 0.5);
         // Tools.displayEllipsoid(this.getScene(), this);
-    }
-
-
-    private initAnimation () {
-
-        //Saut 22-48
-        //run 0-21
-        //double saut 49-73
-        //Mort 74-138
-        //
-        // this.addAnimation('Run', 0, 21);
-        // this.addAnimation('Jump', 22, 48);
-        // this.addAnimation('Double Jump', 49, 73);
-        // this.addAnimation('Death', 74, 138);
-        //
-        //
-        // this.skeleton.beginAnimation('Witch_Walk');
-        // this.addAnimation('Run', 0, 1);
-        //
-        // this.runAnimationName('Run');
-
-        //IDLE 0-39
-        //Run 45-85
     }
 
 
@@ -454,7 +444,7 @@ class Player extends Character {
 
 
     private onCoinCollision ():void {
-        this.coins++;
+        this.gainCoin(1);
     }
 
 

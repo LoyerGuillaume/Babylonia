@@ -2,6 +2,8 @@ class EnemyManager {
 
     public static ON_WAVE_END: string = 'ONWAVEEND';
 
+    private canceled:boolean;
+
     /**
      * @params pScene
      * @params pPositions
@@ -15,6 +17,7 @@ class EnemyManager {
         this.levelManager = pLevelManager;
 
         this.currentWaveNumber = 0;
+        this.canceled = false;
 
         this.enemyStack = [];
         this.isStackPlaying = false;
@@ -46,6 +49,12 @@ class EnemyManager {
         } else {
             console.warn('The wave named "'+pWaveName+'" does not exists.');
         }
+    }
+
+    public clearCurrentWave () {
+        this.canceled = true;
+        this.reset();
+        this.enemyStack = [];
     }
 
     public waveExists (pWaveName:string|number): boolean {
@@ -84,6 +93,8 @@ class EnemyManager {
     private enemyConstructors: {};
 
     private _startWave (pWaveName:string|number) {
+
+        this.canceled = false;
 
         var lSituations = this.getSituationsFromWave(this.waves[pWaveName]);
 
@@ -143,6 +154,8 @@ class EnemyManager {
 
     private playCurrentStack () {
 
+        if (this.canceled) return;
+
         if (this.enemyStack[0]) {
             this.isStackPlaying = true;
             this.playStackStep( this.enemyStack.shift() );
@@ -177,6 +190,9 @@ class EnemyManager {
     }
 
     private onEnemiesDead (pEvent:EnemyEvent = null) {
+
+        if (this.canceled) return;
+
         if (!this.enemyStack[0]) {
             this.reset();
             BEvent.emit(new BEvent(EnemyManager.ON_WAVE_END));

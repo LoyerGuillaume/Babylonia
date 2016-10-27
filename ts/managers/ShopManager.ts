@@ -102,22 +102,43 @@ class ShopManager {
     private initPositionItemShop (pLevelManager:LevelManager) {
         this.pedestralPos = [];
         for (var i = 1; i <= 3; i++) {
-            console.log(pLevelManager.getGameplayObjectUnique(ShopManager.PEDESTRAL_NAME + '0' + i));
             this.pedestralPos.push(pLevelManager.getGameplayObjectUnique(ShopManager.PEDESTRAL_NAME + '0' + i).mesh.position.clone());
         }
     }
 
-    public static popAllItem () {
-        ShopManager.depopAllItem();
-        ShopManager.popItem(0);
-        ShopManager.popItem(1);
-        ShopManager.popItem(2);
+
+    public static get3RandomIndexInListItem () :number[] {
+        var numberList:number[] = [];
+
+        var indexList:number[] = [];
+        for (var i = 0; i < ShopManager.itemShopList.length; i++) {
+            indexList.push(i);
+        }
+
+        Tools.shuffleArray(indexList);
+
+        var indexMax = Math.min(indexList.length, 3);
+        for (var j = 0; j < indexMax; j++) {
+            numberList.push(indexList.shift());
+        }
+
+        return numberList;
     }
 
-    public static popItem (pIndex:number) :void {
+
+    public static popAllItem () {
+        ShopManager.depopAllItem();
+        var indexList:number[] = ShopManager.get3RandomIndexInListItem();
+
+        for (var i = 0; i < indexList.length; i++) {
+            ShopManager.popItem(indexList[i], i);
+        }
+    }
+
+    public static popItem (pIndex:number, pPos:number) :void {
         var addPosition:BABYLON.Vector3 = new BABYLON.Vector3(0, 1, 0);
         if (ShopManager.itemShopList[pIndex]) {
-            ShopManager.itemShopList[pIndex].setPosition(ShopManager.manager.pedestralPos[pIndex].clone().add(addPosition));
+            ShopManager.itemShopList[pIndex].setPosition(ShopManager.manager.pedestralPos[pPos].clone().add(addPosition));
             ShopManager.itemShopList[pIndex].start();
         }
 
@@ -125,9 +146,9 @@ class ShopManager {
 
 
     public static depopAllItem () :void {
-        ShopManager.depopItem(0);
-        ShopManager.depopItem(1);
-        ShopManager.depopItem(2);
+        for (var i = 0; i < 3; i++) {
+            ShopManager.depopItem(i);
+        }
     }
 
 

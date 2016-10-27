@@ -6,6 +6,10 @@ class ItemShop extends AssetGraphic {
     private cost:number;
     private bonusCallback;
 
+    public get costCoin():number {
+        return this.cost;
+    }
+
     constructor(pScene:BABYLON.Scene, pAssetName:string, pCost:number, pCallback) {
         super(pAssetName, pScene);
 
@@ -34,8 +38,6 @@ class ItemShop extends AssetGraphic {
         for (var i in Player.list) {
             if (Tools.minusVector3(this.position, Player.list[i].position).length() < 0.8) {
                 this.bonusCallback(Player.list[i], this);
-
-                this.destroy();
                 return;
             }
         }

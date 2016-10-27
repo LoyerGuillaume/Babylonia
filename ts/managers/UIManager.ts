@@ -1,10 +1,9 @@
 class UIManager {
 
-    private static get FONT()              :string { return "Montserrat"; };
+    private static get FONT()              :string { return "Montserrat"; };    //Font isn't working anymore
     private static get HEART_SIZE()        :number { return 64; };
     private static get SCORE_SIZE()        :number { return 40; };
     private static get BEST_SCORE_SIZE()   :number { return 36; };
-    private static get BEST_SCORE_OFFSET() :number { return 18; };
     private static get COINS_SIZE()        :number { return 40; };
     private static get COINS_OFFSET()      :number { return 30; };
     private static get COINS_OFFSET_X()    :number { return 450; };
@@ -76,7 +75,7 @@ class UIManager {
             id      : 'best_score',
             parent  : UIManager.hudContainer,
             fontName: UIManager.BEST_SCORE_SIZE + "pt " + UIManager.FONT,
-            y       : UIManager.score.height - UIManager.BEST_SCORE_OFFSET
+            y       : UIManager.score.height
         });
 
         UIManager.babyCoins = new BABYLON.Group2D({
@@ -113,7 +112,7 @@ class UIManager {
             y     : window.innerHeight - UIManager.HEART_SIZE
         })
 
-        BEvent.on(PlayerEvent.GOT_COIN, UIManager.updateCoins, UIManager);
+        BEvent.on(PlayerEvent.UPDATE_COIN, UIManager.updateCoins, UIManager);
         BEvent.on(PlayerEvent.HIT, UIManager.looseLife, UIManager);
         BEvent.on(PlayerEvent.GAIN_LIFE, UIManager.gainLife, UIManager);
         window.onresize = UIManager.onResize;

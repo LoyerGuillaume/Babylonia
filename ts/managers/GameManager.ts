@@ -107,6 +107,7 @@ class GameManager {
     private onGameOver () {
         this.enemyManager.clearCurrentWave();
         this.destroyAllEnemies();
+        this.moveBridge(true);
     }
 
 
@@ -121,7 +122,7 @@ class GameManager {
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
         BEvent.emit(new PlayerEvent(PlayerEvent.GAIN_LIFE, {
-            amount: Player.LIFE_POINT 
+            amount: Player.LIFE_POINT
         }))
     }
 
@@ -129,6 +130,24 @@ class GameManager {
         // start game
         this.currentWaveNumber = 1;
         this.enemyManager.startWave(this.currentWaveNumber);
+
+        this.moveBridge(false);
+    }
+
+    private bridgePosInit;
+    private moveBridge (pWalkable:boolean) {
+
+        var lBridge = this.levelManager.getGameplayObjectUnique('Bridge');
+
+        if (!this.bridgePosInit) {
+            this.bridgePosInit = lBridge.mesh.position.clone();
+        }
+
+        if (pWalkable) {
+            lBridge.mesh.position.x = this.bridgePosInit.x;
+        } else {
+            lBridge.mesh.position.x = this.bridgePosInit.x - 3;
+        }
     }
 
     private checkController() {

@@ -7,7 +7,7 @@ class UIManager {
     private static get BEST_SCORE_OFFSET() :number { return 18; };
     private static get COINS_SIZE()        :number { return 40; };
     private static get COINS_OFFSET()      :number { return 30; };
-    private static get COINS_OFFSET_X()    :number { return 400; };
+    private static get COINS_OFFSET_X()    :number { return 450; };
     private static get MESSAGE_SIZE()      :number { return 20; };
     private static get CAPACITY_OFFSET()   :number { return 250; };
 
@@ -218,8 +218,7 @@ class UIManager {
         }
         for (var i = 0; i < pAmount; i++) {
             var sprite = UIManager.heartsContainer.children.pop();
-            //UGLY but .dispose() is full buggy
-            sprite.y = 1500;
+            sprite.y = 1500;    //UGLY but .dispose() is full buggy
         }
     }
 

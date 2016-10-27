@@ -304,12 +304,6 @@ class Player extends Character {
 
         this._doActionBase(deltaTime);
 
-        if (this.isHit) {
-            super.hitFeedbackCooldown(Player.INVICIBILITY_TIME);
-        } else {
-            this.checkEnemyCollision();
-        }
-
         if (this.position.x < this.arenaLimitPos.x) {
             this.position.x = this.arenaLimitPos.x;
         }
@@ -410,6 +404,12 @@ class Player extends Character {
 
         this.move(deltaTime);
         this.checkAttack();
+
+        if (this.isHit) {
+            super.hitFeedbackCooldown(Player.INVICIBILITY_TIME);
+        } else {
+            this.checkEnemyCollision();
+        }
 
         this.checkCoinCollision();
     }

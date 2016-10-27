@@ -105,6 +105,7 @@ class GameManager {
     }
 
     private onGameOver () {
+        this.enemyManager.clearCurrentWave();
         this.destroyAllEnemies();
     }
 

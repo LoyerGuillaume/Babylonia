@@ -12,6 +12,8 @@ class PlayerEvent extends BEvent {
     public static GOT_XP         :string = 'GOT_XP';
     public static GOT_LEVEL      :string = 'GOT_LEVEL';
 
+    public static IN_ARENA      :string = 'IN_ARENA';
+
     constructor(pEventName:string, pParams:any = undefined) {
         super(pEventName, pParams);
     }

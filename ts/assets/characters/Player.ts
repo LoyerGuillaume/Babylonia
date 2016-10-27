@@ -45,6 +45,8 @@ class Player extends Character {
 
     private bonusCoinsTimeout:Timeout;
 
+    private arenaEntryPos:BABYLON.Vector3;
+
     private attacks:{} = {
         attack: {
             name            : 'BabyBoule',
@@ -76,11 +78,12 @@ class Player extends Character {
         }
     };
 
-    constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pProfile:IPlayerProfile = undefined) {
+    constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pArenaEntry:BABYLON.Vector3, pProfile:IPlayerProfile = undefined) {
         super(pScene, Player.ASSET_NAME, pPosition, Player.LIFE_POINT);
         Player.list.push(this);
 
         this.profile    = pProfile;
+        this.arenaEntryPos = pArenaEntry;
         this.controller = new ControllerKeyboard();
 
         this.initAnimation();
@@ -310,6 +313,8 @@ class Player extends Character {
         }
 
         this.checkCoinCollision();
+
+        this.checkArenaEnter();
     }
 
 
@@ -441,6 +446,15 @@ class Player extends Character {
                 this.onHit();
                 return;
             }
+        }
+    }
+
+
+    private checkArenaEnter () {
+        if (Tools.minusVector3(this.position, this.arenaEntryPos).length() < 5) {
+            console.warn('ARENA');
+            BEvent.emit(new PlayerEvent(PlayerEvent.IN_ARENA));
+            return;
         }
     }
 

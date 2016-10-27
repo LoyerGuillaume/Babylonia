@@ -39,19 +39,15 @@ class GameManager {
         this.lightManager = new LightManager(this.mainScene);
 
         this.shopManager = new ShopManager(this.mainScene, this.levelManager);
-console.info('p b');
+
         this.initPlayer(0);
-console.info('p a');
 
         this.initEnemyManager();
 
         // events
         BEvent.on(PlayerEvent.DEATH, this.onPlayerDeath, this);
+        BEvent.on(PlayerEvent.IN_ARENA, this.onPlayerInArena, this);
         BEvent.on(EnemyManager.ON_WAVE_END, this.onEnemyWaveEnd, this);
-
-        // start game
-        this.currentWaveNumber = 1;
-        this.enemyManager.startWave(this.currentWaveNumber);
 
         // var enemy = new EnemyOne(new BABYLON.Vector3(3, 1, 3), this.mainScene);
         // enemy.start();
@@ -116,12 +112,18 @@ console.info('p a');
     private initPlayer(indexPlayer, pProfile:IPlayerProfile = undefined) {
         var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();
         lPos.y += 0.6;
-        Player.list[indexPlayer] = new Player(this.mainScene, lPos, pProfile);
+        Player.list[indexPlayer] = new Player(this.mainScene, lPos, this.levelManager.getGameplayPositionUnique('GameDeclencher'), pProfile);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
         BEvent.emit(new PlayerEvent(PlayerEvent.GAIN_LIFE, {
             amount: Player.LIFE_POINT
         }))
+    }
+
+    private onPlayerInArena (pPlayerEvent:any) {
+        // start game
+        this.currentWaveNumber = 1;
+        this.enemyManager.startWave(this.currentWaveNumber);
     }
 
     private checkController() {

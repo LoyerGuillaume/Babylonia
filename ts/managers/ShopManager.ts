@@ -19,7 +19,7 @@ class ShopManager {
             assetName    : ShopManager.ASSET_NAME.HEALTH,
             cost         : 5,
             bonusCallback: ShopManager.addHealth,
-            title        : 'Coeur éternel',
+            title        : 'BabyCoeur',
             description  : 'Gagnes un coeur permanent'
         },
         'boostBabyBoule' : {

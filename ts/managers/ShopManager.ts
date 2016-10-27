@@ -45,8 +45,6 @@ class ShopManager {
     public static addHealth (pPlayer:Player, pItemShop:ItemShop):void {
         ShopManager.bonusCallback(pItemShop);
         pPlayer.upgradeLife = 1;
-        console.log('addHealth');
-
     }
 
     public static removeToItemList (pItemShop:ItemShop) :void {
@@ -60,8 +58,6 @@ class ShopManager {
             console.log(pLevelManager.getGameplayObjectUnique(ShopManager.PEDESTRAL_NAME + '0' + i));
             this.pedestralPos.push(pLevelManager.getGameplayObjectUnique(ShopManager.PEDESTRAL_NAME + '0' + i).mesh.position.clone());
         }
-
-        console.log(this.pedestralPos);
     }
 
     public static popAllItem () {

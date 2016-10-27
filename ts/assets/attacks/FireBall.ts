@@ -1,44 +1,25 @@
-class FireBall extends PlayerAttack {
+class FireBall extends Ball {
 
-    private static get SPEED()               :number { return 0.25;};
-    private static get MAX_LIFE_TIME()       :number { return 120;};
     private static get RATIO_SCALE_PARTICLE():number { return 0.15;};
 
-    private direction:BABYLON.Vector3;
     private fireParticleSystem:BABYLON.ParticleSystem;
     private smokeParticleSystem:BABYLON.ParticleSystem;
 
-    protected collisionRange:number = 1;
-    protected damageDeal:number = 1;
-
-
     constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion, pPlayer) {
-        super('', pScene, pPosition, pPlayer);
+        super('', pScene, pPosition, pRotation, pPlayer);
 
-        this.rotationQuaternion = pRotation;
-        this.addOffset();
-        this.maxLifeTime = FireBall.MAX_LIFE_TIME;
+        this.maxLifeTime = 60;
+        this.speed       = 0.25;
 
         this.meshe.isVisible = false;
         this.initParticlesSystem();
     }
-
-
-    private addOffset ():void {
-        this.computeWorldMatrix(true);
-        var movement  = BABYLON.Vector3.TransformCoordinates(new BABYLON.Vector3(0, 0.2, -1), this.getWorldMatrix());
-
-        movement.subtractInPlace(this.position).normalize();
-        this.position = new BABYLON.Vector3(this.position.x + movement.x, this.position.y + movement.y, this.position.z + movement.z);
-    }
-
 
     private initParticlesSystem ():void {
         var scene:BABYLON.Scene = this.getScene();
         this.initFireParticle(scene);
         this.initSmokeParticle(scene);
     }
-
 
     private initFireParticle (pScene:BABYLON.Scene):void {
         this.fireParticleSystem                 = new BABYLON.ParticleSystem('particleSystem', 1500, pScene);
@@ -112,22 +93,6 @@ class FireBall extends PlayerAttack {
         this.smokeParticleSystem.updateSpeed  = 0.060;
 
         this.smokeParticleSystem.start();
-    }
-
-
-    protected doActionNormal () {
-        super.doActionNormal();
-        this.move();
-    }
-
-
-    private move() {
-        var v         = new BABYLON.Vector3(0, 0, -1);
-        this.computeWorldMatrix(true);
-        var m         = this.getWorldMatrix();
-        var movement  = BABYLON.Vector3.TransformCoordinates(v, m);
-        movement.subtractInPlace(this.position).normalize().scaleInPlace(FireBall.SPEED);
-        this.position = new BABYLON.Vector3(this.position.x + movement.x, this.position.y + movement.y, this.position.z + movement.z);
     }
 
 }

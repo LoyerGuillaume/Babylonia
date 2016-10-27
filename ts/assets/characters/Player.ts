@@ -360,17 +360,45 @@ class Player extends Character {
         fireBall.start();
     }
 
+    private createKnifeHurtle (pRotationQuaternion:BABYLON.Quaternion) {
+        var knifeHurtle = new KnifeHurtle(this.getScene(), this.position, pRotationQuaternion, this);
+        knifeHurtle.start();
+    }
 
+    /**
+     * Attack SIMPLE
+     */
     private shotOneFireBall () {
         this.createFireBall(this.rotationQuaternion);
     }
 
-
+    /**
+     * Attack SIMPLE PLUS
+     */
     private shotThreeFireBalls () {
         var rotationQuaternion:BABYLON.Quaternion = this.rotationQuaternion;
         this.createFireBall(rotationQuaternion);
         this.createFireBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( Player.ANGLE_SPECIAL_ATTACK_1))));
         this.createFireBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(-Player.ANGLE_SPECIAL_ATTACK_1))));
+    }
+
+    /**
+     * Attack SIMPLE
+     */
+    private shotOneKnifeHurtle () {
+        this.createKnifeHurtle(this.rotationQuaternion);
+    }
+
+    /**
+     * Attack SIMPLE PLUS
+     */
+    private shotThreeKnifeHurtles () {
+        var rotationQuaternion:BABYLON.Quaternion = this.rotationQuaternion;
+        this.createKnifeHurtle(rotationQuaternion);
+        this.createKnifeHurtle(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(  Player.ANGLE_SPECIAL_ATTACK_1       ))));
+        this.createKnifeHurtle(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( -Player.ANGLE_SPECIAL_ATTACK_1       ))));
+        this.createKnifeHurtle(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(  Player.ANGLE_SPECIAL_ATTACK_1 * 2   ))));
+        this.createKnifeHurtle(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( -(Player.ANGLE_SPECIAL_ATTACK_1 * 2) ))));
     }
 
 

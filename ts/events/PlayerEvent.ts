@@ -11,8 +11,8 @@ class PlayerEvent extends BEvent {
     public static UPDATE_COIN    :string = 'UPDATE_COIN';
     public static GOT_XP         :string = 'GOT_XP';
     public static GOT_LEVEL      :string = 'GOT_LEVEL';
- 
-    public static IN_ARENA      :string = 'IN_ARENA';
+
+    public static READY_TO_FIGHT      :string = 'READY_TO_FIGHT';
 
     constructor(pEventName:string, pParams:any = undefined) {
         super(pEventName, pParams);

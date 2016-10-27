@@ -33,7 +33,7 @@ class ItemShop extends AssetGraphic {
     private checkPlayerCollision () :void {
         for (var i in Player.list) {
             if (Tools.minusVector3(this.position, Player.list[i].position).length() < 0.8) {
-                this.bonusCallback(Player.list[i]);
+                this.bonusCallback(Player.list[i], this);
 
                 this.destroy();
                 return;

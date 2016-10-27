@@ -3,6 +3,13 @@ class ShopManager {
 
     private static PEDESTRAL_NAME: string = 'pedestral';
 
+    private static ASSET_NAME: any = {
+        HEALTH: 'Bottle_Health',
+        BONUS1: 'Bottle_Mana',
+        BONUS2: 'Bottle_Endurance',
+        BONUS3: 'BoxOfPandora'
+    };
+
     public static itemShopList:ItemShop[];
 
     public static manager:ShopManager;
@@ -23,12 +30,18 @@ class ShopManager {
 
     private initItemShopList ():void {
         ShopManager.itemShopList = [];
+        var index = 0;
 
-        ShopManager.itemShopList[0] = new ItemShop(this.mainScene, 'Bottle_Health', 10, ShopManager.addHealth);
-        ShopManager.itemShopList[1] = new ItemShop(this.mainScene, 'Bottle_Health', 10, ShopManager.addHealth);
-        ShopManager.itemShopList[2] = new ItemShop(this.mainScene, 'Bottle_Health', 10, ShopManager.addHealth);
-        ShopManager.itemShopList[3] = new ItemShop(this.mainScene, 'Bottle_Mana', 10, ShopManager.addHealth);
+        this.addItemShopList(ShopManager.ASSET_NAME.HEALTH, 1, ShopManager.addHealth);
+        this.addItemShopList(ShopManager.ASSET_NAME.HEALTH, 1, ShopManager.addHealth);
+        this.addItemShopList(ShopManager.ASSET_NAME.HEALTH, 1, ShopManager.addHealth);
+        this.addItemShopList(ShopManager.ASSET_NAME.BONUS1, 1, ShopManager.addHealth);
+        this.addItemShopList(ShopManager.ASSET_NAME.BONUS2, 1, ShopManager.addHealth);
+        this.addItemShopList(ShopManager.ASSET_NAME.BONUS3, 1, ShopManager.addHealth);
+    }
 
+    private addItemShopList (pAssetName:string, pCostCoin:number, pCallback:any):void {
+        ShopManager.itemShopList[ShopManager.itemShopList.length] = new ItemShop(this.mainScene, pAssetName, pCostCoin, pCallback);
     }
 
     public static bonusCallback(pPlayer:Player, pItemShop:ItemShop) :void {

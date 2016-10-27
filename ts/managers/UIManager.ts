@@ -7,7 +7,7 @@ class UIManager {
     private static get BEST_SCORE_OFFSET() :number { return 18; };
     private static get COINS_SIZE()        :number { return 40; };
     private static get COINS_OFFSET()      :number { return 30; };
-    private static get COINS_OFFSET_X()    :number { return 400; };
+    private static get COINS_OFFSET_X()    :number { return 450; };
     private static get MESSAGE_SIZE()      :number { return 20; };
     private static get CAPACITY_OFFSET()   :number { return 250; };
 
@@ -201,6 +201,27 @@ class UIManager {
     }
 
 
+    public static looseLife (pAmount:number) {
+        if (typeof pAmount !== 'number') {
+            pAmount = 1;
+        }
+        for (var i = 0; i < pAmount; i++) {
+            var sprite = UIManager.heartsContainer.children.pop();
+            sprite.y = 1500;    //UGLY but .dispose() is full buggy
+        }
+    }
+
+
+    private static gainLife (pPlayerEventParams:any) {
+        if (typeof pPlayerEventParams.amount !== 'number') {
+            pPlayerEventParams.amount = 1;
+        }
+        for (var i = 0; i < pPlayerEventParams.amount; i++) {
+            UIManager.addHeart();
+        }
+    }
+
+
     private static addHeart () {
         new BABYLON.Sprite2D(UIManager.heartTexture, {
             id: 'heart' + UIManager.heartsContainer.children.length,
@@ -209,28 +230,6 @@ class UIManager {
             scale: UIManager.heartScale,
             origin: new BABYLON.Vector2(0, 0)
         });
-    }
-
-
-    public static looseLife (pAmount:number) {
-        if (typeof pAmount !== 'number') {
-            pAmount = 1;
-        }
-        for (var i = 0; i < pAmount; i++) {
-            var sprite = UIManager.heartsContainer.children.pop();
-            //UGLY but .dispose() is full buggy
-            sprite.y = 1500;
-        }
-    }
-
-
-    public static gainLife (pAmount:number) {
-        if (typeof pAmount !== 'number') {
-            pAmount = 1;
-        }
-        for (var i = 0; i < pAmount; i++) {
-            UIManager.addHeart();
-        }
     }
 
 
@@ -246,7 +245,7 @@ class UIManager {
     private static updateCoins (pPlayerEventParams:any) {
         UIManager.textCoins.text = pPlayerEventParams.coins.toString(10);
         UIManager.textCoins.parent.scale = 1;
-        Tools.bump({ 
+        Tools.bump({
             prim2D : UIManager.textCoins.parent,
             scale  : 2.5
         });

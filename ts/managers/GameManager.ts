@@ -119,7 +119,9 @@ console.info('p a');
         Player.list[indexPlayer] = new Player(this.mainScene, lPos, pProfile);
         Player.list[indexPlayer].start();
         CameraManager.setTarget(Player.list[indexPlayer]);
-        UIManager.gainLife(Player.LIFE_POINT);
+        BEvent.emit(new PlayerEvent(PlayerEvent.GAIN_LIFE, {
+            amount: Player.LIFE_POINT
+        }))
     }
 
     private checkController() {

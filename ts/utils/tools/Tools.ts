@@ -26,7 +26,7 @@ class Tools {
 
         var s = BABYLON.Mesh.CreateSphere("__ellipsoid__", 8, 1, scene);
         s.scaling = elem.ellipsoid.clone();
-        s.scaling.y *= 4; 
+        s.scaling.y *= 4;
         s.scaling.x *= 2;
         s.scaling.z *= 2;
         s.material = material;
@@ -107,6 +107,13 @@ class Tools {
                 params.prim2D.scale = 1;
             }
         }, 16);
+    }
+
+    public static shuffleArray(a) {
+        for (let i = a.length; i; i--) {
+            let j = Math.floor(Math.random() * i);
+            [a[i - 1], a[j]] = [a[j], a[i - 1]];
+        }
     }
 
 

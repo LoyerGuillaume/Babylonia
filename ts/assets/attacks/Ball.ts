@@ -4,8 +4,8 @@ class Ball extends PlayerAttack {
 
     protected speed:number = 0.25;
 
-    constructor(pAssetName:string, pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion, pPlayer) {
-        super(pAssetName, pScene, pPosition, pPlayer);
+    constructor(pAssetName:string, pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion, pPlayer, upgrade:IAttackUpgrade) {
+        super(pAssetName, pScene, pPosition, pPlayer, upgrade);
 
         this.rotationQuaternion = pRotation;
         this.addOffset();

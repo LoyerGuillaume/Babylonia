@@ -8,11 +8,11 @@ class AOE extends PlayerAttack {
     protected collisionRange = 0.1;
 
     constructor (pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pPlayer) {
-        super(AOE.ASSET_NAME, pScene, pPosition, pPlayer);
+        super(AOE.ASSET_NAME, pScene, pPosition, pPlayer, AOE._upgrade);
 
         this.maxLifeTime = AOE.MAX_LIFE_TIME;
         this.meshe.isVisible = false;
-        this.initTorus(pScene);
+        this.initEffectZone(pScene);
     }
 
 
@@ -32,7 +32,12 @@ class AOE extends PlayerAttack {
     }
 
 
-    private initTorus (pScene:BABYLON.Scene) {
+    public static upgrade (params:IAttackUpgrade) {
+        super.upgrade(params, AOE._upgrade);
+    }
+
+
+    private initEffectZone (pScene:BABYLON.Scene) {
         this.cylinder = BABYLON.MeshBuilder.CreateCylinder('cylinder', {
             diameter    : 0.2,
             height      : 0.2,

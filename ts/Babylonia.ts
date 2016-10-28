@@ -80,6 +80,10 @@ class Babylonia {
 
         this.loadSounds(loader, Babylonia.SOUNDS_NAMES, this.mainScene, function () {
 
+console.info(Babylonia.soundsLoaded);
+            //Babylonia.soundsLoaded['BabyBoule'].play();
+            //Babylonia.getSoundLoaded('BabyBoule').play();
+
             self.loadUITexture(loader, Babylonia.TEXTURES_NAMES);
             self.loadUnityAssets(loader, Babylonia.ASSETS_NAME, true);
             self.loadUnityAssets(loader, Babylonia.LEVELS_NAME, false);
@@ -109,10 +113,7 @@ class Babylonia {
 
         for (var i in pSources) {
             var assetName: string = pSources[i];
-            var lSound = new BABYLON.Sound(assetName, Config.AUDIO_PATH + assetName + ".ogg", pScene, function () {
-                Babylonia.addLoadedSound(assetName, lSound);
-                onSucces();
-            });
+            Babylonia.soundsLoaded[assetName] = new BABYLON.Sound(assetName, Config.AUDIO_PATH + assetName + ".ogg", pScene, onSucces);
         }
 
         function onSucces () {

@@ -5,7 +5,7 @@ class IceSpikes extends PlayerAttack {
 
     protected collisionRange:number = 0.8;
     protected damageDeal:number = 0.02;
-    protected malusSpeed:number = 1;
+    protected malusSpeed:number = 0.75;
 
     private targetPosition:BABYLON.Vector3;
     private isDestroy:boolean = false;
@@ -43,10 +43,9 @@ class IceSpikes extends PlayerAttack {
     }
 
     protected malus (pEnemy:Enemy) {
-        pEnemy.setMalusSpeed(0.5);
-        var malus = this.malusSpeed;
+        pEnemy.setMalusSpeed(this.malusSpeed);
         new Timeout(function () {
-            pEnemy.setMalusSpeed(malus);
+            pEnemy.setMalusSpeed(1);
         }, 1500);
     }
 

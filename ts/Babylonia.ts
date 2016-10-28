@@ -32,7 +32,7 @@ class Babylonia {
         'babyboule.png',
         'babyspread.png',
         'babygel.png',
-        'babyaoe.png',
+        'babyboum.png',
     ];};
 
     private static get SOUNDS_NAMES () { return [

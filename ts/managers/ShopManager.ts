@@ -7,7 +7,7 @@ interface ItemProperties {
     cost:number,
     title:string,
     description:string,
-    bonusCallback:any,
+    effect:any,
     quantity:number
 }
 
@@ -15,20 +15,36 @@ class ShopManager {
 
     private static get ITEM_POOL():ItemsDictionnary { return {
         'eternalHeart' : {
-            quantity     : 2,
-            assetName    : ShopManager.ASSET_NAME.HEALTH,
-            cost         : 5,
-            bonusCallback: ShopManager.addHealth,
-            title        : 'BabyCoeur',
-            description  : 'Gagnes un coeur permanent'
+            quantity    : 5,
+            assetName   : ShopManager.ASSET_NAME.HEALTH,
+            cost        : 10,
+            effect      : ShopManager.addHealth,
+            title       : 'BabyCoeur',
+            description : 'Pour être moins en mousse\nGagne un coeur permanent\n(restera même après la mort)'
         },
         'boostBabyBoule' : {
-            quantity     : 1,
-            assetName    : ShopManager.ASSET_NAME.BONUS3,
-            cost         : 20,
-            bonusCallback: ShopManager.addHealth,
-            title        : 'Upgrade Babyboule',
-            description  : 'Augmente la puissance de tes\nBabyBoules !!!'
+            quantity    : 3,
+            assetName   : ShopManager.ASSET_NAME.BONUS1,
+            cost        : 20,
+            effect      : ShopManager.upgradeBabyBoule,
+            title       : 'Upgrade Babyboule',
+            description : 'Augmente la puissance de tes\nBabyBoules !!!\nAugmente les dégats'
+        },
+        'boostBabySpread' : {
+            quantity    : 3,
+            assetName   : ShopManager.ASSET_NAME.BONUS2,
+            cost        : 30,
+            effect      : ShopManager.upgradeBabySpread,
+            title       : 'Upgrade BabySpread',
+            description : 'Gotta BabySpreads \'em all !!!\nAugmente les dégats'
+        },
+        'boostBabyIce' : {
+            quantity    : 3,
+            assetName   : ShopManager.ASSET_NAME.BONUS3,
+            cost        : 40,
+            effect      : ShopManager.upgradeBabyIce,
+            title       : 'Upgrade BabyGel',
+            description : 'Babygel fixation extrême !!!\nAugmente les dégats, la durée et\nle ralentissement'
         }
     }; };
 
@@ -65,7 +81,7 @@ class ShopManager {
         for (var index in ShopManager.ITEM_POOL) {
             var item:ItemProperties = ShopManager.ITEM_POOL[index];
             for (var i = 0; i < item.quantity; i++) {
-                this.addItemShopList(item.assetName, item.cost, item.title, item.description, item.bonusCallback);
+                this.addItemShopList(item.assetName, item.cost, item.title, item.description, item.effect);
             }
         }
 
@@ -93,13 +109,60 @@ class ShopManager {
         return pItemShop.costCoin <= pPlayer.coins;
     }
 
-    public static addHealth (pPlayer:Player, pItemShop:ItemShop):boolean {
+    private static onItemEffect (pPlayer:Player, pItemShop:ItemShop):boolean {
         if (!ShopManager.enoughtMoney(pPlayer, pItemShop)) {
             return false;
         }
 
         ShopManager.bonusCallback(pPlayer, pItemShop);
+        return true;
+    }
+
+    private static addHealth (pPlayer:Player, pItemShop:ItemShop):boolean {
+        if (!ShopManager.onItemEffect(pPlayer, pItemShop)) {
+            return false;
+        }
         pPlayer.upgradeLife = 1;
+
+        return true;
+    }
+
+    private static upgradeBabyBoule (pPlayer:Player, pItemShop:ItemShop):boolean {
+        if (!ShopManager.onItemEffect(pPlayer, pItemShop)) {
+            return false;
+        }
+
+        FireBall.upgrade({
+            damageUp: 0.5,
+            lifeTimeUp: 10
+        })
+
+        return true;
+    }
+
+    private static upgradeBabySpread (pPlayer:Player, pItemShop:ItemShop):boolean {
+        if (!ShopManager.onItemEffect(pPlayer, pItemShop)) {
+            return false;
+        }
+
+        BallSpread.upgrade({
+            damageUp: 0.5,
+            lifeTimeUp: 10
+        })
+
+        return true;
+    }
+
+    private static upgradeBabyIce (pPlayer:Player, pItemShop:ItemShop):boolean {
+        if (!ShopManager.onItemEffect(pPlayer, pItemShop)) {
+            return false;
+        }
+
+        IceSpikes.upgrade({
+            damageUp: 0.01,
+            lifeTimeUp: 100,
+            malusSpeedUp: -0.2
+        })
 
         return true;
     }

@@ -53,13 +53,15 @@ class Character extends AssetGraphic {
     }
 
 
-    protected onHit (pDamage:number = 1) {
+    protected onHit (pDamage:number = 1):boolean {
         this.lifePoint -= pDamage;
         if (this.lifePoint > 0) {
             this.isHit = true;
         } else {
             this.die();
+            return true;
         }
+        return false;
     }
 
     protected die () {

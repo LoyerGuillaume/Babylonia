@@ -7,6 +7,9 @@ class CollisionBoxCreator {
     private static boxes:any = {};
 
     public static addBox (pMesh:BABYLON.Mesh) {
+
+        pMesh.convertToUnIndexedMesh();
+
         pMesh.checkCollisions = true;
         pMesh.isVisible       = CollisionBoxCreator.DEBUG_COLLISION_BOX;
 

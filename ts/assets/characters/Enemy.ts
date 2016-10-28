@@ -35,13 +35,6 @@ class Enemy extends Character {
     private initCollision () :void {
         this.checkCollisions = true;
         this.ellipsoid = new BABYLON.Vector3(0.5, 0.5, 0.5);
-        // Tools.displayEllipsoid(this.getScene(), this);
-    }
-
-
-    public setModeNormal() {
-        super.setModeNormal();
-        // this.runAnimationName('Run');
     }
 
 
@@ -105,7 +98,7 @@ class Enemy extends Character {
     protected die ():void {
         BEvent.emit(new PlayerEvent(PlayerEvent.HAS_HIT, {
             player: this.lastPlayerHitMe,
-            score: this.getScore
+            score : this.getScore
         }));
 
         this.dropCoins();

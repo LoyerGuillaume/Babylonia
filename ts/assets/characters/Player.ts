@@ -23,6 +23,21 @@ interface IPlayerProfile {
 
 }
 
+
+interface IPlayerAttack {
+    name            : string,
+    key             : string,
+    cooldown        : number,
+    attackFunction  : any,
+    countFrameAttack: number
+}
+
+
+interface PlayerAttacksDictionnary {
+    [naem:string]:IPlayerAttack
+}
+
+
 class Player extends Character {
 
     public static list:Player[] = [];
@@ -50,7 +65,7 @@ class Player extends Character {
 
     private lastDoAction: (deltaTime:number) => void;
 
-    private attacks:{} = {
+    private attacks:PlayerAttacksDictionnary = {
         attack: {
             name            : 'BabyBoule',
             key             : 'A',

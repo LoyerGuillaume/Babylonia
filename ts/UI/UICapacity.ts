@@ -3,7 +3,7 @@ class UICapacity extends BABYLON.Group2D {
     private static get WIDTH()     :number { return 150; };
     private static get PICTO_SIZE():number { return 100; };
 
-    private capacity:any;
+    private capacity:IPlayerAttack;
 
     private picto:BABYLON.Sprite2D;
 

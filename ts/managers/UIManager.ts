@@ -15,7 +15,7 @@ class UIManager {
     private static heartsContainer:BABYLON.Group2D;
 
     private static score:BABYLON.Text2D;
-    private static bestScoreText:BABYLON.Text2D; 
+    private static bestScoreText:BABYLON.Text2D;
     private static babyCoins:BABYLON.Group2D;
     private static textCoins:BABYLON.Text2D;
 
@@ -129,7 +129,7 @@ class UIManager {
         UIManager.closeShopPopin();
         UIManager.popinShop = new BABYLON.ScreenSpaceCanvas2D(UIManager.scene, {
             id: "PopinShopCanvas",
-            size: new BABYLON.Size(400, 230),
+            size: new BABYLON.Size(600, 370),
             backgroundFill: "#4040408F",
             backgroundRoundRadius: 10,
             x : window.innerWidth  / 8,
@@ -138,46 +138,46 @@ class UIManager {
                 new BABYLON.Text2D(pTitle, {
                     id: "SHOP_Title",
                     marginAlignment: "h: center",
-                    fontName: "20pt " + UIManager.FONT,
-                    y : 175
+                    fontName: "28pt " + UIManager.FONT,
+                    y : 300
                 }),
                 new BABYLON.Text2D(pText, {
                     id: "SHOP_Text",
                     marginAlignment: "h: center, v:center",
-                    fontName: "12pt " + UIManager.FONT,
+                    fontName: "18pt " + UIManager.FONT,
                 }),
                 new BABYLON.Text2D(pBuyKey + ' pour acheter', {
                     id: "SHOP_Info",
                     marginAlignment: "h: center",
-                    fontName: "12pt " + UIManager.FONT,
+                    fontName: "18pt " + UIManager.FONT,
                     defaultFontColor: new BABYLON.Color4(183, 183, 183, 183),
-                    y : 50
+                    y : 85
                 }),
 
                 new BABYLON.Text2D('Prix : ', {
                     id: "SHOP_Price",
-                    fontName: "14pt " + UIManager.FONT,
+                    fontName: "18pt " + UIManager.FONT,
                     x : 40,
                     y : 20
                 }),
                 new BABYLON.Text2D(pPrice.toString(), {
                     id: "SHOP_PriceValue",
-                    fontName: "14pt " + UIManager.FONT,
+                    fontName: "18pt " + UIManager.FONT,
                     defaultFontColor: new BABYLON.Color4(192, 159, 79, 1),
-                    x : 100,
+                    x : 110,
                     y : 20
                 }),
 
                 new BABYLON.Text2D('Niveau : ', {
                     id: "SHOP_Level",
-                    fontName: "14pt " + UIManager.FONT,
-                    x : 220,
+                    fontName: "18pt " + UIManager.FONT,
+                    x : 420,
                     y : 20
                 }),
                 new BABYLON.Text2D(pLevelRequired.toString(), {
                     id: "SHOP_LevelValue",
-                    fontName: "14pt " + UIManager.FONT,
-                    x : 310,
+                    fontName: "18pt " + UIManager.FONT,
+                    x : 530,
                     y : 20
                 })
             ]

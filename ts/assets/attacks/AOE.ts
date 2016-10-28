@@ -16,10 +16,13 @@ class AOE extends PlayerAttack {
     }
 
 
+    public static upgrade (params:IAttackUpgrade) {
+        super.upgrade(params, AOE._upgrade);
+    }
+
+
     protected doActionNormal () {
-        this.cylinder.scaling.x *= 1.3;
-        this.cylinder.scaling.z *= 1.3;
-        this.cylinder.material.alpha -= 0.02;
+        this.increaseEffectZone();
 
         if (this.cylinder.material.alpha < 0.5) {
             this.collisionRange = 0;
@@ -32,8 +35,10 @@ class AOE extends PlayerAttack {
     }
 
 
-    public static upgrade (params:IAttackUpgrade) {
-        super.upgrade(params, AOE._upgrade);
+    private increaseEffectZone () {
+        this.cylinder.scaling.x *= 1.3;
+        this.cylinder.scaling.z *= 1.3;
+        this.cylinder.material.alpha -= 0.02;
     }
 
 

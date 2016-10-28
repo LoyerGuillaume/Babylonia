@@ -9,9 +9,6 @@ class Ball extends PlayerAttack {
 
         this.rotationQuaternion = pRotation;
         this.addOffset();
-        this.maxLifeTime = this.maxLifeTime;
-
-        this.meshe.isVisible = true;
     }
 
     private addOffset ():void {

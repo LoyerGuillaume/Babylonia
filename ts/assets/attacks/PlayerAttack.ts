@@ -9,9 +9,6 @@ class PlayerAttack extends AssetGraphic {
     public static list:PlayerAttack[] = [];
     private launcher:Player;
 
-    protected static life:number;
-    protected static damage:number;
-
     protected maxLifeTime:number;
     private lifeTime:number = 0;
 

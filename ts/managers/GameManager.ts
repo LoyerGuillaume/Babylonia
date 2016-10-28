@@ -85,6 +85,8 @@ class GameManager {
         pPlayerEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
 
+        this.stopMusic();
+
         var playerRemaining = Player.list.length;
 
         var that = this;
@@ -113,6 +115,9 @@ class GameManager {
 
 
     private initPlayer(indexPlayer, pProfile:IPlayerProfile = undefined) {
+
+        this.switchMusic(false);
+
         var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();
         lPos.y += 0.6;
 
@@ -127,10 +132,27 @@ class GameManager {
         }));
     }
 
+    private switchMusic (pIsBattle:boolean) {
+        if (pIsBattle) {
+            Babylonia.getSoundLoaded('shopmusic').stop();
+            Babylonia.getSoundLoaded('battlemusic').play();
+        } else {
+            Babylonia.getSoundLoaded('battlemusic').stop();
+            Babylonia.getSoundLoaded('shopmusic').play();
+        }
+    }
+
+    private stopMusic () {
+        Babylonia.getSoundLoaded('battlemusic').stop();
+        Babylonia.getSoundLoaded('shopmusic').stop();
+    }
+
     private onPlayerInArena (pPlayerEvent:any) {
         // start game
         this.currentWaveNumber = 1;
         this.enemyManager.startWave(this.currentWaveNumber);
+
+        this.switchMusic(true);
 
         this.moveBridge(false);
     }

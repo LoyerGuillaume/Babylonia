@@ -12,6 +12,7 @@ class Babylonia {
     private oldPausePress:boolean = false;
 
     private static loadedContent: any = {};
+    private static soundsLoaded: any = {};
 
     private static get ASSETS_NAME () { return [
         'elf',
@@ -32,6 +33,14 @@ class Babylonia {
         'babyspread.png',
         'babygel.png',
         'babyaoe.png',
+    ];};
+
+    private static get SOUNDS_NAMES () { return [
+        'BabyBoule',
+        'BabySpread',
+        'BabyGel',
+        'BabyBoom',
+        'NextWave'
     ];};
 
     constructor (pScene, pEngine) {
@@ -57,18 +66,31 @@ class Babylonia {
         return lContent || console.error('The loaded content named "'+pName+'" does not exists.');
     }
 
+    public static getSoundLoaded (pName:string, pRemoveReferense:boolean = false): BABYLON.Sound {
+        var lSound = Babylonia.soundsLoaded[pName];
+        if (pRemoveReferense) delete Babylonia.soundsLoaded[pName];
+        return lSound || console.error('The sound named "'+pName+'" does not exists.');
+    }
+
     private loadAssets () {
 
         var loader = new BABYLON.AssetsManager(this.mainScene);
 
-        this.loadUITexture(loader, Babylonia.TEXTURES_NAMES);
-        this.loadUnityAssets(loader, Babylonia.ASSETS_NAME, true);
-        this.loadUnityAssets(loader, Babylonia.LEVELS_NAME, false);
-        this.loadJsons(loader, Babylonia.JSON_NAMES);
+        var self = this;
 
-        loader.onFinish = this.onAssetsLoaded.bind(this);
-        loader.useDefaultLoadingScreen = true;
-        loader.load();
+        this.loadSounds(loader, Babylonia.SOUNDS_NAMES, this.mainScene, function () {
+
+            self.loadUITexture(loader, Babylonia.TEXTURES_NAMES);
+            self.loadUnityAssets(loader, Babylonia.ASSETS_NAME, true);
+            self.loadUnityAssets(loader, Babylonia.LEVELS_NAME, false);
+            self.loadJsons(loader, Babylonia.JSON_NAMES);
+
+            loader.onFinish = self.onAssetsLoaded.bind(self);
+            loader.useDefaultLoadingScreen = true;
+            loader.load();
+        });
+
+
     }
 
     private onAssetsLoaded () {
@@ -78,6 +100,26 @@ class Babylonia {
         UIManager.init(this.mainScene);
 
         this.gameManager.start();
+    }
+
+    private loadSounds (pLoader:BABYLON.AssetsManager, pSources: string[], pScene:BABYLON.Scene, pCallback) {
+
+        var lCount = pSources.length;
+        var lCounter = 0;
+
+        for (var i in pSources) {
+            var assetName: string = pSources[i];
+            var lSound = new BABYLON.Sound(assetName, Config.AUDIO_PATH + assetName + ".ogg", pScene, function () {
+                Babylonia.addLoadedSound(assetName, lSound);
+                onSucces();
+            });
+        }
+
+        function onSucces () {
+            if (++lCounter === lCount) {
+                pCallback();
+            }
+        }
     }
 
     private loadUITexture (pLoader:BABYLON.AssetsManager, pSources: string[]) {
@@ -141,6 +183,10 @@ class Babylonia {
 
     private static addLoadedContent (pName:string, pContent:any) {
         Babylonia.loadedContent[pName] = pContent;
+    }
+
+    private static addLoadedSound (pName:string, pSound:any) {
+        Babylonia.soundsLoaded[pName] = pSound;
     }
 
     private initLevel(pMeshes:BABYLON.Mesh[]) {

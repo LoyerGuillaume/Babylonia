@@ -33,9 +33,11 @@ Vous contrôlez Babylelf, un mage de niveau 56, à l'aide des touches du clavier
 - Les meshes qui repop (ennemies et player) se retrouve à l'envers.
 
 ## Team
+
 ### Game Designer et Programmer
 - Guillaume Loyer</br>
 - Pierre Machkovsky</br>
 - Dimitri Pommier</br>
+
 ### Musique et SFX
 - Jesse Howard

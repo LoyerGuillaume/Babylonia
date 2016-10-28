@@ -5,8 +5,8 @@ class FireBall extends Ball {
     private fireParticleSystem:BABYLON.ParticleSystem;
     private smokeParticleSystem:BABYLON.ParticleSystem;
 
-    constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion, pPlayer) {
-        super('', pScene, pPosition, pRotation, pPlayer, FireBall._upgrade);
+    constructor(pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion, pPlayer, pUpgrade:IAttackUpgrade = FireBall._upgrade) {
+        super('', pScene, pPosition, pRotation, pPlayer, pUpgrade);
 
         this.maxLifeTime = 60;
         this.speed       = 0.25;
@@ -15,8 +15,8 @@ class FireBall extends Ball {
         this.initParticlesSystem();
     }
 
-    public static upgrade (params:IAttackUpgrade) {
-        super.upgrade(params, FireBall._upgrade);
+    public static upgrade (params:IAttackUpgrade, classUpgrade:IAttackUpgrade = FireBall._upgrade) {
+        super.upgrade(params, classUpgrade);
     }
 
     private initParticlesSystem ():void {

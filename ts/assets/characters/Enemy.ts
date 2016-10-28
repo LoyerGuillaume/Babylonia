@@ -4,7 +4,7 @@ class Enemy extends Character {
 
     protected hitFeedbackTime:number;
 
-    private static get MOVE_SPEED():number { return 0.002;};
+    private static get MOVE_SPEED():number { return 0.003;};
     private static get ROTATION_SPEED():number { return 0.3;};
 
     private lastPlayerHitMe:Player;

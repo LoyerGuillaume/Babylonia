@@ -18,6 +18,7 @@
         "assets/attacks/PlayerAttack.ts",
         "assets/attacks/Ball.ts",
         "assets/attacks/FireBall.ts",
+        "assets/attacks/BallSpread.ts",
         "assets/attacks/KnifeHurtle.ts",
         "assets/attacks/IceSpikes.ts",
         "assets/attacks/AOE.ts",

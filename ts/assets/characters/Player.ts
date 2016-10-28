@@ -357,6 +357,11 @@ class Player extends Character {
         fireBall.start();
     }
 
+    private createSpreadBall (pRotationQuaternion:BABYLON.Quaternion) {
+        var spreadBall = new BallSpread(this.getScene(), this.position, pRotationQuaternion, this);
+        spreadBall.start();
+    }
+
     private createKnifeHurtle (pRotationQuaternion:BABYLON.Quaternion) {
         var knifeHurtle = new KnifeHurtle(this.getScene(), this.position, pRotationQuaternion, this);
         knifeHurtle.start();
@@ -374,9 +379,9 @@ class Player extends Character {
      */
     private shotThreeFireBalls () {
         var rotationQuaternion:BABYLON.Quaternion = this.rotationQuaternion;
-        this.createFireBall(rotationQuaternion);
-        this.createFireBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( Player.ANGLE_SPECIAL_ATTACK_1))));
-        this.createFireBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(-Player.ANGLE_SPECIAL_ATTACK_1))));
+        this.createSpreadBall(rotationQuaternion);
+        this.createSpreadBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( Player.ANGLE_SPECIAL_ATTACK_1))));
+        this.createSpreadBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians(-Player.ANGLE_SPECIAL_ATTACK_1))));
     }
 
     /**

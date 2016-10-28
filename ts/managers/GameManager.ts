@@ -134,17 +134,17 @@ class GameManager {
 
     private switchMusic (pIsBattle:boolean) {
         if (pIsBattle) {
-            Babylonia.getSoundLoaded('shopmusic').stop();
-            Babylonia.getSoundLoaded('battlemusic').play();
+            SoundManager.getSound(SoundManager.SOUNDS_NAMES.SHOPMUSIC).stop();
+            SoundManager.getSound(SoundManager.SOUNDS_NAMES.BATTLEMUSIC).play();
         } else {
-            Babylonia.getSoundLoaded('battlemusic').stop();
-            Babylonia.getSoundLoaded('shopmusic').play();
+            SoundManager.getSound(SoundManager.SOUNDS_NAMES.BATTLEMUSIC).stop();
+            SoundManager.getSound(SoundManager.SOUNDS_NAMES.SHOPMUSIC).play();
         }
     }
 
     private stopMusic () {
-        Babylonia.getSoundLoaded('battlemusic').stop();
-        Babylonia.getSoundLoaded('shopmusic').stop();
+        SoundManager.getSound(SoundManager.SOUNDS_NAMES.BATTLEMUSIC).stop();
+        SoundManager.getSound(SoundManager.SOUNDS_NAMES.SHOPMUSIC).stop();
     }
 
     private onPlayerInArena (pPlayerEvent:any) {

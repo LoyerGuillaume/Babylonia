@@ -7,6 +7,7 @@ class Ball extends PlayerAttack {
     constructor(pAssetName:string, pScene:BABYLON.Scene, pPosition:BABYLON.Vector3, pRotation:BABYLON.Quaternion, pPlayer, upgrade:IAttackUpgrade) {
         super(pAssetName, pScene, pPosition, pPlayer, upgrade);
 
+        this.computeWorldMatrix(true);
         this.rotationQuaternion = pRotation;
         this.addOffset();
         this.maxLifeTime = this.maxLifeTime;
@@ -30,7 +31,6 @@ class Ball extends PlayerAttack {
 
     private move() {
         var v         = new BABYLON.Vector3(0, 0, -1);
-        this.computeWorldMatrix(true);
         var m         = this.getWorldMatrix();
         var movement  = BABYLON.Vector3.TransformCoordinates(v, m);
         movement.subtractInPlace(this.position).normalize().scaleInPlace(this.speed);

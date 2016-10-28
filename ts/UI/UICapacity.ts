@@ -29,7 +29,7 @@ class UICapacity extends BABYLON.Group2D {
 
 
     private initContent ()  {
-        var pictoTexture:BABYLON.Texture = Babylonia.getLoadedContent(this.capacity.name.toLowerCase() + '.png', true);
+        var pictoTexture:BABYLON.Texture = Babylonia.getLoadedContent(this.capacity.name.toLowerCase() + '.png', false);
         var pictoScale:number = UICapacity.PICTO_SIZE / pictoTexture.getSize().width;
         this.picto = new BABYLON.Sprite2D(pictoTexture, {
             id: 'picto' + this.capacity.name,

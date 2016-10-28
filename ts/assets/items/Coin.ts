@@ -8,8 +8,8 @@ class Coin extends AssetGraphic {
     private static get MAX_MULTIPLY_MOVEMENT():number { return 10;};
     private static get MOVEMENT_FRICTION()    :number { return 0.95;};
     private static get BOUNCING_FRICTION()    :number { return 0.95;};
-    private static get BOUNCING_FREQUENCE()    :number { return 5;};
-    private static get MIN_VELOCITY()    :number { return 0.01;};
+    private static get BOUNCING_FREQUENCE()   :number { return 5;};
+    private static get MIN_VELOCITY()         :number { return 0.01;};
 
     private vectorMovement:BABYLON.Vector3;
     private startYPosition:number;
@@ -20,28 +20,32 @@ class Coin extends AssetGraphic {
         super(Coin.ASSET_NAME, pScene);
 
         this.position           = pPosition.clone();
-        this.startYPosition = this.position.y;
+        this.startYPosition     = this.position.y;
         this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
-
-        // var randomNumber:number = Coin.MIN_MULTIPLY_MOVEMENT + Math.random() * (Coin.MAX_MULTIPLY_MOVEMENT - Coin.MIN_MULTIPLY_MOVEMENT);
-        // this.vectorMovement     = pVectorDirection.multiplyByFloats(this.getNumberForVectorMovement(), this.getNumberForVectorMovement(), this.getNumberForVectorMovement());
         this.vectorMovement     = new BABYLON.Vector3(this.getNumberForVectorMovement(), 0, this.getNumberForVectorMovement());
-        // console.log('vectorMovement : '+this.vectorMovement);
-
 
         Coin.list.push(this);
     }
 
+    public setModeNormal () {
+        this.doAction = this.doActionPop;
+    }
+
 
     private getNumberForVectorMovement () :number {
-        return (Coin.MIN_MULTIPLY_MOVEMENT + Math.random() * (Coin.MAX_MULTIPLY_MOVEMENT - Coin.MIN_MULTIPLY_MOVEMENT)) * (Math.random() <= 0.5 ? 1 : -1);
+        return (Tools.lerp(Coin.MIN_MULTIPLY_MOVEMENT, Coin.MAX_MULTIPLY_MOVEMENT, Math.random())) * (Math.random() <= 0.5 ? 1 : -1);
+    }
+
+
+    private doActionPop (deltaTime:number) {
+        this._rotate();
+        this.movement(deltaTime);
+        this.frameCount++;
     }
 
 
     protected doActionNormal (deltaTime:number) {
         this._rotate();
-        this.movement(deltaTime);
-        this.frameCount++;
     }
 
 
@@ -51,6 +55,7 @@ class Coin extends AssetGraphic {
          && Math.abs(this.vectorMovement.y) <= minVelocity
          && Math.abs(this.vectorMovement.z) <= minVelocity) {
             this.vectorMovement = BABYLON.Vector3.Zero();
+            this.doAction = this.doActionNormal;
             return;
         }
 

@@ -31,7 +31,7 @@ class Babylonia {
         'babyboule.png',
         'babyspread.png',
         'babygel.png',
-        'babyaoe.png',
+        'babyboum.png',
     ];};
 
     constructor (pScene, pEngine) {

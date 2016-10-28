@@ -72,9 +72,10 @@ class Enemy extends Character {
             if (Tools.intersectOnHorizontalPlan(this.position, attack.position, attack.collisionSize)) {
                 this.lastPlayerHitMe = PlayerAttack.list[i].getLauncher;
                 attack.onHit();
-                this.onHit(attack.damage);
                 attack.debuff(this);
-                return;
+                if (this.onHit(attack.damage)) {
+                    return;
+                }
             }
         }
     }

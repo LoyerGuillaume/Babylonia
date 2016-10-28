@@ -73,7 +73,7 @@ class Player extends Character {
             countFrameAttack: 500
         },
         special_3: {
-            name            : 'BabyAOE',
+            name            : 'BabyBoum',
             key             : 'R',
             cooldown        : 3000,
             attackFunction  : this.launchAOE,
@@ -427,7 +427,7 @@ class Player extends Character {
 
     private doActionIceWalking (deltaTime:number) {
         this.lastDoAction(deltaTime);
-        if (this.iceWalkingCount % 6 === 0) { 
+        if (this.iceWalkingCount % 6 === 0) {
             this.createIce();
         }
         if (++this.iceWalkingCount >= Player.ICE_WALKING_DURATION) {

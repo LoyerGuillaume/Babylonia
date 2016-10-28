@@ -79,7 +79,7 @@ class ItemShop extends AssetGraphic {
         if ((e.keyCode || e.which) === Keyboard.SPACE && this.playerRef) {
             if (this.bonusCallback(this.playerRef, this)) {
                 UIManager.closeShopPopin();
-                if (Babylonia.getSoundLoaded(this.sound)) Babylonia.getSoundLoaded(this.sound).play();
+                if (SoundManager.getSound(this.sound)) SoundManager.getSound(this.sound).play();
                 window.removeEventListener(Keyboard.KEY_UP, this.bindedFunction);
             }
         }

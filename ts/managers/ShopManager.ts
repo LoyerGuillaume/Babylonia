@@ -18,7 +18,7 @@ class ShopManager {
         'eternalHeart' : {
             quantity    : 5,
             assetName   : ShopManager.ASSET_NAME.HEALTH,
-            sound       : 'shoppotion',
+            sound       : SoundManager.SOUNDS_NAMES.SHOP_POTION,
             cost        : 10,
             effect      : ShopManager.addHealth,
             title       : 'BabyCoeur',
@@ -27,7 +27,7 @@ class ShopManager {
         'boostBabyBoule' : {
             quantity    : 3,
             assetName   : ShopManager.ASSET_NAME.BONUS1,
-            sound       : 'shoppotion',
+            sound       : SoundManager.SOUNDS_NAMES.SHOP_POTION,
             cost        : 20,
             effect      : ShopManager.upgradeBabyBoule,
             title       : 'Upgrade Babyboule',
@@ -36,7 +36,7 @@ class ShopManager {
         'boostBabySpread' : {
             quantity    : 3,
             assetName   : ShopManager.ASSET_NAME.BONUS2,
-            sound       : 'shoppotion',
+            sound       : SoundManager.SOUNDS_NAMES.SHOP_POTION,
             cost        : 30,
             effect      : ShopManager.upgradeBabySpread,
             title       : 'Upgrade BabySpread',
@@ -45,7 +45,7 @@ class ShopManager {
         'boostBabyIce' : {
             quantity    : 3,
             assetName   : ShopManager.ASSET_NAME.BONUS3,
-            sound       : 'shopbox',
+            sound       : SoundManager.SOUNDS_NAMES.SHOPBOX,
             cost        : 40,
             effect      : ShopManager.upgradeBabyIce,
             title       : 'Upgrade BabyGel',

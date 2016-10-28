@@ -60,18 +60,13 @@ class Babylonia {
         return lContent || console.error('The loaded content named "'+pName+'" does not exists.');
     }
 
-    public static getSoundLoaded (pName:string): BABYLON.Sound {
-        var lSound = SoundManager.getSound(pName);
-        return lSound || console.error('The sound named "'+pName+'" does not exists.');
-    }
-
     private loadAssets () {
 
         var loader = new BABYLON.AssetsManager(this.mainScene);
 
         var self = this;
 
-        this.loadSounds(loader, SoundManager.SOUNDS_NAMES, this.mainScene, function () {
+        this.loadSounds(this.soundManager, SoundManager.SOUNDS_NAMES, this.mainScene, function () {
 
             self.loadUITexture(loader, Babylonia.TEXTURES_NAMES);
             self.loadUnityAssets(loader, Babylonia.ASSETS_NAME, true);
@@ -82,8 +77,6 @@ class Babylonia {
             loader.useDefaultLoadingScreen = true;
             loader.load();
         });
-
-
     }
 
     private onAssetsLoaded () {
@@ -95,7 +88,7 @@ class Babylonia {
         this.gameManager.start();
     }
 
-    private loadSounds (pLoader:BABYLON.AssetsManager, pSources: {}, pScene:BABYLON.Scene, pCallback) {
+    private loadSounds (pSoundManager:SoundManager, pSources: {}, pScene:BABYLON.Scene, pCallback) {
 
         var lKeys = Object.keys(pSources);
         var lCount = lKeys.length;

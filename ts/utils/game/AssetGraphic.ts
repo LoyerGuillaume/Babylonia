@@ -56,7 +56,8 @@ class AssetGraphic extends GameObject {
                 this.meshe.skeleton = AssetGraphic.skeletonsList[pAssetName].clone();
             }
         } else {
-            console.warn('The AssetGraphic with the name "'+pAssetName+'" don\'t have any loaded mesh with the same name. Is that ok ?');
+            // used for developpement
+            //console.warn('The AssetGraphic with the name "'+pAssetName+'" don\'t have any loaded mesh with the same name. Is that ok ?');
             this.meshe = BABYLON.Mesh.CreateBox(pAssetName, 0.5, pScene);
         }
 

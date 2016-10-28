@@ -12,9 +12,9 @@ Les Babycoins sont lachés par les ennemis, une fois tués.
 
 ## Contrôle
 Vous contrôlez Babylelf, un mage de niveau 56, à l'aide des touches du clavier :</br>
-    - Touches directionelles : Se déplacer</br>
-    - A, Z, E, R : Différentes attaques</br>
-    - Espace : Confirmer l'achat de l'objet</br>
+- Touches directionelles : Se déplacer</br>
+- A, Z, E, R : Différentes attaques</br>
+- Espace : Confirmer l'achat de l'objet</br>
 
 ## Features
 - 4 attaques avec différentes puissance, différentes cooldown</br>
@@ -36,6 +36,6 @@ Vous contrôlez Babylelf, un mage de niveau 56, à l'aide des touches du clavier
 ### Game Designer et Programmer
 - Guillaume Loyer</br>
 - Pierre Machkovsky</br>
-- Dimitri Pommier</br>
+- Dimitri Pommier
 ### Musique & SFX
 - Jesse Howard

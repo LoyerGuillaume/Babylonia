@@ -36,11 +36,18 @@ class Babylonia {
     ];};
 
     private static get SOUNDS_NAMES () { return [
-        'BabyBoule',
-        'BabySpread',
+        'battlemusic',
+        'shopmusic',
+        'death',
         'BabyGel',
         'BabyBoom',
-        'NextWave'
+        'mummydeath',
+        'upgrade',
+        'BabySpread',
+        'BabyBoule',
+        'nextwave',
+        'potion',
+        'coin'
     ];};
 
     constructor (pScene, pEngine) {

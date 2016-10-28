@@ -379,7 +379,7 @@ class Player extends Character {
      * Attack SIMPLE PLUS
      */
     private shotThreeFireBalls () {
-    Babylonia.getSoundLoaded('BabySpread').play();
+        Babylonia.getSoundLoaded('BabySpread').play();
         var rotationQuaternion:BABYLON.Quaternion = this.rotationQuaternion;
         this.createSpreadBall(rotationQuaternion);
         this.createSpreadBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( Player.ANGLE_SPECIAL_ATTACK_1))));
@@ -421,7 +421,7 @@ class Player extends Character {
         this.checkCoinCollision();
     }
 
-    private launchIceWalking () { 
+    private launchIceWalking () {
         Babylonia.getSoundLoaded('BabyGel').play();
         this.iceWalkingCount = 0;
         this.lastDoAction = this.doAction;
@@ -434,6 +434,7 @@ class Player extends Character {
             this.createIce();
         }
         if (++this.iceWalkingCount >= Player.ICE_WALKING_DURATION) {
+            Babylonia.getSoundLoaded('BabyGel').stop();
             this.doAction = this.lastDoAction;
         }
     }

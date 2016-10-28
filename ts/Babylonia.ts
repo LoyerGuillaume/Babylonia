@@ -86,11 +86,6 @@ class Babylonia {
         var self = this;
 
         this.loadSounds(loader, Babylonia.SOUNDS_NAMES, this.mainScene, function () {
-
-console.info(Babylonia.soundsLoaded);
-            //Babylonia.soundsLoaded['BabyBoule'].play();
-            //Babylonia.getSoundLoaded('BabyBoule').play();
-
             self.loadUITexture(loader, Babylonia.TEXTURES_NAMES);
             self.loadUnityAssets(loader, Babylonia.ASSETS_NAME, true);
             self.loadUnityAssets(loader, Babylonia.LEVELS_NAME, false);

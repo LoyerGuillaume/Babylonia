@@ -23,9 +23,7 @@ class GameObject extends BABYLON.Mesh {
         this.doAction = this.doActionVoid;
     }
 
-    protected doActionNormal(deltaTime:number) {
-
-    }
+    protected doActionNormal(deltaTime:number) { }
 
     private doActionVoid(deltaTime:number) { }
 

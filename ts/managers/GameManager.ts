@@ -11,7 +11,7 @@ class GameManager {
     private onPause:boolean = false;
     private oldPausePress:boolean = false;
     private frameCount:number = 0;
-
+    private bridgePosInit:BABYLON.Vector3;
 
     // GAME RULES
     private static get RESPAWN_SECONDS() { return 3;};
@@ -106,7 +106,7 @@ class GameManager {
     }
 
     private onGameOver () {
-    this.enemyManager.clearCurrentWave();
+        this.enemyManager.clearCurrentWave();
         this.destroyAllEnemies();
         this.moveBridge(true);
     }
@@ -124,7 +124,7 @@ class GameManager {
         CameraManager.setTarget(Player.list[indexPlayer]);
         BEvent.emit(new PlayerEvent(PlayerEvent.GAIN_LIFE, {
             amount: Player.LIFE_POINT
-        }))
+        }));
     }
 
     private onPlayerInArena (pPlayerEvent:any) {
@@ -135,7 +135,6 @@ class GameManager {
         this.moveBridge(false);
     }
 
-    private bridgePosInit;
     private moveBridge (pWalkable:boolean) {
 
         var lBridge = this.levelManager.getGameplayObjectUnique('Bridge');

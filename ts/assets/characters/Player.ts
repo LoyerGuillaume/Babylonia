@@ -483,6 +483,7 @@ class Player extends Character {
 
 
     private onCoinCollision ():void {
+        Babylonia.getSoundLoaded('coin').play();
         this.gainCoin(1);
     }
 
@@ -494,6 +495,7 @@ class Player extends Character {
     }
 
     protected die () {
+        Babylonia.getSoundLoaded('death').play();
         BEvent.emit(new PlayerEvent(PlayerEvent.DEATH, {
             player: this
         }));

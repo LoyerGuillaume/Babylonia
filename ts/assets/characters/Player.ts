@@ -421,8 +421,8 @@ class Player extends Character {
     }
 
     private doActionIceWalking (deltaTime:number) {
-        this.doActionNormal(deltaTime);
-        if (this.iceWalkingCount % 6 === 0) {
+        this.lastDoAction(deltaTime);
+        if (this.iceWalkingCount % 6 === 0) { 
             this.createIce();
         }
         if (++this.iceWalkingCount >= Player.ICE_WALKING_DURATION) {

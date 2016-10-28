@@ -82,7 +82,11 @@ class Babylonia {
     }
 
     private onAssetsLoaded () {
+        var startBinded = this.start.bind(this);
+        BABYLON.SceneOptimizer.OptimizeAsync(this.mainScene, BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed(), startBinded, startBinded);
+    }
 
+    private start () {
         this.gameManager = new GameManager(this.mainScene, this.engine, this.levelManager);
 
         UIManager.init(this.mainScene);

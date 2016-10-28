@@ -68,6 +68,8 @@ class ShopManager {
                 this.addItemShopList(item.assetName, item.cost, item.title, item.description, item.bonusCallback);
             }
         }
+
+        Tools.shuffleArray(ShopManager.itemShopList);
     }
 
     private addItemShopList (pAssetName:string, pCostCoin:number, pTitle:string, pDescription:string, pCallback:any):void {
@@ -115,31 +117,11 @@ class ShopManager {
     }
 
 
-    public static get3RandomIndexInListItem () :number[] {
-        var numberList:number[] = [];
-
-        var indexList:number[] = [];
-        for (var i = 0; i < ShopManager.itemShopList.length; i++) {
-            indexList.push(i);
-        }
-
-        Tools.shuffleArray(indexList);
-
-        var indexMax = Math.min(indexList.length, 3);
-        for (var j = 0; j < indexMax; j++) {
-            numberList.push(indexList.shift());
-        }
-
-        return numberList;
-    }
-
-
     public static popAllItem () {
         ShopManager.depopAllItem();
-        var indexList:number[] = ShopManager.get3RandomIndexInListItem();
-
-        for (var i = 0; i < indexList.length; i++) {
-            ShopManager.popItem(indexList[i], i);
+        var indexMax = Math.min(ShopManager.itemShopList.length, 3);
+        for (var i = 0; i < indexMax; i++) {
+            ShopManager.popItem(i, i);
         }
     }
 

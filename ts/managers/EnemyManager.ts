@@ -4,7 +4,7 @@ class EnemyManager {
 
     private canceled:boolean;
 
-    /**
+    /** 
      * @params pScene
      * @params pPositions
      * @params pEnemyClasses

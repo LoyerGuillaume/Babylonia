@@ -106,7 +106,7 @@ class GameManager {
     }
 
     private onGameOver () {
-        this.enemyManager.clearCurrentWave();
+    this.enemyManager.clearCurrentWave();
         this.destroyAllEnemies();
         this.moveBridge(true);
     }

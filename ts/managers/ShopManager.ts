@@ -1,7 +1,38 @@
+interface ItemsDictionnary {
+    [name: string]: ItemProperties;
+}
+
+interface ItemProperties {
+    assetName:string,
+    cost:number,
+    title:string,
+    description:string,
+    bonusCallback:any,
+    quantity:number
+}
+
 class ShopManager {
 
+    private static get ITEM_POOL():ItemsDictionnary { return {
+        'eternalHeart' : {
+            quantity     : 2,
+            assetName    : ShopManager.ASSET_NAME.HEALTH,
+            cost         : 5,
+            bonusCallback: ShopManager.addHealth,
+            title        : 'BabyCoeur',
+            description  : 'Gagnes un coeur permanent'
+        },
+        'boostBabyBoule' : {
+            quantity     : 1,
+            assetName    : ShopManager.ASSET_NAME.BONUS3,
+            cost         : 20,
+            bonusCallback: ShopManager.addHealth,
+            title        : 'Upgrade Babyboule',
+            description  : 'Augmente la puissance de tes\nBabyBoules !!!'
+        }
+    }; };
 
-    private static PEDESTRAL_NAME: string = 'pedestral';
+    private static get PEDESTRAL_NAME():string { return 'pedestral'; };
 
     private static ASSET_NAME: any = {
         HEALTH: 'Bottle_Health',
@@ -30,18 +61,19 @@ class ShopManager {
 
     private initItemShopList ():void {
         ShopManager.itemShopList = [];
-        var index = 0;
 
-        this.addItemShopList(ShopManager.ASSET_NAME.HEALTH, 1, ShopManager.addHealth);
-        this.addItemShopList(ShopManager.ASSET_NAME.HEALTH, 1, ShopManager.addHealth);
-        this.addItemShopList(ShopManager.ASSET_NAME.HEALTH, 1, ShopManager.addHealth);
-        this.addItemShopList(ShopManager.ASSET_NAME.BONUS1, 1, ShopManager.addHealth);
-        this.addItemShopList(ShopManager.ASSET_NAME.BONUS2, 1, ShopManager.addHealth);
-        this.addItemShopList(ShopManager.ASSET_NAME.BONUS3, 1, ShopManager.addHealth);
+        for (var index in ShopManager.ITEM_POOL) {
+            var item:ItemProperties = ShopManager.ITEM_POOL[index];
+            for (var i = 0; i < item.quantity; i++) {
+                this.addItemShopList(item.assetName, item.cost, item.title, item.description, item.bonusCallback);
+            }
+        }
+
+        Tools.shuffleArray(ShopManager.itemShopList);
     }
 
-    private addItemShopList (pAssetName:string, pCostCoin:number, pCallback:any):void {
-        ShopManager.itemShopList[ShopManager.itemShopList.length] = new ItemShop(this.mainScene, pAssetName, pCostCoin, pCallback);
+    private addItemShopList (pAssetName:string, pCostCoin:number, pTitle:string, pDescription:string, pCallback:any):void {
+        ShopManager.itemShopList[ShopManager.itemShopList.length] = new ItemShop(this.mainScene, pAssetName, pCostCoin, pTitle, pDescription, pCallback);
     }
 
     public static bonusCallback(pPlayer:Player, pItemShop:ItemShop) :void {
@@ -61,13 +93,15 @@ class ShopManager {
         return pItemShop.costCoin <= pPlayer.coins;
     }
 
-    public static addHealth (pPlayer:Player, pItemShop:ItemShop):void {
+    public static addHealth (pPlayer:Player, pItemShop:ItemShop):boolean {
         if (!ShopManager.enoughtMoney(pPlayer, pItemShop)) {
-            return;
+            return false;
         }
 
         ShopManager.bonusCallback(pPlayer, pItemShop);
         pPlayer.upgradeLife = 1;
+
+        return true;
     }
 
     public static removeToItemList (pItemShop:ItemShop) :void {
@@ -83,31 +117,11 @@ class ShopManager {
     }
 
 
-    public static get3RandomIndexInListItem () :number[] {
-        var numberList:number[] = [];
-
-        var indexList:number[] = [];
-        for (var i = 0; i < ShopManager.itemShopList.length; i++) {
-            indexList.push(i);
-        }
-
-        Tools.shuffleArray(indexList);
-
-        var indexMax = Math.min(indexList.length, 3);
-        for (var j = 0; j < indexMax; j++) {
-            numberList.push(indexList.shift());
-        }
-
-        return numberList;
-    }
-
-
     public static popAllItem () {
         ShopManager.depopAllItem();
-        var indexList:number[] = ShopManager.get3RandomIndexInListItem();
-
-        for (var i = 0; i < indexList.length; i++) {
-            ShopManager.popItem(indexList[i], i);
+        var indexMax = Math.min(ShopManager.itemShopList.length, 3);
+        for (var i = 0; i < indexMax; i++) {
+            ShopManager.popItem(i, i);
         }
     }
 

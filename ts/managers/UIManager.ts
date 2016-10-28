@@ -15,7 +15,7 @@ class UIManager {
     private static heartsContainer:BABYLON.Group2D;
 
     private static score:BABYLON.Text2D;
-    private static bestScoreText:BABYLON.Text2D;
+    private static bestScoreText:BABYLON.Text2D; 
     private static babyCoins:BABYLON.Group2D;
     private static textCoins:BABYLON.Text2D;
 
@@ -125,30 +125,28 @@ class UIManager {
         }
     }
 
-    public static openShopPopin (pTitle:string, pText:string, pPrice:number, pLevelRequired:number, pBuyKey = 'E') {
+    public static openShopPopin (pTitle:string, pText:string, pPrice:number, pLevelRequired:number = 1, pBuyKey = 'ESPACE') {
         UIManager.closeShopPopin();
         UIManager.popinShop = new BABYLON.ScreenSpaceCanvas2D(UIManager.scene, {
             id: "PopinShopCanvas",
             size: new BABYLON.Size(400, 230),
             backgroundFill: "#4040408F",
             backgroundRoundRadius: 10,
-            x : 400,
-            y : 300,
+            x : window.innerWidth  / 8,
+            y : window.innerHeight / 2,
             children: [
                 new BABYLON.Text2D(pTitle, {
                     id: "SHOP_Title",
+                    marginAlignment: "h: center",
                     fontName: "20pt " + UIManager.FONT,
-                    x : 30,
                     y : 175
                 }),
                 new BABYLON.Text2D(pText, {
                     id: "SHOP_Text",
                     marginAlignment: "h: center, v:center",
                     fontName: "12pt " + UIManager.FONT,
-                    x : 0,
-                    y : 10,
                 }),
-                new BABYLON.Text2D('Press '+pBuyKey+' for buy', {
+                new BABYLON.Text2D(pBuyKey + ' pour acheter', {
                     id: "SHOP_Info",
                     marginAlignment: "h: center",
                     fontName: "12pt " + UIManager.FONT,
@@ -156,7 +154,7 @@ class UIManager {
                     y : 50
                 }),
 
-                new BABYLON.Text2D('Price : ', {
+                new BABYLON.Text2D('Prix : ', {
                     id: "SHOP_Price",
                     fontName: "14pt " + UIManager.FONT,
                     x : 40,
@@ -170,7 +168,7 @@ class UIManager {
                     y : 20
                 }),
 
-                new BABYLON.Text2D('Level : ', {
+                new BABYLON.Text2D('Niveau : ', {
                     id: "SHOP_Level",
                     fontName: "14pt " + UIManager.FONT,
                     x : 220,
@@ -179,11 +177,13 @@ class UIManager {
                 new BABYLON.Text2D(pLevelRequired.toString(), {
                     id: "SHOP_LevelValue",
                     fontName: "14pt " + UIManager.FONT,
-                    x : 280,
+                    x : 310,
                     y : 20
                 })
             ]
         });
+
+        UIManager.popinShop.y -= UIManager.popinShop.height / 2;
 
     }
 
@@ -196,6 +196,10 @@ class UIManager {
         UIManager.placeCapacityContainer();
         if (typeof UIManager.displayTextPanel !== 'undefined') {
             UIManager.displayTextPanel.y = window.innerHeight / 2 - UIManager.displayTextPanel.height / 2;
+        }
+        if (typeof UIManager.popinShop !== 'undefined') {
+            UIManager.popinShop.x = window.innerWidth  / 8;
+            UIManager.popinShop.y = window.innerHeight / 2 - UIManager.popinShop.height / 2;
         }
     }
 

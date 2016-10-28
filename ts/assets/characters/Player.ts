@@ -34,7 +34,7 @@ interface IPlayerAttack {
 
 
 interface PlayerAttacksDictionnary {
-    [naem:string]:IPlayerAttack
+    [name:string]:IPlayerAttack
 }
 
 

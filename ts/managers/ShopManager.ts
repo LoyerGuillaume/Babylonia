@@ -4,6 +4,7 @@ interface ItemsDictionnary {
 
 interface ItemProperties {
     assetName:string,
+    sound:string,
     cost:number,
     title:string,
     description:string,
@@ -17,6 +18,7 @@ class ShopManager {
         'eternalHeart' : {
             quantity    : 5,
             assetName   : ShopManager.ASSET_NAME.HEALTH,
+            sound       : SoundManager.SOUNDS_NAMES.SHOP_POTION,
             cost        : 10,
             effect      : ShopManager.addHealth,
             title       : 'BabyCoeur',
@@ -25,6 +27,7 @@ class ShopManager {
         'boostBabyBoule' : {
             quantity    : 3,
             assetName   : ShopManager.ASSET_NAME.BONUS1,
+            sound       : SoundManager.SOUNDS_NAMES.SHOP_POTION,
             cost        : 20,
             effect      : ShopManager.upgradeBabyBoule,
             title       : 'Upgrade Babyboule',
@@ -33,6 +36,7 @@ class ShopManager {
         'boostBabySpread' : {
             quantity    : 3,
             assetName   : ShopManager.ASSET_NAME.BONUS2,
+            sound       : SoundManager.SOUNDS_NAMES.SHOP_POTION,
             cost        : 30,
             effect      : ShopManager.upgradeBabySpread,
             title       : 'Upgrade BabySpread',
@@ -41,6 +45,7 @@ class ShopManager {
         'boostBabyIce' : {
             quantity    : 3,
             assetName   : ShopManager.ASSET_NAME.BONUS3,
+            sound       : SoundManager.SOUNDS_NAMES.SHOPBOX,
             cost        : 40,
             effect      : ShopManager.upgradeBabyIce,
             title       : 'Upgrade BabyGel',
@@ -81,15 +86,15 @@ class ShopManager {
         for (var index in ShopManager.ITEM_POOL) {
             var item:ItemProperties = ShopManager.ITEM_POOL[index];
             for (var i = 0; i < item.quantity; i++) {
-                this.addItemShopList(item.assetName, item.cost, item.title, item.description, item.effect);
+                this.addItemShopList(item.assetName, item.sound, item.cost, item.title, item.description, item.effect);
             }
         }
 
         Tools.shuffleArray(ShopManager.itemShopList);
     }
 
-    private addItemShopList (pAssetName:string, pCostCoin:number, pTitle:string, pDescription:string, pCallback:any):void {
-        ShopManager.itemShopList[ShopManager.itemShopList.length] = new ItemShop(this.mainScene, pAssetName, pCostCoin, pTitle, pDescription, pCallback);
+    private addItemShopList (pAssetName:string, pSound:string, pCostCoin:number, pTitle:string, pDescription:string, pCallback:any):void {
+        ShopManager.itemShopList[ShopManager.itemShopList.length] = new ItemShop(this.mainScene, pAssetName, pSound, pCostCoin, pTitle, pDescription, pCallback);
     }
 
     private static bonusCallback(pPlayer:Player, pItemShop:ItemShop) :void {

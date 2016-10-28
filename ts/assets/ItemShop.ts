@@ -10,6 +10,7 @@ class ItemShop extends AssetGraphic {
 
     private title      :string = '';
     private description:string = '';
+    private sound:string;
 
     private collisionSize:number = 1.5;
 
@@ -20,13 +21,15 @@ class ItemShop extends AssetGraphic {
         return this.cost;
     }
 
-    constructor(pScene:BABYLON.Scene, pAssetName:string, pCost:number, pTitle:string, pDescription:string, pCallback:any) {
+
+    constructor(pScene:BABYLON.Scene, pAssetName:string, pSound:string, pCost:number, pTitle:string, pDescription:string, pCallback:any) {
         super(pAssetName, pScene);
 
         this.cost          = pCost;
         this.bonusCallback = pCallback;
         this.title         = pTitle;
         this.description   = pDescription;
+        this.sound         = pSound;
 
         this.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), 0);
 
@@ -86,6 +89,7 @@ class ItemShop extends AssetGraphic {
         if ((e.keyCode || e.which) === Keyboard.SPACE && this.playerRef) {
             if (this.bonusCallback(this.playerRef, this)) {
                 UIManager.closeShopPopin();
+                if (SoundManager.getSound(this.sound)) SoundManager.getSound(this.sound).play();
                 window.removeEventListener(Keyboard.KEY_UP, this.bindedFunction);
             }
         }

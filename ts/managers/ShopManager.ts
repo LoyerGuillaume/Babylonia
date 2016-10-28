@@ -97,7 +97,7 @@ class ShopManager {
         ShopManager.itemShopList[ShopManager.itemShopList.length] = new ItemShop(this.mainScene, pAssetName, pSound, pCostCoin, pTitle, pDescription, pCallback);
     }
 
-    public static bonusCallback(pPlayer:Player, pItemShop:ItemShop) :void {
+    private static bonusCallback(pPlayer:Player, pItemShop:ItemShop) :void {
         ShopManager.removeToItemList(pItemShop);
 
         pPlayer.lostCoin(pItemShop.costCoin);

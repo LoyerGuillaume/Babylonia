@@ -1,11 +1,10 @@
 class GameManager {
 
-    private mainScene:BABYLON.Scene;
-    private engine:BABYLON.Engine;
+    private mainScene   : BABYLON.Scene;
+    private engine      : BABYLON.Engine;
     private levelManager: LevelManager;
-    private shopManager: ShopManager;
-    private lightManager:LightManager;
-
+    private shopManager : ShopManager;
+    private lightManager: LightManager;
     private enemyManager: EnemyManager;
 
     private onPause:boolean = false;
@@ -206,10 +205,6 @@ class GameManager {
 
             for (var q = Timeout.list.length - 1; q >= 0; q--) {
                 Timeout.list[q].doAction(deltaTime);
-            }
-
-            for (var i in Tree.list) {
-                Tree.list[i].doAction(deltaTime);
             }
 
             for (var j in PlayerAttack.list) {

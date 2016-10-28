@@ -1,12 +1,14 @@
 class ItemShop extends AssetGraphic {
 
+    private static get ROTATION_SPEED():number { return 0.01; };
+
     public static list:ItemShop[] = [];
 
     private startYPosition:number;
     private cost:number;
     private bonusCallback;
 
-    private title:string = '';
+    private title      :string = '';
     private description:string = '';
     private sound:string;
 
@@ -19,7 +21,8 @@ class ItemShop extends AssetGraphic {
         return this.cost;
     }
 
-    constructor(pScene:BABYLON.Scene, pAssetName:string, pSound:string, pCost:number, pTitle:string, pDescription:string, pCallback) {
+
+    constructor(pScene:BABYLON.Scene, pAssetName:string, pSound:string, pCost:number, pTitle:string, pDescription:string, pCallback:any) {
         super(pAssetName, pScene);
 
         this.cost          = pCost;
@@ -38,8 +41,8 @@ class ItemShop extends AssetGraphic {
 
 
     public setPosition (pPosition:BABYLON.Vector3):void {
-        this.position = pPosition.clone();
-        this.startYPosition     = this.position.y;
+        this.position       = pPosition.clone();
+        this.startYPosition = this.position.y;
     }
 
 
@@ -50,6 +53,7 @@ class ItemShop extends AssetGraphic {
             UIManager.openShopPopin(this.title, this.description, this.cost);
             window.addEventListener(Keyboard.KEY_UP, this.bindedFunction);
         }
+        this._rotate();
     }
 
 
@@ -60,6 +64,12 @@ class ItemShop extends AssetGraphic {
             window.removeEventListener(Keyboard.KEY_UP, this.bindedFunction);
             UIManager.closeShopPopin();
         }
+        this._rotate();
+    }
+
+
+    private _rotate () {
+        this.meshe.rotation = this.meshe.rotation.add(BABYLON.Vector3.Up().multiplyByFloats(ItemShop.ROTATION_SPEED, ItemShop.ROTATION_SPEED, ItemShop.ROTATION_SPEED));
     }
 
 

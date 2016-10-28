@@ -4,13 +4,6 @@ class EnemyManager {
 
     private canceled:boolean;
 
-    /** 
-     * @params pScene
-     * @params pPositions
-     * @params pEnemyClasses
-     * @params pBaseEnemyIndex Sélectionne les enemis de `pEnemyClasses` pour la base de la difficultéde. Sélectionne les enemis de l'index 0 jusqu'à celui donné (ex pour 2: 0, 1 et 2)
-     * @params pBaseEnemyCount Nombre d'enemi utiliser comme base pour la difficulté
-     */
     constructor(pScene:BABYLON.Scene, pLevelManager:LevelManager) {
 
         this.scene = pScene;

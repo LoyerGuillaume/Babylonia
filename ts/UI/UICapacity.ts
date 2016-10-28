@@ -1,18 +1,9 @@
-interface Dictionnary {
-    [name: string]: BABYLON.Texture;
-}
-
 class UICapacity extends BABYLON.Group2D {
 
     private static get WIDTH()     :number { return 150; };
-
-    private static get TEXTURES()  :string[] { return [ 'babyboule', 'babyspread', 'babygel', 'babyboum' ]; }; // DEPRICATED
-
     private static get PICTO_SIZE():number { return 100; };
 
-    private static textures:Dictionnary = {};
-
-    private capacity:any;
+    private capacity:IPlayerAttack;
 
     private picto:BABYLON.Sprite2D;
 
@@ -26,12 +17,6 @@ class UICapacity extends BABYLON.Group2D {
         this.initEvents();
     }
 
-    public static initTextures () {
-        UICapacity.textures['babyboule'] = Babylonia.getLoadedContent('babyboule.png', true);
-        UICapacity.textures['babyspread'] = Babylonia.getLoadedContent('babyspread.png', true);
-        UICapacity.textures['babygel'] = Babylonia.getLoadedContent('babygel.png', true);
-        UICapacity.textures['babyboum'] = Babylonia.getLoadedContent('babyboum.png', true);
-    }
 
     private initEvents () {
         var that = this;
@@ -44,7 +29,7 @@ class UICapacity extends BABYLON.Group2D {
 
 
     private initContent ()  {
-        var pictoTexture:BABYLON.Texture = UICapacity.textures[this.capacity.name.toLowerCase()];
+        var pictoTexture:BABYLON.Texture = Babylonia.getLoadedContent(this.capacity.name.toLowerCase() + '.png', false);
         var pictoScale:number = UICapacity.PICTO_SIZE / pictoTexture.getSize().width;
         this.picto = new BABYLON.Sprite2D(pictoTexture, {
             id: 'picto' + this.capacity.name,
@@ -70,21 +55,6 @@ class UICapacity extends BABYLON.Group2D {
             y: this.picto.y + UICapacity.PICTO_SIZE
         })
         key.x = UICapacity.WIDTH / 2 - key.width / 2;
-    }
-
-    /**
-     * DEPRECATED
-     */
-    public static loadTextures (scene:BABYLON.Scene, pCallback:any) {
-        var count:number = 0;
-        for (var i in UICapacity.TEXTURES) {
-            var textureName:string = UICapacity.TEXTURES[i];
-            UICapacity.textures[textureName] = new BABYLON.Texture('../assets/' + textureName + '.png', scene, false, true, 0, function () {
-                if (++count === UICapacity.TEXTURES.length) {
-                    pCallback();
-                }
-            });
-        }
     }
 
 

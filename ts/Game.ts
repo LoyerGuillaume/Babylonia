@@ -28,10 +28,6 @@ class Game {
             loader.style.display = "none";
 
             this._initGame();
-
-            // this.engine.runRenderLoop(() => {
-            //     this.scene.render();
-            // });
         });
     }
 

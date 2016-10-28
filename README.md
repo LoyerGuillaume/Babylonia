@@ -7,21 +7,22 @@ Grâce à ses pouvoirs de Babymage et ses boules de feu, Babylelf va devoir terr
 
 ## But
 Votre but est simple, tuer le plus d'ennemis, et faire le meilleurs score.
-Afin de vous aidez, vous pouvez utiliser vos BabyCoins dans le magasin afin d'améliorer vos compètences (puissance d'attaque, coeurs suplémentaires, et autre).
-Les Babycoins sont lachés par les ennemis, une fois tués.
+Afin de vous aider, vous pouvez dépenser vos BabyCoins dans le magasin afin d'améliorer vos compétences (puissance d'attaque, coeurs suplémentaires, et autre).
+Les ennemis vous rapportent des Babycoins.
 
-## Contrôle
+## Contrôles
 Vous contrôlez Babylelf, un mage de niveau 56, à l'aide des touches du clavier :</br>
 - Touches directionelles : Se déplacer</br>
 - A, Z, E, R : Différentes attaques</br>
 - Espace : Confirmer l'achat de l'objet</br>
+- P : Pause</br>
 
 ## Features
-- 4 attaques avec différentes puissance, différentes cooldown</br>
-- 1 ennemi, cet ennemi suis le joueur.</br>
-- Augmentation du score a chaque mort d'ennemie</br>
+- 4 attaques avec différentes puissances, effets et cooldowns.</br>
+- 1 type d'ennemi, cet ennemi suis le joueur.</br>
+- Augmentation du score à chaque ennemi vaincu.</br>
 - Le joueur peut ramasser des Babycoins.</br>
-- Magasin, le joueur peut dépenser des Babycoins pour acheter différent objets :</br>
+- Magasin, le joueur peut dépenser des Babycoins pour acheter différents objets :</br>
     - Des nouveaux coeurs</br>
     - Des upgrades pour les 3 premières attaques</br>
 - Musique et SFX (branchez vos casques).</br>
@@ -31,11 +32,14 @@ Vous contrôlez Babylelf, un mage de niveau 56, à l'aide des touches du clavier
     - Perte de FPS</br>
     - Texte qui ne s'affiche plus au bout d'un certain temps</br>
 - Les meshes qui repop (ennemies et player) se retrouve à l'envers.
+- Fonts pas prises en compte.
 
 ## Team
+
 ### Game Designer et Programmer
 - Guillaume Loyer</br>
 - Pierre Machkovsky</br>
 - Dimitri Pommier</br>
+
 ### Musique et SFX
 - Jesse Howard

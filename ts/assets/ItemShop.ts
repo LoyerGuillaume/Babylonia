@@ -1,5 +1,7 @@
 class ItemShop extends AssetGraphic {
 
+    private static get ROTATION_SPEED():number { return 0.01; };
+
     public static list:ItemShop[] = [];
 
     private startYPosition:number;
@@ -48,6 +50,7 @@ class ItemShop extends AssetGraphic {
             UIManager.openShopPopin(this.title, this.description, this.cost);
             window.addEventListener(Keyboard.KEY_UP, this.bindedFunction);
         }
+        this._rotate();
     }
 
 
@@ -58,6 +61,12 @@ class ItemShop extends AssetGraphic {
             window.removeEventListener(Keyboard.KEY_UP, this.bindedFunction);
             UIManager.closeShopPopin();
         }
+        this._rotate();
+    }
+
+
+    private _rotate () {
+        this.meshe.rotation = this.meshe.rotation.add(BABYLON.Vector3.Up().multiplyByFloats(ItemShop.ROTATION_SPEED, ItemShop.ROTATION_SPEED, ItemShop.ROTATION_SPEED));
     }
 
 

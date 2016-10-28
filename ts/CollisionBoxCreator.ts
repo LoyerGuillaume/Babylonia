@@ -2,7 +2,7 @@ type BoxCollider = { scale: BABYLON.Vector3, rotation: BABYLON.Vector3, position
 
 class CollisionBoxCreator {
 
-    private static get DEBUG_COLLISION_BOX():boolean { return true; };
+    private static get DEBUG_COLLISION_BOX():boolean { return false; };
 
     private static boxes:any = {};
 

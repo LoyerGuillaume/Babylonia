@@ -40,7 +40,7 @@ Vous contrôlez Babylelf, un mage de niveau 56, à l'aide des touches du clavier
 ### Game Designer et Programmer
 - Guillaume Loyer</br>
 - Pierre Machkovsky</br>
-- Dimitri Pommier</br>
+- Dimitri Pomier</br>
 
 ### Musique et SFX
 - Jesse Howard

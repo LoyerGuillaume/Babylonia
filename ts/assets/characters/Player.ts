@@ -371,7 +371,7 @@ class Player extends Character {
      * Attack SIMPLE
      */
     private shotOneFireBall () {
-        Babylonia.getSoundLoaded('BabyBoule').play();
+        SoundManager.getSound(SoundManager.SOUNDS_NAMES.BABYBOULE).play();
         this.createFireBall(this.rotationQuaternion);
     }
 
@@ -379,7 +379,7 @@ class Player extends Character {
      * Attack SIMPLE PLUS
      */
     private shotThreeFireBalls () {
-        Babylonia.getSoundLoaded('BabySpread').play();
+        SoundManager.getSound(SoundManager.SOUNDS_NAMES.BABYSPREAD).play();
         var rotationQuaternion:BABYLON.Quaternion = this.rotationQuaternion;
         this.createSpreadBall(rotationQuaternion);
         this.createSpreadBall(rotationQuaternion.clone().multiply(BABYLON.Quaternion.RotationAxis(BABYLON.Vector3.Up(), BABYLON.Tools.ToRadians( Player.ANGLE_SPECIAL_ATTACK_1))));
@@ -422,7 +422,7 @@ class Player extends Character {
     }
 
     private launchIceWalking () {
-        Babylonia.getSoundLoaded('BabyGel').play();
+        SoundManager.getSound(SoundManager.SOUNDS_NAMES.BABYGEL).play();
         this.iceWalkingCount = 0;
         this.lastDoAction = this.doAction;
         this.doAction = this.doActionIceWalking;
@@ -434,7 +434,7 @@ class Player extends Character {
             this.createIce();
         }
         if (++this.iceWalkingCount >= Player.ICE_WALKING_DURATION) {
-            Babylonia.getSoundLoaded('BabyGel').stop();
+            SoundManager.getSound(SoundManager.SOUNDS_NAMES.BABYGEL).stop();
             this.doAction = this.lastDoAction;
         }
     }
@@ -448,7 +448,7 @@ class Player extends Character {
 
 
     private launchAOE () {
-        Babylonia.getSoundLoaded('BabyBoom').play();
+        SoundManager.getSound(SoundManager.SOUNDS_NAMES.BABYBOOM).play();
         var position:BABYLON.Vector3 = this.position.clone();
         var aoe:AOE = new AOE(this.getScene(), position, this);
         aoe.start();
@@ -483,6 +483,7 @@ class Player extends Character {
 
 
     private onCoinCollision ():void {
+        SoundManager.getSound(SoundManager.SOUNDS_NAMES.COIN).play();
         this.gainCoin(1);
     }
 
@@ -494,6 +495,7 @@ class Player extends Character {
     }
 
     protected die () {
+        SoundManager.getSound(SoundManager.SOUNDS_NAMES.DEATH).play();
         BEvent.emit(new PlayerEvent(PlayerEvent.DEATH, {
             player: this
         }));

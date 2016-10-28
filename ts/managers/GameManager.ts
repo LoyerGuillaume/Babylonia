@@ -11,7 +11,7 @@ class GameManager {
     private onPause:boolean = false;
     private oldPausePress:boolean = false;
     private frameCount:number = 0;
-
+    private bridgePosInit:BABYLON.Vector3;
 
     // GAME RULES
     private static get RESPAWN_SECONDS() { return 3;};
@@ -85,6 +85,8 @@ class GameManager {
         pPlayerEvent.player.destroy();
         Player.list.splice(playerIndex, 1);
 
+        this.stopMusic();
+
         var playerRemaining = Player.list.length;
 
         var that = this;
@@ -106,13 +108,16 @@ class GameManager {
     }
 
     private onGameOver () {
-    this.enemyManager.clearCurrentWave();
+        this.enemyManager.clearCurrentWave();
         this.destroyAllEnemies();
         this.moveBridge(true);
     }
 
 
     private initPlayer(indexPlayer, pProfile:IPlayerProfile = undefined) {
+
+        this.switchMusic(false);
+
         var lPos = this.levelManager.getGameplayObjectUnique('Spawner').mesh.position.clone();
         lPos.y += 0.6;
 
@@ -124,7 +129,22 @@ class GameManager {
         CameraManager.setTarget(Player.list[indexPlayer]);
         BEvent.emit(new PlayerEvent(PlayerEvent.GAIN_LIFE, {
             amount: Player.LIFE_POINT
-        }))
+        }));
+    }
+
+    private switchMusic (pIsBattle:boolean) {
+        if (pIsBattle) {
+            SoundManager.getSound(SoundManager.SOUNDS_NAMES.SHOPMUSIC).stop();
+            SoundManager.getSound(SoundManager.SOUNDS_NAMES.BATTLEMUSIC).play();
+        } else {
+            SoundManager.getSound(SoundManager.SOUNDS_NAMES.BATTLEMUSIC).stop();
+            SoundManager.getSound(SoundManager.SOUNDS_NAMES.SHOPMUSIC).play();
+        }
+    }
+
+    private stopMusic () {
+        SoundManager.getSound(SoundManager.SOUNDS_NAMES.BATTLEMUSIC).stop();
+        SoundManager.getSound(SoundManager.SOUNDS_NAMES.SHOPMUSIC).stop();
     }
 
     private onPlayerInArena (pPlayerEvent:any) {
@@ -132,10 +152,11 @@ class GameManager {
         this.currentWaveNumber = 1;
         this.enemyManager.startWave(this.currentWaveNumber);
 
+        this.switchMusic(true);
+
         this.moveBridge(false);
     }
 
-    private bridgePosInit;
     private moveBridge (pWalkable:boolean) {
 
         var lBridge = this.levelManager.getGameplayObjectUnique('Bridge');

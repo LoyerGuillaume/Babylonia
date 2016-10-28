@@ -45,7 +45,6 @@ class Babylonia {
         'shopbox',
         'BabySpread',
         'BabyBoule',
-        'nextwave',
         'shoppotion',
         'coin'
     ];};

@@ -137,16 +137,14 @@ class UIManager {
             children: [
                 new BABYLON.Text2D(pTitle, {
                     id: "SHOP_Title",
+                    marginAlignment: "h: center",
                     fontName: "20pt " + UIManager.FONT,
-                    x : 30,
                     y : 175
                 }),
                 new BABYLON.Text2D(pText, {
                     id: "SHOP_Text",
                     marginAlignment: "h: center, v:center",
                     fontName: "12pt " + UIManager.FONT,
-                    x : 0,
-                    y : 10,
                 }),
                 new BABYLON.Text2D(pBuyKey + ' pour acheter', {
                     id: "SHOP_Info",

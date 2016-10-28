@@ -187,10 +187,6 @@ class GameManager {
                 Timeout.list[q].doAction(deltaTime);
             }
 
-            for (var i in Tree.list) {
-                Tree.list[i].doAction(deltaTime);
-            }
-
             for (var j in PlayerAttack.list) {
                 PlayerAttack.list[j].doAction(deltaTime);
             }

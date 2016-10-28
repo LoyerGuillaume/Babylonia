@@ -63,7 +63,7 @@ class ControllerKeyboard extends Controller {
         }
 
         private onKeyDown(pEvent: KeyboardEvent): void {
-            this.keys[pEvent.keyCode] = true;
+            this.keys[pEvent.keyCode || pEvent.which] = true;
 
             // traitement des touches antagonistes en favorisant la derniere touche appuyee
             if (pEvent.keyCode == Keyboard.LEFT) this._h = -1;

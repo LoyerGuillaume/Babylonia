@@ -28,7 +28,6 @@
         "assets/characters/EnemyOne.ts",
         "assets/items/Coin.ts",
         "assets/ItemShop.ts",
-        "assets/Tree.ts",
         "assets/LDElement.ts",
         "typings/babylon.d.ts",
         "utils/tools/Tools.ts",

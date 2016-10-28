@@ -47,7 +47,6 @@
         "UI/UICapacity.ts",
         "Config.ts",
         "Preloader.ts",
-        "ICollisionable.ts",
         "CollisionBoxCreator.ts"
     ],
     "compileOnSave": true

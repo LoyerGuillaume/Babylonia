@@ -36,7 +36,7 @@ class SoundManager {
     }
 
     private mix () {
-        SoundManager.getSound(SoundManager.SOUNDS_NAMES.SHOPBOX).setVolume(1.5);
+        SoundManager.getSound(SoundManager.SOUNDS_NAMES.SHOPBOX).setVolume(5);
     }
 
     private initLoops () {

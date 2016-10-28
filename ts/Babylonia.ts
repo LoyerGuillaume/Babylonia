@@ -42,11 +42,10 @@ class Babylonia {
         'BabyGel',
         'BabyBoom',
         'mummydeath',
-        'upgrade',
+        'shopbox',
         'BabySpread',
         'BabyBoule',
-        'nextwave',
-        'potion',
+        'shoppotion',
         'coin'
     ];};
 

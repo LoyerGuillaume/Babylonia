@@ -43,7 +43,7 @@ class ItemShop extends AssetGraphic {
 
 
     protected doActionNormal (deltaTime:number) {
-        if (this.checkPlayerCollision()) {
+        if (this.checkPlayerCollision()) { 
             this.doAction = this.doActionOnPlayerCollision;
             UIManager.openShopPopin(this.title, this.description, this.cost);
             window.addEventListener(Keyboard.KEY_UP, this.bindedFunction);

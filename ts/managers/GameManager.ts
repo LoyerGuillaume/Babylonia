@@ -16,6 +16,7 @@ class GameManager {
     // GAME RULES
     private static get RESPAWN_SECONDS() { return 3;};
     private static get WAVES_INTERVAL_MS() { return 5000;};
+    private static get WAVES_SANDBOX_NAME() { return 'SANDBOX';};
 
     // GAME VARS
     private currentWaveNumber: number;
@@ -67,7 +68,7 @@ class GameManager {
     }
 
     private onLastWaveWon () {
-        console.info('Big victory !');
+        new Timeout(this.enemyManager.startWave.bind(this.enemyManager, GameManager.WAVES_SANDBOX_NAME), GameManager.WAVES_INTERVAL_MS);
     }
 
     private initEnemyManager () {
@@ -105,7 +106,7 @@ class GameManager {
     }
 
     private onGameOver () {
-        this.enemyManager.clearCurrentWave();
+    this.enemyManager.clearCurrentWave();
         this.destroyAllEnemies();
         this.moveBridge(true);
     }

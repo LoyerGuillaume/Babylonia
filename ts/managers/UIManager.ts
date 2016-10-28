@@ -15,7 +15,7 @@ class UIManager {
     private static heartsContainer:BABYLON.Group2D;
 
     private static score:BABYLON.Text2D;
-    private static bestScoreText:BABYLON.Text2D;
+    private static bestScoreText:BABYLON.Text2D; 
     private static babyCoins:BABYLON.Group2D;
     private static textCoins:BABYLON.Text2D;
 

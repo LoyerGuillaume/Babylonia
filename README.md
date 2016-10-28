@@ -12,6 +12,30 @@ Les Babycoins sont lachés par les ennemis, une fois tués.
 
 ## Contrôle
 Vous contrôlez Babylelf, un mage de niveau 56, à l'aide des touches du clavier :</br>
-    - Touches directionelles : Se déplacer</br>
-    - A, Z, E, R : Différentes attaques</br>
-    - Espace : Confirmer l'achat de l'objet</br>
+- Touches directionelles : Se déplacer</br>
+- A, Z, E, R : Différentes attaques</br>
+- Espace : Confirmer l'achat de l'objet</br>
+
+## Features
+- 4 attaques avec différentes puissance, différentes cooldown</br>
+- 1 ennemi, cet ennemi suis le joueur.</br>
+- Augmentation du score a chaque mort d'ennemie</br>
+- Le joueur peut ramasser des Babycoins.</br>
+- Magasin, le joueur peut dépenser des Babycoins pour acheter différent objets :</br>
+    - Des nouveaux coeurs</br>
+    - Des upgrades pour les 3 premières attaques</br>
+- Musique et SFX (branchez vos casques).</br>
+
+## Bug connu
+- Fonctionne mal sur Firefox</br>
+    - Perte de FPS</br>
+    - Texte qui ne s'affiche plus au bout d'un certain temps</br>
+- Les meshes qui repop (ennemies et player) se retrouve à l'envers.
+
+## Team
+### Game Designer et Programmer
+- Guillaume Loyer</br>
+- Pierre Machkovsky</br>
+- Dimitri Pommier</br>
+### Musique et SFX
+- Jesse Howard
